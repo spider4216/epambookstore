@@ -9,7 +9,7 @@ public class MapRouter {
 	private static HashMap<String, IAction> map = new HashMap<>();
 	
 	static {
-		map.put("/sort/science", new SortAction());
+		map.put("/BookShop/sort/science.html", new SortAction());
 	}
 	
 	public static IAction getAction(String path) throws RouterException {

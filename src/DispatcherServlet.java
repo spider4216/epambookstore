@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import action.IAction;
 import component.route.MapRouter;
 import component.route.RouterException;
+import component.view.Viewer;
 
 public class DispatcherServlet extends HttpServlet {
 
@@ -26,7 +27,7 @@ public class DispatcherServlet extends HttpServlet {
 		// Сетим тип контента
 		response.setContentType("text/html");
 		// Получаем url без параметров
-		String path = request.getPathInfo();
+		String path = request.getRequestURI();
 		
 		// Если маршрут не указан, направляем на главную страницу
 		if (path == null || path.equals("/")) {
@@ -61,7 +62,20 @@ public class DispatcherServlet extends HttpServlet {
 		
 		String res = action.run(args);
 		
-		out.println(res);
+		String includeJsp = null;
+		
+		try {
+			includeJsp = Viewer.getViewByAction(action);
+		} catch (Exception e) {
+			// TODO 404
+			out.println("Cannot Find View");
+			return;
+		}
+		
+		request.setAttribute("includeJsp", includeJsp);
+		request.setAttribute("actionResult", res);
+		
+		request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").include(request, response);
 
 		out.close();
 	}
