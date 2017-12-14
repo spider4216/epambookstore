@@ -11,7 +11,7 @@ import component.dao.book.MYSQLBookDAO;
 public class MYSQLDAOFactory extends DAOFactory {
 	
 	private static synchronized Connection createConnection() throws SQLException {
-		ResourceBundle resource = ResourceBundle.getBundle("com.epam.bookshop.config.db");
+		ResourceBundle resource = ResourceBundle.getBundle("config.db");
 		String url = resource.getString("url");
 		String driver = resource.getString("driver");
 		String user = resource.getString("user");
