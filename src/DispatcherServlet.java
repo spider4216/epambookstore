@@ -60,7 +60,7 @@ public class DispatcherServlet extends HttpServlet {
 			}
 		}
 		
-		String res = action.run(args);
+		Object res = action.run(args);
 		
 		String includeJsp = null;
 		
