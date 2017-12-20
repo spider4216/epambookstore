@@ -3,6 +3,7 @@ package component.route;
 import java.util.HashMap;
 
 import action.IAction;
+import action.SignInMainAction;
 import action.SortAction;
 
 public class MapRouter {
@@ -10,6 +11,7 @@ public class MapRouter {
 	
 	static {
 		map.put("/BookShop/sort/science.html", new SortAction());
+		map.put("/BookShop/sign-in.html", new SignInMainAction());
 	}
 	
 	public static IAction getAction(String path) throws RouterException {

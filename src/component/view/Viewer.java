@@ -10,6 +10,8 @@ public class Viewer {
 		switch (action.getClass().getSimpleName()) {
 			case "SortAction":
 				return "science.jsp";
+			case "SignInMainAction":
+				return "signIn.jsp";
 
 			default:
 				// TODO special exception should be situated here

@@ -75,7 +75,7 @@ public class DispatcherServlet extends HttpServlet {
 		request.setAttribute("includeJsp", includeJsp);
 		request.setAttribute("actionResult", res);
 		
-		request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").include(request, response);
+		request.getRequestDispatcher("/jsp/main.jsp").include(request, response);
 
 		out.close();
 	}
