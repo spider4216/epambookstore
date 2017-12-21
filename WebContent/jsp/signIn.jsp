@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-12">
-		<div class="panel panel-default sign-up-panel">
+		<div class="panel panel-default sign-in-panel">
 			<div class="panel-heading">
 				<h3 class="panel-title">Sign In</h3>
 			</div>
@@ -26,7 +26,7 @@
 				<div class="panel-footer">
 					<div class="row">
 						<div class="col-md-12">
-							<input type="submit" class="btn btn-primary pull-right" value="sign up" />
+							<input type="submit" class="btn btn-primary pull-right" value="sign in" />
 						</div>
 					</div>
 				</div>

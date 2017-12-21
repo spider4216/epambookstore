@@ -1,3 +1,4 @@
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -49,6 +50,17 @@ public class DispatcherServlet extends HttpServlet {
 		String queryString = request.getQueryString();
 		HashMap<String, String> args = new HashMap<>();
 		
+		// For Post
+		BufferedReader br = request.getReader();
+		String line = "";
+		if ((line = br.readLine()) != null) {
+			if (queryString != null) {
+				queryString += "&" + line;
+			} else {
+				queryString = line;
+			}
+		}
+				
 		// Если Query string есть, то делаем коллекцию
 		if (queryString != null && !queryString.isEmpty()) {
 			String[] params = queryString.split("&");
