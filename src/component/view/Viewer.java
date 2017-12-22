@@ -14,6 +14,8 @@ public class Viewer {
 				return "signIn.jsp";
 			case "SignUpMainAction":
 				return "signUp.jsp";
+			case "SignUpProcessAction":
+				return "signUpProcess.jsp";
 
 			default:
 				// TODO special exception should be situated here

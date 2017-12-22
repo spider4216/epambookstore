@@ -76,6 +76,7 @@ public class DispatcherServlet extends HttpServlet {
 		try {
 			res = action.run(args);
 		} catch (Exception e) {
+			e.printStackTrace();
 			out.println("Exception error. Pretty page here");
 			return;
 		}

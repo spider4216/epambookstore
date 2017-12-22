@@ -7,6 +7,16 @@
 			
 			<form action="/BookShop/sign-up-process.html" method="post">
 				<div class="panel-body">
+				
+			  		<div class="form-group">
+			    		<label for="username">Username</label>
+			    		<input type="text" name="username" class="form-control" id="username" placeholder="Username">
+			  		</div>
+			  		
+			  		<div class="form-group">
+			    		<label for="password">Password</label>
+			    		<input type="text" name="password" class="form-control" id="password" placeholder="Password">
+			  		</div>
 					
 					<div class="form-group">
 			    		<label for="first_name">First Name</label>

@@ -9,6 +9,9 @@ import component.dao.book.IBookDAO;
 import component.dao.book.MYSQLBookDAO;
 import component.dao.book.exception.DaoBookException;
 import component.dao.factory.exception.MysqlDaoException;
+import component.dao.user.IUserDao;
+import component.dao.user.MysqlUserDao;
+import component.dao.user.exception.DaoUserException;
 
 public class MYSQLDAOFactory extends DAOFactory {
 	
@@ -41,6 +44,18 @@ public class MYSQLDAOFactory extends DAOFactory {
 		}
 		
 		return new MYSQLBookDAO(con);
+	}
+	
+	public IUserDao getUserDAO() throws DaoUserException {
+		// TODO DRY
+		Connection con = null;
+		try {
+			con = createConnection();
+		} catch (MysqlDaoException e) {
+			throw new DaoUserException("Problem with create connection", e);
+		}
+		
+		return new MysqlUserDao(con);
 	}
 
 }
