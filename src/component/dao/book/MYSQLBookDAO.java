@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import component.dao.book.exception.DaoBookException;
 import entity.Book;
 
 public class MYSQLBookDAO implements IBookDAO {
@@ -22,7 +23,7 @@ public class MYSQLBookDAO implements IBookDAO {
 		this.entity = entity;
 	}
 
-	public Integer insertBook() throws Exception {
+	public Integer insertBook() throws DaoBookException {
 		String sqlInsert = "INSERT INTO books (name, price, author, description, isbn, pages) VALUES (?, ?, ?, ?, ?, ?)";
 		
 		try {
@@ -36,12 +37,12 @@ public class MYSQLBookDAO implements IBookDAO {
 			
 			return pr.executeUpdate();
 		} catch (SQLException e) {
-			throw new Exception("Cannot get prepare statment instance", e);
+			throw new DaoBookException("Cannot insert book", e);
 		}
 	}
 
 	// TODO not checking
-	public Boolean deleteBook() throws Exception {
+	public Boolean deleteBook() throws DaoBookException {
 		String sqlDelete = "DELETE FROM books WHERE id = ?";
 		
 		try {
@@ -51,7 +52,7 @@ public class MYSQLBookDAO implements IBookDAO {
 			pr.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			throw new Exception("Cannot get prepare statment instance", e);
+			throw new DaoBookException("Cannot delete book", e);
 		}
 	}
 
@@ -59,7 +60,7 @@ public class MYSQLBookDAO implements IBookDAO {
 		return null;
 	}
 	
-	public Book findBook(Integer id) throws Exception {
+	public Book findBook(Integer id) throws DaoBookException {
 		String sqlFind = "SELECT * FROM books WHERE id = ?";
 		
 		try {
@@ -81,7 +82,7 @@ public class MYSQLBookDAO implements IBookDAO {
 			
 			return book;
 		} catch (SQLException e) {
-			throw new Exception("Cannot get prepare statment instance", e);
+			throw new DaoBookException("Cannot find book", e);
 		}
 	}
 

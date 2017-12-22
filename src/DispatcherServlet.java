@@ -72,7 +72,13 @@ public class DispatcherServlet extends HttpServlet {
 			}
 		}
 		
-		Object res = action.run(args);
+		Object res = null;
+		try {
+			res = action.run(args);
+		} catch (Exception e) {
+			out.println("Exception error. Pretty page here");
+			return;
+		}
 		
 		String includeJsp = null;
 		

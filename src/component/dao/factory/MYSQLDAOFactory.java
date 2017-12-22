@@ -7,10 +7,12 @@ import java.util.ResourceBundle;
 
 import component.dao.book.IBookDAO;
 import component.dao.book.MYSQLBookDAO;
+import component.dao.book.exception.DaoBookException;
+import component.dao.factory.exception.MysqlDaoException;
 
 public class MYSQLDAOFactory extends DAOFactory {
 	
-	private static synchronized Connection createConnection() throws SQLException {
+	private static synchronized Connection createConnection() throws MysqlDaoException {
 		ResourceBundle resource = ResourceBundle.getBundle("config.db");
 		String url = resource.getString("url");
 		String driver = resource.getString("driver");
@@ -19,23 +21,23 @@ public class MYSQLDAOFactory extends DAOFactory {
 		
 		try {
 			Class.forName(driver).newInstance();
-		} catch (ClassNotFoundException e) {
-			throw new SQLException("Драйвер не загружен!");
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+			throw new MysqlDaoException("Cannot create DB connection", e);
 		}
 
-		return DriverManager.getConnection(url, user, pass);
+		try {
+			return DriverManager.getConnection(url, user, pass);
+		} catch (SQLException e) {
+			throw new MysqlDaoException("Problem with connection", e);
+		}
 	}
 
-	public IBookDAO getBookDAO() {
+	public IBookDAO getBookDAO() throws DaoBookException {
 		Connection con = null;
 		try {
 			con = createConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (MysqlDaoException e) {
+			throw new DaoBookException("Problem with create connection", e);
 		}
 		
 		return new MYSQLBookDAO(con);
