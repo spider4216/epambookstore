@@ -16,7 +16,7 @@ import com.epam.component.dao.user.exception.DaoUserException;
 public class MYSQLDAOFactory extends DAOFactory {
 	
 	private static synchronized Connection createConnection() throws MysqlDaoException {
-		ResourceBundle resource = ResourceBundle.getBundle("config.db");
+		ResourceBundle resource = ResourceBundle.getBundle("com.epam.config.db");
 		String url = resource.getString("url");
 		String driver = resource.getString("driver");
 		String user = resource.getString("user");
