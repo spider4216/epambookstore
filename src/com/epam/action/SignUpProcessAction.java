@@ -2,21 +2,22 @@ package com.epam.action;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.epam.component.dao.user.exception.DaoUserException;
 import com.epam.entity.User;
 import com.epam.service.UserService;
 
 public class SignUpProcessAction implements IAction {
 
-	public Object run(HashMap<String, String> params) throws DaoUserException {
-		System.out.println(params);
-		// TODO Service sign up here
+	public Object execute(HttpServletRequest request, HttpServletResponse response) throws DaoUserException {
 		User user = new User();
-		user.setUsername(params.get("username"));
+		user.setUsername(request.getParameter("username"));
 		// TODO HASH HERE
-		user.setPassword(params.get("password"));
-		user.setFirstName(params.get("first_name"));
-		user.setLastName(params.get("last_name"));
+		user.setPassword(request.getParameter("password"));
+		user.setFirstName(request.getParameter("first_name"));
+		user.setLastName(request.getParameter("last_name"));
 		// TODO replace it
 		user.setGender(1);
 		

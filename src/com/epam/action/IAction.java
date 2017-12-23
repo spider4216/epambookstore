@@ -1,7 +1,8 @@
 package com.epam.action;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public interface IAction {
-	abstract public Object run(HashMap<String, String> params) throws Exception;
+	abstract public Object execute(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }
