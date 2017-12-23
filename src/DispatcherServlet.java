@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import action.IAction;
-import component.route.MapRouter;
-import component.route.RouterException;
-import component.view.Viewer;
+import com.epam.action.IAction;
+import com.epam.component.route.MapRouter;
+import com.epam.component.route.RouterException;
+import com.epam.component.view.Viewer;
 
 public class DispatcherServlet extends HttpServlet {
 
