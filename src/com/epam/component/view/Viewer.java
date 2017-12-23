@@ -1,25 +1,16 @@
 package com.epam.component.view;
 
+import java.io.IOException;
 import java.util.HashMap;
 
-import com.epam.action.IAction;
-import com.epam.action.SortAction;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-public class Viewer {
-	public static String getViewByAction(IAction action) throws Exception {
-		switch (action.getClass().getSimpleName()) {
-			case "SortAction":
-				return "science.jsp";
-			case "SignInMainAction":
-				return "signIn.jsp";
-			case "SignUpMainAction":
-				return "signUp.jsp";
-			case "SignUpProcessAction":
-				return "signUpProcess.jsp";
-
-			default:
-				// TODO special exception should be situated here
-				throw new Exception("View not found");
-		}
+public class Viewer {	
+	public static void execute(HttpServletRequest request, HttpServletResponse response, String name) throws ServletException, IOException {
+		request.setAttribute("includeJsp", name);
+		
+		request.getRequestDispatcher("/jsp/main.jsp").include(request, response);
 	}
 }

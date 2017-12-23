@@ -45,56 +45,13 @@ public class DispatcherServlet extends HttpServlet {
 			out.println("Page Not Found");
 			return;
 		}
-
-		// Получаем Query string
-		String queryString = request.getQueryString();
-		HashMap<String, String> args = new HashMap<>();
 		
-		// For Post
-		BufferedReader br = request.getReader();
-		String line = "";
-		if ((line = br.readLine()) != null) {
-			if (queryString != null) {
-				queryString += "&" + line;
-			} else {
-				queryString = line;
-			}
-		}
-				
-		// Если Query string есть, то делаем коллекцию
-		if (queryString != null && !queryString.isEmpty()) {
-			String[] params = queryString.split("&");
-			
-
-			for (String param : params) {
-				String[] keyValue = param.split("=");
-				args.put(keyValue[0], keyValue[1]);
-			}
-		}
-		
-		Object res = null;
 		try {
-			res = action.execute(request, response);
+			action.execute(request, response);
 		} catch (Exception e) {
-			e.printStackTrace();
 			out.println("Exception error. Pretty page here");
 			return;
 		}
-		
-		String includeJsp = null;
-		
-		try {
-			includeJsp = Viewer.getViewByAction(action);
-		} catch (Exception e) {
-			// TODO 404
-			out.println("Cannot Find View");
-			return;
-		}
-		
-		request.setAttribute("includeJsp", includeJsp);
-		request.setAttribute("actionResult", res);
-		
-		request.getRequestDispatcher("/jsp/main.jsp").include(request, response);
 
 		out.close();
 	}

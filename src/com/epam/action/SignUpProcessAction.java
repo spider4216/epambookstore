@@ -1,7 +1,5 @@
 package com.epam.action;
 
-import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,7 +9,7 @@ import com.epam.service.UserService;
 
 public class SignUpProcessAction implements IAction {
 
-	public Object execute(HttpServletRequest request, HttpServletResponse response) throws DaoUserException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws DaoUserException {
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
 		// TODO HASH HERE
@@ -30,8 +28,6 @@ public class SignUpProcessAction implements IAction {
 		}
 		
 		// TODO I Want Redirect here
-		
-		return true;
 	}
 
 }
