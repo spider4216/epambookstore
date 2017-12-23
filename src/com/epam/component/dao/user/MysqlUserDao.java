@@ -11,16 +11,10 @@ public class MysqlUserDao implements IUserDao {
 	
 	private Connection connection = null;
 	
-	private User entity = null;	
-
 	public MysqlUserDao(Connection connection) {
 		this.connection = connection;
 	}
 	
-	public void setUserEntity(User entity) {
-		this.entity = entity;
-	}
-
 	public Integer insertUser(User entity) throws DaoUserException {
 		String sqlInsert = "INSERT INTO user (username, password, first_name, last_name, gender) VALUES (?, ?, ?, ?, ?)";
 		
