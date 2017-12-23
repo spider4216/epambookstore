@@ -27,5 +27,10 @@
 </nav>
 
 <jsp:include page='<%=(String) request.getAttribute("includeJsp")%>' />
+
+<div class="scripts">
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/validator.min.js"></script>
+</div>
 </body>
 </html>

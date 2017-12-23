@@ -5,17 +5,19 @@
 				<h3 class="panel-title">Sign Up</h3>
 			</div>
 			
-			<form action="/BookShop/sign-up-process.html" method="post">
+			<form action="/BookShop/sign-up-process.html" method="post" data-toggle="validator">
 				<div class="panel-body">
 				
 			  		<div class="form-group">
 			    		<label for="username">Username</label>
-			    		<input type="text" name="username" class="form-control" id="username" placeholder="Username">
+			    		<input type="text"data-minlength="14" data-error="too short :)" name="username" class="form-control" id="username" placeholder="Username">
+			    		<div class="help-block with-errors"></div>
 			  		</div>
 			  		
 			  		<div class="form-group">
 			    		<label for="password">Password</label>
-			    		<input type="password" name="password" class="form-control" id="password" placeholder="Password">
+			    		<input type="password" data-minlength="16" name="password" class="form-control" id="password" placeholder="Password">
+			    		<div class="help-block with-errors"></div>
 			  		</div>
 					
 					<div class="form-group">
