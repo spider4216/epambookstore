@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.component.dao.user.exception.DaoUserException;
+import com.epam.component.flash.FlashMessage;
 import com.epam.entity.User;
 import com.epam.service.UserService;
 
@@ -34,6 +35,8 @@ public class SignUpProcessAction implements IAction {
 		}
 		
 		// TODO flash message here
+		FlashMessage fm = FlashMessage.getInstance();
+		fm.setMsg("You were successfully registered!");
 		
 		response.sendRedirect("/BookShop/sign-in.html");
 	}

@@ -18,19 +18,24 @@ import javax.servlet.http.HttpServletResponse;
 import com.epam.action.IAction;
 import com.epam.component.route.MapRouter;
 import com.epam.component.route.RouterException;
+import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.view.Viewer;
 
 public class DispatcherServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Получаем Writer
+		// Put Session to Service Locator
+		ServiceLocator sl = ServiceLocator.getInstance();
+		sl.setService("session", request.getSession(true));
+		
+		// Getting Writer
 		PrintWriter out = response.getWriter();
-		// Сетим тип контента
+		// Set type of content
 		response.setContentType("text/html");
-		// Получаем url без параметров
+		// Get url without params
 		String path = request.getRequestURI();
 		
-		// Если маршрут не указан, направляем на главную страницу
+		// If route does not specified, redirect to front page
 		if (path == null || path.equals("/")) {
 			// TODO Front Page
 			out.println("Front Page Here");

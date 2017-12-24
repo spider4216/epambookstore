@@ -1,9 +1,12 @@
+<%@page import="com.epam.component.flash.FlashMessage"%>
 <div class="row">
 	<div class="col-md-12">
 		<div class="panel panel-default sign-in-panel">
 			<div class="panel-heading">
 				<h3 class="panel-title">Sign In</h3>
 			</div>
+			
+			<%= FlashMessage.getInstance().getMsg() %>
 			
 			<form>
 				<div class="panel-body">
