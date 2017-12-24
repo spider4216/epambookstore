@@ -10,32 +10,35 @@
 				
 			  		<div class="form-group">
 			    		<label for="username">Username</label>
-			    		<input type="text"data-minlength="14" data-error="too short :)" name="username" class="form-control" id="username" placeholder="Username">
+			    		<input type="text" required pattern="^[a-zA-Z1-9_]+$" data-minlength="4" maxlength="14" data-error="Minimum four characters, special character not permitted" name="username" class="form-control" id="username" placeholder="Username">
 			    		<div class="help-block with-errors"></div>
 			  		</div>
 			  		
 			  		<div class="form-group">
 			    		<label for="password">Password</label>
-			    		<input type="password" data-minlength="16" name="password" class="form-control" id="password" placeholder="Password">
+			    		<input type="password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}" data-maxlength="16" data-minlength="8" data-error="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character" name="password" class="form-control" id="password" placeholder="Password">
 			    		<div class="help-block with-errors"></div>
 			  		</div>
 					
 					<div class="form-group">
 			    		<label for="first_name">First Name</label>
-			    		<input type="text" name="first_name" class="form-control" id="first_name" placeholder="First Name">
+			    		<input type="text" required name="first_name" class="form-control" id="first_name" placeholder="First Name">
+			    		<div class="help-block with-errors"></div>
 			  		</div>
 			  			
 			  		<div class="form-group">
 			    		<label for="last_name">Last Name</label>
-			    		<input type="text" name="last_name" class="form-control" id="last_name" placeholder="Last Name">
+			    		<input type="text" required name="last_name" class="form-control" id="last_name" placeholder="Last Name">
+			    		<div class="help-block with-errors"></div>
 			  		</div>
 					
 					<div class="form-group">
 			    		<label for="gender">Gender</label>
-			    		<select class="form-control" name="gender">
+			    		<select class="form-control" required name="gender">
 			    			<option value="1">Man</option>
 			    			<option value="2">Woman</option>
 			    		</select>
+			    		<div class="help-block with-errors"></div>
 			  		</div>
 				</div>
 				<div class="panel-footer">
