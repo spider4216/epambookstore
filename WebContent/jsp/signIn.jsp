@@ -5,8 +5,13 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">Sign In</h3>
 			</div>
+			<% if (FlashMessage.getInstance().hasMsg()) { %>
 			
-			<%= FlashMessage.getInstance().getMsg() %>
+			<div class="alert alert-info" role="alert">
+				<%= FlashMessage.getInstance().getMsg() %>
+			</div>
+			
+			<% } %>
 			
 			<form>
 				<div class="panel-body">
