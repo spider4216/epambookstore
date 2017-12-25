@@ -19,10 +19,11 @@ public class SignUpProcessAction implements IAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		FlashMessage fm = FlashMessage.getInstance();
 		ValidatorFabric validatorPassword = ValidatorFabric.initial(ValidatorEnum.PASSWORD);
-//		ValidatorFabric validatorUsername = ValidatorFabric.initial(ValidatorEnum.USERNAME);
+		ValidatorFabric validatorUsername = ValidatorFabric.initial(ValidatorEnum.USERNAME);
 		// TODO Validation
 		try {
 			validatorPassword.execute(request.getParameter("password"));
+			validatorUsername.execute(request.getParameter("username"));
 		} catch (ValidationException e) {
 			fm.setMsg(e.getMessage());
 			response.sendRedirect("/BookShop/sign-up.html");

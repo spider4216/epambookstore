@@ -2,6 +2,7 @@ package com.epam.component.validation;
 
 import com.epam.component.validation.exception.ValidationException;
 import com.epam.component.validation.validator.PasswordValidator;
+import com.epam.component.validation.validator.UsernameValidator;
 
 public abstract class ValidatorFabric {
 	public abstract Boolean execute(String value) throws ValidationException;
@@ -13,6 +14,8 @@ public abstract class ValidatorFabric {
 			case PASSWORD :
 				validator = new PasswordValidator();
 				break;
+			case USERNAME :
+				validator = new UsernameValidator();
 		}
 		
 		return validator;
