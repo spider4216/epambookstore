@@ -20,7 +20,8 @@ public class SignUpProcessAction implements IAction {
 		FlashMessage fm = FlashMessage.getInstance();
 		ValidatorFabric validatorPassword = ValidatorFabric.initial(ValidatorEnum.PASSWORD);
 		ValidatorFabric validatorUsername = ValidatorFabric.initial(ValidatorEnum.USERNAME);
-		// TODO Validation
+		// TODO unique login validation
+		
 		try {
 			validatorPassword.execute(request.getParameter("password"));
 			validatorUsername.execute(request.getParameter("username"));
@@ -33,15 +34,11 @@ public class SignUpProcessAction implements IAction {
 		UserService userService = new UserService();
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
-		// TODO validator
-		// TODO unique login
-		// TODO complicated password and login
 		// TODO DB unique password
 		// TODO not null in database
 		user.setPassword(userService.passwordHash(request.getParameter("password")));
 		user.setFirstName(request.getParameter("first_name"));
 		user.setLastName(request.getParameter("last_name"));
-		// TODO replace it
 		user.setGender(Integer.parseInt(request.getParameter("gender")));
 		
 		Boolean res = userService.insert(user);
