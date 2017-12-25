@@ -1,9 +1,18 @@
+<%@page import="com.epam.component.flash.FlashMessage"%>
 <div class="row">
 	<div class="col-md-12">
 		<div class="panel panel-default sign-up-panel">
 			<div class="panel-heading">
 				<h3 class="panel-title">Sign Up</h3>
 			</div>
+			
+			<% if (FlashMessage.getInstance().hasMsg()) { %>
+			
+			<div class="alert alert-info" role="alert">
+				<%= FlashMessage.getInstance().getMsg() %>
+			</div>
+			
+			<% } %>
 			
 			<form action="/BookShop/sign-up-process.html" method="post" data-toggle="validator">
 				<div class="panel-body">

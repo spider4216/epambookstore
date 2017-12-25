@@ -8,12 +8,27 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epam.component.dao.user.exception.DaoUserException;
 import com.epam.component.flash.FlashMessage;
+import com.epam.component.validation.ValidatorEnum;
+import com.epam.component.validation.ValidatorFabric;
+import com.epam.component.validation.exception.ValidationException;
 import com.epam.entity.User;
 import com.epam.service.UserService;
 
 public class SignUpProcessAction implements IAction {
 
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		FlashMessage fm = FlashMessage.getInstance();
+		ValidatorFabric validatorPassword = ValidatorFabric.initial(ValidatorEnum.PASSWORD);
+//		ValidatorFabric validatorUsername = ValidatorFabric.initial(ValidatorEnum.USERNAME);
+		// TODO Validation
+		try {
+			validatorPassword.execute(request.getParameter("password"));
+		} catch (ValidationException e) {
+			fm.setMsg(e.getMessage());
+			response.sendRedirect("/BookShop/sign-up.html");
+		}
+		
+		
 		UserService userService = new UserService();
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
@@ -34,8 +49,6 @@ public class SignUpProcessAction implements IAction {
 			throw new Exception("Cannot insert user");
 		}
 		
-		// TODO flash message here
-		FlashMessage fm = FlashMessage.getInstance();
 		fm.setMsg("You were successfully registered!");
 		
 		response.sendRedirect("/BookShop/sign-in.html");
