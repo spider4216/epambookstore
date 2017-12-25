@@ -10,5 +10,5 @@ public interface IUserDao {
 	
 	public Boolean deleteUser() throws DaoUserException;
 		
-	public User findUser(Integer id) throws DaoUserException;
+	public User findOneById(Integer id) throws DaoUserException;
 }

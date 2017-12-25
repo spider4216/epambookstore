@@ -85,5 +85,4 @@ public class MYSQLBookDAO implements IBookDAO {
 			throw new DaoBookException("Cannot find book", e);
 		}
 	}
-
 }

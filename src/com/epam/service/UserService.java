@@ -27,6 +27,16 @@ public class UserService {
 		return true;
 	}
 	
+	public Boolean isUserExist(String username) {
+		try {
+			userDao.findOneByUsername(username);
+		} catch (DaoUserException e) {
+			return false;
+		}
+		
+		return true;
+	}
+	
 	public String passwordHash(String password) throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		byte[] mdPass = md.digest(password.getBytes());
