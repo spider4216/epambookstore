@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="com.epam.component.flash.FlashMessage"%>
 <div class="row">
 	<div class="col-md-12">
@@ -5,13 +6,11 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">Sign In</h3>
 			</div>
-			<% if (FlashMessage.getInstance().hasMsg()) { %>
-			
+			<c:if test="${FlashMessage.getInstance().hasMsg() == true}">
 			<div class="alert alert-info" role="alert">
 				<%= FlashMessage.getInstance().getMsg() %>
 			</div>
-			
-			<% } %>
+			</c:if>
 			
 			<form>
 				<div class="panel-body">
