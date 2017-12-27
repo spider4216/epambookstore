@@ -5,6 +5,7 @@ import com.epam.component.validation.ValidatorFabric;
 import com.epam.component.validation.exception.ValidationException;
 import com.epam.service.UserService;
 
+// TODO rename validator. It should be something like "UniqueUsernameValidator"
 public class UniqueUsername extends ValidatorFabric {
 
 	public Boolean execute(String value) throws ValidationException {

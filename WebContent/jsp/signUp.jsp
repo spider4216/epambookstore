@@ -9,7 +9,7 @@
 			
 			<c:if test="${FlashMessage.getInstance().hasMsg() == true}">
 			<div class="alert alert-info" role="alert">
-				<%= FlashMessage.getInstance().getMsg() %>
+				<c:out value="${FlashMessage.getInstance().getMsg()}" />
 			</div>
 			</c:if>
 			

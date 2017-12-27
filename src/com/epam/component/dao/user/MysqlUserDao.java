@@ -41,10 +41,9 @@ public class MysqlUserDao implements IUserDao {
 		return null;
 	}
 	
-	public User findOneByUsername(String username) throws DaoUserException {
+	public ResultSet findOneByUsername(String username) throws DaoUserException {
 		String sqlInsert = "SELECT * FROM user WHERE username = ?";
 
-		User entity = new User();
 		ResultSet res = null;
 
 		try {
@@ -52,21 +51,27 @@ public class MysqlUserDao implements IUserDao {
 			pr.setString(1, username);
 			res = pr.executeQuery();
 			res.next();
-			
-			if (res.wasNull()) {
+						
+			if (res.getRow() <= 0) {
 				throw new DaoUserException("User not found");
 			}
 
-			entity.setId(res.getInt("id"));
-			entity.setUsername(res.getString("username"));
-			entity.setPassword(res.getString("password"));
-			entity.setFirstName(res.getString("first_name"));
-			entity.setLastName(res.getString("last_name"));
-			entity.setGender(res.getInt("gender"));
-
-			return entity;
+			return res;
 		} catch (SQLException e) {
-			throw new DaoUserException("Cannot insert user", e);
+			throw new DaoUserException("Cannot find user", e);
+		}
+	}
+	
+	public Integer updateSissionIdByUsername(String username, String sessionId) throws DaoUserException {
+		String sqlUpdate = "UPDATE user SET session_id = ? where username = ?";
+		
+		try {
+			PreparedStatement pr = connection.prepareStatement(sqlUpdate);
+			pr.setString(1, sessionId);
+			pr.setString(2, username);
+			return pr.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoUserException("Cannot set session id for some reason", e);
 		}
 	}
 }

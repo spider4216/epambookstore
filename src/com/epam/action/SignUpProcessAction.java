@@ -37,7 +37,7 @@ public class SignUpProcessAction implements IAction {
 		UserService userService = new UserService();
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
-		// TODO DB unique password
+		// TODO DB unique username
 		// TODO not null in database
 		user.setPassword(userService.passwordHash(request.getParameter("password")));
 		user.setFirstName(request.getParameter("first_name"));

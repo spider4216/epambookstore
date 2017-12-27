@@ -2,6 +2,7 @@ package com.epam.component.validation;
 
 import com.epam.component.validation.exception.ValidationException;
 import com.epam.component.validation.validator.PasswordValidator;
+import com.epam.component.validation.validator.RequiredValidator;
 import com.epam.component.validation.validator.UniqueUsername;
 import com.epam.component.validation.validator.UsernameValidator;
 
@@ -20,6 +21,9 @@ public abstract class ValidatorFabric {
 				break;
 			case USERNAME_UNIQUE :
 				validator = new UniqueUsername();
+				break;
+			case REQUIRED :
+				validator = new RequiredValidator();
 				break;
 		}
 		

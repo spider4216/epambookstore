@@ -8,21 +8,21 @@
 			</div>
 			<c:if test="${FlashMessage.getInstance().hasMsg() == true}">
 			<div class="alert alert-info" role="alert">
-				<%= FlashMessage.getInstance().getMsg() %>
+				<c:out value="${FlashMessage.getInstance().getMsg()}" />
 			</div>
 			</c:if>
 			
-			<form>
+			<form method="post" action="/BookShop/sign-in-process.html">
 				<div class="panel-body">
 					
 					<div class="form-group">
 			    		<label for="username">Username</label>
-			    		<input type="text" class="form-control" id="username" placeholder="Username">
+			    		<input type="text" class="form-control" name="username" id="username" placeholder="Username">
 			  		</div>
 			  			
 			  		<div class="form-group">
 			    		<label for="password">Password</label>
-			    		<input type="password" class="form-control" id="password" placeholder="Password">
+			    		<input type="password" name="password" class="form-control" id="password" placeholder="Password">
 			  		</div>
 					
 					<div class="sign-up-info">

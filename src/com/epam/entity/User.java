@@ -12,6 +12,8 @@ public class User {
 	private String last_name;
 	
 	private Integer gender;
+	
+	private String session_id;
 
 	public Integer getId() {
 		return id;
@@ -59,5 +61,13 @@ public class User {
 
 	public void setGender(Integer gender) {
 		this.gender = gender;
+	}
+
+	public String getSessionId() {
+		return session_id;
+	}
+
+	public void setSessionId(String session_id) {
+		this.session_id = session_id;
 	}
 }

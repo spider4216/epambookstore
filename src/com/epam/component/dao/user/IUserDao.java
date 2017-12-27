@@ -11,4 +11,6 @@ public interface IUserDao {
 	public Boolean deleteUser() throws DaoUserException;
 		
 	public User findOneById(Integer id) throws DaoUserException;
+	
+	public Integer updateSissionIdByUsername(String username, String sessionId) throws DaoUserException;
 }
