@@ -19,9 +19,13 @@ import com.epam.service.exception.UserServiceException;
 public class UserService {
 	private MysqlUserDao userDao;
 	
-	public UserService() throws DaoUserException {
+	public UserService() throws UserServiceException {
 		DAOFactory MYSQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		userDao = (MysqlUserDao)MYSQLFactory.getUserDAO();
+		try {
+			userDao = (MysqlUserDao)MYSQLFactory.getUserDAO();
+		} catch (DaoUserException e) {
+			throw new UserServiceException("cannot get dao for user service");
+		}
 	}
 
 	public Boolean insert(User entity) throws DaoUserException {
@@ -53,7 +57,7 @@ public class UserService {
 			throw new UserServiceException("Cannot find user with username specified", e);
 		}
 		User entity = new User();
-		
+		// TODO builder by ResultSet
 		try {
 			entity.setId(res.getInt("id"));
 			entity.setUsername(res.getString("username"));
@@ -99,5 +103,38 @@ public class UserService {
 		}
 		
 		return true;
+	}
+	
+	public User currentUser() throws UserServiceException {
+		
+		// TODO DRY
+		HttpSession session = null;
+		try {
+			session = (HttpSession)ServiceLocator.getInstance().getService("session");
+		} catch (ServiceLocatorException e) {
+			throw new UserServiceException("cannot get current user", e);
+		}
+		
+		ResultSet res;
+		try {
+			res = userDao.findOneBySessionId(session.getId());
+		} catch (DaoUserException e) {
+			throw new UserServiceException("Cannot find user with username specified", e);
+		}
+		User entity = new User();
+		// TODO builder by ResultSet
+		// TODO DRY
+		try {
+			entity.setId(res.getInt("id"));
+			entity.setUsername(res.getString("username"));
+			entity.setPassword(res.getString("password"));
+			entity.setFirstName(res.getString("first_name"));
+			entity.setLastName(res.getString("last_name"));
+			entity.setGender(res.getInt("gender"));
+		} catch (SQLException e) {
+			throw new UserServiceException("Problem with getting data in user service by session id", e);
+		}
+		
+		return entity;
 	}
 }

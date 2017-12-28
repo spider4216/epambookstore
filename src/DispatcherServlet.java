@@ -20,6 +20,9 @@ import com.epam.component.route.MapRouter;
 import com.epam.component.route.RouterException;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.view.Viewer;
+import com.epam.entity.User;
+import com.epam.service.UserService;
+import com.epam.service.exception.UserServiceException;
 
 public class DispatcherServlet extends HttpServlet {
 
@@ -27,6 +30,16 @@ public class DispatcherServlet extends HttpServlet {
 		// Put Session to Service Locator
 		ServiceLocator sl = ServiceLocator.getInstance();
 		sl.setService("session", request.getSession(true));
+				
+		try {
+			UserService us = new UserService();
+			User user = us.currentUser();
+			// TODO use constant for service name
+			sl.setService("user", user);
+		} catch (UserServiceException e) {
+			// TODO use constant for service name
+			sl.setService("user", null);
+		}
 		
 		// Getting Writer
 		PrintWriter out = response.getWriter();

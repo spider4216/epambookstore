@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.epam.component.service_locator.ServiceLocator"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,11 +19,13 @@
 		</div>
 	
 		<div class="navbar-collapse collapse">
-			<ul class="nav navbar-nav navbar-right">
-				<li>
-					<a href="/BookShop/sign-in.html">Sign-in</a>
-				</li>
-			</ul>
+			<c:if test="${empty ServiceLocator.getInstance().getService('user')}">
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="/BookShop/sign-in.html">Sign-in</a>
+					</li>
+				</ul>
+			</c:if>
 		</div>
 	</div>
 </nav>

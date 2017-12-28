@@ -74,4 +74,26 @@ public class MysqlUserDao implements IUserDao {
 			throw new DaoUserException("Cannot set session id for some reason", e);
 		}
 	}
+	
+	// TODO Interface
+	public ResultSet findOneBySessionId(String sessionId) throws DaoUserException {
+		String sqlSelect = "SELECT * FROM user WHERE session_id = ?";
+
+		ResultSet res = null;
+
+		try {
+			PreparedStatement pr = connection.prepareStatement(sqlSelect);
+			pr.setString(1, sessionId);
+			res = pr.executeQuery();
+			res.next();
+						
+			if (res.getRow() <= 0) {
+				throw new DaoUserException("User not found");
+			}
+
+			return res;
+		} catch (SQLException e) {
+			throw new DaoUserException("Cannot find user by session id", e);
+		}
+	}
 }
