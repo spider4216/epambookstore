@@ -14,17 +14,11 @@ public class MysqlBookDao implements IBookDao {
 	
 	private Connection connection = null;
 	
-	private Book entity = null;	
-
 	public MysqlBookDao(Connection connection) {
 		this.connection = connection;
 	}
-	
-	public void setBookEntity(Book entity) {
-		this.entity = entity;
-	}
 
-	public Integer insertBook() throws DaoBookException {
+	public Integer insertBook(Book entity) throws DaoBookException {
 		String sqlInsert = "INSERT INTO books (name, price, author, description, isbn, pages) VALUES (?, ?, ?, ?, ?, ?)";
 		
 		try {
@@ -43,7 +37,7 @@ public class MysqlBookDao implements IBookDao {
 	}
 
 	// TODO not checking
-	public Boolean deleteBook() throws DaoBookException {
+	public Boolean deleteBook(Book entity) throws DaoBookException {
 		String sqlDelete = "DELETE FROM books WHERE id = ?";
 		
 		try {
@@ -57,34 +51,17 @@ public class MysqlBookDao implements IBookDao {
 		}
 	}
 
-	public ArrayList<Book> findBooks() throws DaoBookException {
-		String sqlFind = "SELECT * FROM books";
-		ArrayList<Book> booksCollection = new ArrayList<>();
-		
+	public ResultSet findBooks() throws DaoBookException {
+		String sqlFind = "SELECT * FROM books";		
 		try {
 			Statement pr = connection.createStatement();
 			
 			ResultSet rs = pr.executeQuery(sqlFind);
 			
-			while (rs.next()) {
-				Book book = new Book();
-				
-				// TODO вынести в другое место. Сделать как билдер. Но вот куда?
-				book.setId(rs.getInt("id"));
-				book.setName(rs.getString("name"));
-				book.setPrice(rs.getDouble("price"));
-				book.setAuthor(rs.getString("author"));
-				book.setDescription(rs.getString("description"));
-				book.setIsbn(rs.getString("isbn"));
-				book.setPage(rs.getInt("page"));
-				booksCollection.add(book);
-			}
-			
+			return rs;
 		} catch (SQLException e) {
 			throw new DaoBookException("Cannot find book", e);
 		}
-			
-		return booksCollection;
 	}
 	
 	public Book findBook(Integer id) throws DaoBookException {
