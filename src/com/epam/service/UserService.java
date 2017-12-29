@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpSession;
 
-import com.epam.component.dao.factory.DAOFactory;
+import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.user.MysqlUserDao;
 import com.epam.component.dao.user.exception.DaoUserException;
 import com.epam.component.service_locator.ServiceLocator;
@@ -21,9 +21,9 @@ public class UserService {
 	private MysqlUserDao userDao;
 	
 	public UserService() throws UserServiceException {
-		DAOFactory MYSQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 		try {
-			userDao = (MysqlUserDao)MYSQLFactory.getUserDAO();
+			userDao = (MysqlUserDao)MYSQLFactory.getUserDao();
 		} catch (DaoUserException e) {
 			throw new UserServiceException("cannot get dao for user service");
 		}

@@ -1,21 +1,21 @@
 package com.epam.component.dao.factory;
 
-import com.epam.component.dao.book.IBookDAO;
+import com.epam.component.dao.book.IBookDao;
 import com.epam.component.dao.book.exception.DaoBookException;
 import com.epam.component.dao.user.IUserDao;
 import com.epam.component.dao.user.exception.DaoUserException;
 
-public abstract class DAOFactory {
+public abstract class DaoFactory {
 	public static final int MYSQL = 1;
 	
-	public abstract IBookDAO getBookDAO() throws DaoBookException;
+	public abstract IBookDao getBookDao() throws DaoBookException;
 	
-	public abstract IUserDao getUserDAO() throws DaoUserException;
+	public abstract IUserDao getUserDao() throws DaoUserException;
 	
-	public static DAOFactory getDAOFactory(Integer whichFactory) {
+	public static DaoFactory getDaoFactory(Integer whichFactory) {
 		switch (whichFactory) {
 			case MYSQL :
-				return new MYSQLDAOFactory();
+				return new MysqlDaoFactory();
 			default :
 				return null;
 		}

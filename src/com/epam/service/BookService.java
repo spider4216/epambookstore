@@ -1,8 +1,8 @@
 package com.epam.service;
 
-import com.epam.component.dao.book.MYSQLBookDAO;
+import com.epam.component.dao.book.MysqlBookDao;
 import com.epam.component.dao.book.exception.DaoBookException;
-import com.epam.component.dao.factory.DAOFactory;
+import com.epam.component.dao.factory.DaoFactory;
 import com.epam.entity.Book;
 
 /**
@@ -11,16 +11,16 @@ import com.epam.entity.Book;
  * @author Yuriy Sirotenko
  */
 public class BookService {
-	private MYSQLBookDAO bookDAO;
+	private MysqlBookDao bookDao;
 	
 	public BookService(Book entity) throws DaoBookException {
-		DAOFactory MYSQLFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		bookDAO = (MYSQLBookDAO)MYSQLFactory.getBookDAO();
-		bookDAO.setBookEntity(entity);
+		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
+		bookDao = (MysqlBookDao)MYSQLFactory.getBookDao();
+		bookDao.setBookEntity(entity);
 	}
 	
 	public Boolean insert(Book entity) throws DaoBookException {
-		Integer res = bookDAO.insertBook();
+		Integer res = bookDao.insertBook();
 		
 		if (res <= 0) {
 			return false;
@@ -30,12 +30,12 @@ public class BookService {
 	}
 	
 	public Boolean delete(Book entity) throws DaoBookException {
-		bookDAO.setBookEntity(entity);
+		bookDao.setBookEntity(entity);
 		
-		return bookDAO.deleteBook();
+		return bookDao.deleteBook();
 	}
 	
 	public Book findById(Integer id) throws DaoBookException {
-		return bookDAO.findBook(id);
+		return bookDao.findBook(id);
 	}
 }

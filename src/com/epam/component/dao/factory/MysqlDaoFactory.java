@@ -5,15 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import com.epam.component.dao.book.IBookDAO;
-import com.epam.component.dao.book.MYSQLBookDAO;
+import com.epam.component.dao.book.IBookDao;
+import com.epam.component.dao.book.MysqlBookDao;
 import com.epam.component.dao.book.exception.DaoBookException;
 import com.epam.component.dao.factory.exception.MysqlDaoException;
 import com.epam.component.dao.user.IUserDao;
 import com.epam.component.dao.user.MysqlUserDao;
 import com.epam.component.dao.user.exception.DaoUserException;
 
-public class MYSQLDAOFactory extends DAOFactory {
+public class MysqlDaoFactory extends DaoFactory {
 	
 	private static synchronized Connection createConnection() throws MysqlDaoException {
 		ResourceBundle resource = ResourceBundle.getBundle("com.epam.config.db");
@@ -35,7 +35,7 @@ public class MYSQLDAOFactory extends DAOFactory {
 		}
 	}
 
-	public IBookDAO getBookDAO() throws DaoBookException {
+	public IBookDao getBookDao() throws DaoBookException {
 		Connection con = null;
 		try {
 			con = createConnection();
@@ -43,10 +43,10 @@ public class MYSQLDAOFactory extends DAOFactory {
 			throw new DaoBookException("Problem with create connection", e);
 		}
 		
-		return new MYSQLBookDAO(con);
+		return new MysqlBookDao(con);
 	}
 	
-	public IUserDao getUserDAO() throws DaoUserException {
+	public IUserDao getUserDao() throws DaoUserException {
 		// TODO DRY
 		Connection con = null;
 		try {

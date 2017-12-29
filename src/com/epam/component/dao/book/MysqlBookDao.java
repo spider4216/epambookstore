@@ -4,18 +4,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.epam.component.dao.book.exception.DaoBookException;
 import com.epam.entity.Book;
 
-public class MYSQLBookDAO implements IBookDAO {
+public class MysqlBookDao implements IBookDao {
 	
 	private Connection connection = null;
 	
 	private Book entity = null;	
 
-	public MYSQLBookDAO(Connection connection) {
+	public MysqlBookDao(Connection connection) {
 		this.connection = connection;
 	}
 	
@@ -33,7 +34,7 @@ public class MYSQLBookDAO implements IBookDAO {
 			pr.setString(3, entity.getAuthor());
 			pr.setString(4, entity.getDescription());
 			pr.setString(5, entity.getIsbn());
-			pr.setInt(6, entity.getPages());
+			pr.setInt(6, entity.getPage());
 			
 			return pr.executeUpdate();
 		} catch (SQLException e) {
@@ -56,8 +57,34 @@ public class MYSQLBookDAO implements IBookDAO {
 		}
 	}
 
-	public ArrayList<Book> findBooks() {
-		return null;
+	public ArrayList<Book> findBooks() throws DaoBookException {
+		String sqlFind = "SELECT * FROM books";
+		ArrayList<Book> booksCollection = new ArrayList<>();
+		
+		try {
+			Statement pr = connection.createStatement();
+			
+			ResultSet rs = pr.executeQuery(sqlFind);
+			
+			while (rs.next()) {
+				Book book = new Book();
+				
+				// TODO вынести в другое место. Сделать как билдер. Но вот куда?
+				book.setId(rs.getInt("id"));
+				book.setName(rs.getString("name"));
+				book.setPrice(rs.getDouble("price"));
+				book.setAuthor(rs.getString("author"));
+				book.setDescription(rs.getString("description"));
+				book.setIsbn(rs.getString("isbn"));
+				book.setPage(rs.getInt("page"));
+				booksCollection.add(book);
+			}
+			
+		} catch (SQLException e) {
+			throw new DaoBookException("Cannot find book", e);
+		}
+			
+		return booksCollection;
 	}
 	
 	public Book findBook(Integer id) throws DaoBookException {
@@ -78,7 +105,7 @@ public class MYSQLBookDAO implements IBookDAO {
 			book.setAuthor(rs.getString("author"));
 			book.setDescription(rs.getString("description"));
 			book.setIsbn(rs.getString("isbn"));
-			book.setPages(rs.getInt("pages"));
+			book.setPage(rs.getInt("page"));
 			
 			return book;
 		} catch (SQLException e) {
