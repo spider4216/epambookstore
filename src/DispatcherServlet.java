@@ -19,6 +19,7 @@ import com.epam.action.IAction;
 import com.epam.component.route.MapRouter;
 import com.epam.component.route.RouterException;
 import com.epam.component.service_locator.ServiceLocator;
+import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.view.Viewer;
 import com.epam.entity.User;
 import com.epam.service.UserService;
@@ -29,16 +30,14 @@ public class DispatcherServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Put Session to Service Locator
 		ServiceLocator sl = ServiceLocator.getInstance();
-		sl.setService("session", request.getSession(true));
+		sl.setService(ServiceLocatorEnum.SESSION, request.getSession(true));
 				
 		try {
 			UserService us = new UserService();
 			User user = us.currentUser();
-			// TODO use constant for service name
-			sl.setService("user", user);
+			sl.setService(ServiceLocatorEnum.USER, user);
 		} catch (UserServiceException e) {
-			// TODO use constant for service name
-			sl.setService("user", null);
+			sl.setService(ServiceLocatorEnum.USER, null);
 		}
 		
 		// Getting Writer

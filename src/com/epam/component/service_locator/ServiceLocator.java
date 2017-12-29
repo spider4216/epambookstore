@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class ServiceLocator {
 	private static ServiceLocator instance = null;
 	
-	private HashMap<String, Object> pool;
+	private HashMap<ServiceLocatorEnum, Object> pool;
 	
 	public ServiceLocator() {
 		pool = new HashMap<>();
@@ -19,11 +19,11 @@ public class ServiceLocator {
 		return instance;
 	}
 	
-	public void setService(String name, Object service) {
+	public void setService(ServiceLocatorEnum name, Object service) {
 		pool.put(name, service);
 	}
 	
-	public Object getService(String name) throws ServiceLocatorException {
+	public Object getService(ServiceLocatorEnum name) throws ServiceLocatorException {
 		if (pool.containsKey(name) == false) {
 			throw new ServiceLocatorException("Cannot find service with specified name");
 		}

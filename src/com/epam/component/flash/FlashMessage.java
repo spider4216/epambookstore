@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 
 import com.epam.component.service_locator.ServiceLocator;
+import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 
 public class FlashMessage {
@@ -56,7 +57,6 @@ public class FlashMessage {
 	}
 	
 	private HttpSession getSession() throws ServiceLocatorException {
-		// TODO constant name of services
-		return (HttpSession)ServiceLocator.getInstance().getService("session");
+		return (HttpSession)ServiceLocator.getInstance().getService(ServiceLocatorEnum.SESSION);
 	}
 }

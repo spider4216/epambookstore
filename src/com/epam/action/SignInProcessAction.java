@@ -48,9 +48,6 @@ public class SignInProcessAction implements IAction {
 			return;
 		}
 		
-		// TODO session and cookie auth
-		// service login. in service update user record and set session id
-		// TODO create getCurrentUser in service
 		// TODO DRY
 		try {
 			service.login(entity);

@@ -12,6 +12,7 @@ import com.epam.component.dao.factory.DAOFactory;
 import com.epam.component.dao.user.MysqlUserDao;
 import com.epam.component.dao.user.exception.DaoUserException;
 import com.epam.component.service_locator.ServiceLocator;
+import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.entity.User;
 import com.epam.service.exception.UserServiceException;
@@ -88,10 +89,9 @@ public class UserService {
 	}
 	
 	public Boolean login(User entity) throws UserServiceException {
-		// TODO constant session here
 		HttpSession session = null;
 		try {
-			session = (HttpSession)ServiceLocator.getInstance().getService("session");
+			session = (HttpSession)ServiceLocator.getInstance().getService(ServiceLocatorEnum.SESSION);
 		} catch (ServiceLocatorException e) {
 			throw new UserServiceException("cannot login", e);
 		}
@@ -110,7 +110,7 @@ public class UserService {
 		// TODO DRY
 		HttpSession session = null;
 		try {
-			session = (HttpSession)ServiceLocator.getInstance().getService("session");
+			session = (HttpSession)ServiceLocator.getInstance().getService(ServiceLocatorEnum.SESSION);
 		} catch (ServiceLocatorException e) {
 			throw new UserServiceException("cannot get current user", e);
 		}
