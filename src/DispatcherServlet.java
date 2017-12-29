@@ -58,15 +58,16 @@ public class DispatcherServlet extends HttpServlet {
 		try {
 			action = MapRouter.getAction(path);
 		} catch (RouterException e) {
-			// TODO 404
-			out.println("Page Not Found");
+			request.setAttribute("errMsg", e.getMessage());
+			Viewer.execute(request, response, "error.jsp");
 			return;
 		}
 		
 		try {
 			action.execute(request, response);
 		} catch (Exception e) {
-			out.println("Exception error. Pretty page here");
+			request.setAttribute("errMsg", e.getMessage());
+			Viewer.execute(request, response, "error.jsp");
 			return;
 		}
 
