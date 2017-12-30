@@ -7,3 +7,28 @@
 	width: 600px;
 	margin: 0 auto;
 }
+
+.thumbnail-book-card {
+	height: 500px;
+	overflow: hidden;
+}
+
+.thumbnail-book-card .thumb-img {
+	width: 200px;
+	margin: 0 auto;
+}
+
+.thumbnail-book-card .thumb-img img {
+	height: 250px;
+}
+
+.thumbnail-book-card .thumb-title {
+	height: 90px;
+	overflow: hidden;
+}
+
+
+.thumbnail-book-card .thumb-description {
+	height: 110px;
+	overflow: hidden;
+}

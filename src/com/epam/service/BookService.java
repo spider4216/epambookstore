@@ -57,6 +57,7 @@ public class BookService {
 				book.setDescription(rs.getString("description"));
 				book.setIsbn(rs.getString("isbn"));
 				book.setPage(rs.getInt("page"));
+				book.setImgPath(rs.getString("img_path"));
 				bookCollection.add(book);
 			}
 

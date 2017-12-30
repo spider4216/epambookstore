@@ -30,6 +30,8 @@ public class Book {
 	private Integer category_id;
 	
 	private Double price;
+	
+	private String img_path;
 
 	public Integer getId() {
 		return id;
@@ -101,5 +103,13 @@ public class Book {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getImgPath() {
+		return img_path;
+	}
+
+	public void setImgPath(String img_path) {
+		this.img_path = img_path;
 	}
 }
