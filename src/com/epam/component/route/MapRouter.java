@@ -3,6 +3,7 @@ package com.epam.component.route;
 import java.util.HashMap;
 
 import com.epam.action.IAction;
+import com.epam.action.LangAction;
 import com.epam.action.MainAction;
 import com.epam.action.SignInMainAction;
 import com.epam.action.SignInProcessAction;
@@ -20,6 +21,7 @@ public class MapRouter {
 		map.put("/BookShop/sign-up-process.html", new SignUpProcessAction());
 		map.put("/BookShop/sign-in-process.html", new SignInProcessAction());
 		map.put("/BookShop/", new MainAction());
+		map.put("/BookShop/change-lang.html", new LangAction());
 	}
 	
 	public static IAction getAction(String path) throws RouterException {

@@ -16,14 +16,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.action.IAction;
+import com.epam.component.lang.Lang;
 import com.epam.component.route.MapRouter;
 import com.epam.component.route.RouterException;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
+import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.component.view.Viewer;
 import com.epam.entity.User;
 import com.epam.service.UserService;
 import com.epam.service.exception.UserServiceException;
+import com.epam.system.Init;
 
 public class DispatcherServlet extends HttpServlet {
 
@@ -33,26 +36,17 @@ public class DispatcherServlet extends HttpServlet {
 		sl.setService(ServiceLocatorEnum.SESSION, request.getSession(true));
 				
 		try {
-			UserService us = new UserService();
-			User user = us.currentUser();
-			sl.setService(ServiceLocatorEnum.USER, user);
-		} catch (UserServiceException e) {
-			sl.setService(ServiceLocatorEnum.USER, null);
+			Init.execute(request, response);
+		} catch (ServiceLocatorException e) {
+			request.setAttribute("errMsg", e.getMessage());
+			Viewer.execute(request, response, "error.jsp");
+			return;
 		}
 		
-		// Getting Writer
-		PrintWriter out = response.getWriter();
 		// Set type of content
 		response.setContentType("text/html");
 		// Get url without params
 		String path = request.getRequestURI();
-		
-		// If route does not specified, redirect to front page
-		if (path == null || path.equals("/")) {
-			// TODO Front Page
-			out.println("Front Page Here");
-			return;
-		}
 		
 		IAction action = null;
 		try {
@@ -70,8 +64,6 @@ public class DispatcherServlet extends HttpServlet {
 			Viewer.execute(request, response, "error.jsp");
 			return;
 		}
-
-		out.close();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

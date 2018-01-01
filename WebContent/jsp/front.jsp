@@ -24,7 +24,7 @@
 						</div>
 						
 						<div class="thumb-footer">
-							<a href="#" class="btn btn-default" role="button">more</a>
+							<a href="#" class="btn btn-default" role="button">${lang.getValue('more')}</a>
 						</div>
 					</div>
 				</div>
