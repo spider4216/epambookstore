@@ -13,4 +13,10 @@ public class Lang {
 	public String getValue(String key) {
 		return bundle.getString(key);
 	}
+	
+	public String getLangAsString() {
+		Locale locale = bundle.getLocale();
+		
+		return locale.getLanguage();
+	}
 }
