@@ -4,7 +4,7 @@
 	<div class="col-md-12">
 		<div class="panel panel-default sign-in-panel">
 			<div class="panel-heading">
-				<h3 class="panel-title">Sign In</h3>
+				<h3 class="panel-title">${requestScope.lang.getValue('sign_in')}</h3>
 			</div>
 			<c:if test="${FlashMessage.getInstance().hasMsg() == true}">
 			<div class="alert alert-info" role="alert">
@@ -16,24 +16,24 @@
 				<div class="panel-body">
 					
 					<div class="form-group">
-			    		<label for="username">Username</label>
-			    		<input type="text" class="form-control" name="username" id="username" placeholder="Username">
+			    		<label for="username">${requestScope.lang.getValue('username')}</label>
+			    		<input type="text" class="form-control" name="username" id="username" placeholder="${requestScope.lang.getValue('username')}">
 			  		</div>
 			  			
 			  		<div class="form-group">
-			    		<label for="password">Password</label>
-			    		<input type="password" name="password" class="form-control" id="password" placeholder="Password">
+			    		<label for="password">${requestScope.lang.getValue('password')}</label>
+			    		<input type="password" name="password" class="form-control" id="password" placeholder="${requestScope.lang.getValue('password')}">
 			  		</div>
 					
 					<div class="sign-up-info">
-						<span>You haven't have account yet?</span>
-						<a href="/BookShop/sign-up.html">Sign Up</a>
+						<span>${requestScope.lang.getValue('you_havent_have_account_yet_q')}</span>
+						<a href="/BookShop/sign-up.html">${requestScope.lang.getValue('sign_up')}</a>
 					</div>
 				</div>
 				<div class="panel-footer">
 					<div class="row">
 						<div class="col-md-12">
-							<input type="submit" class="btn btn-primary pull-right" value="sign in" />
+							<input type="submit" class="btn btn-primary pull-right" value="${requestScope.lang.getValue('sign_in')}" />
 						</div>
 					</div>
 				</div>

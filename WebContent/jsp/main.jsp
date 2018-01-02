@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Book Store</title>
+<title>${requestScope.lang.getValue('book_store')}</title>
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="css/main.css" rel="stylesheet" type="text/css">
 </head>
@@ -17,7 +17,7 @@
 <nav class="navbar navbar-inverse navbar-static-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">Book Store</a>
+			<a class="navbar-brand" href="/BookShop">${requestScope.lang.getValue('book_store')}</a>
 		</div>
 	
 		<div class="navbar-collapse collapse">
@@ -30,8 +30,8 @@
 					<li class="dropdown">
           				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${lang.getValue('language')} <span class="caret"></span></a>
           				<ul class="dropdown-menu">
-            				<li><a href="/BookShop/change-lang.html?lang=ru">RU</a></li>
             				<li><a href="/BookShop/change-lang.html?lang=en">EN</a></li>
+            				<li><a href="/BookShop/change-lang.html?lang=ru">RU</a></li>
           				</ul>
         			</li>
 				</ul>
