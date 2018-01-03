@@ -78,7 +78,7 @@ public class MysqlBookDao implements IBookDao {
 		}
 	}
 	
-	public Book findBook(Integer id) throws DaoBookException {
+	public ResultSet findBook(Integer id) throws DaoBookException {
 		String sqlFind = "SELECT * FROM books WHERE id = ?";
 		
 		try {
@@ -87,18 +87,8 @@ public class MysqlBookDao implements IBookDao {
 			
 			ResultSet rs = pr.executeQuery();
 			rs.next();
-			Book book = new Book();
 			
-			// TODO вынести в другое место. Сделать как билдер. Но вот куда?
-			book.setId(rs.getInt("id"));
-			book.setName(rs.getString("name"));
-			book.setPrice(rs.getDouble("price"));
-			book.setAuthor(rs.getString("author"));
-			book.setDescription(rs.getString("description"));
-			book.setIsbn(rs.getString("isbn"));
-			book.setPage(rs.getInt("page"));
-			
-			return book;
+			return rs;
 		} catch (SQLException e) {
 			throw new DaoBookException("Cannot find book", e);
 		}

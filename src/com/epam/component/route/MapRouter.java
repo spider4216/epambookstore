@@ -9,6 +9,7 @@ import com.epam.action.SignInMainAction;
 import com.epam.action.SignInProcessAction;
 import com.epam.action.SignUpMainAction;
 import com.epam.action.SignUpProcessAction;
+import com.epam.action.BookAction;
 import com.epam.action.CategoryAction;
 
 public class MapRouter {
@@ -22,6 +23,7 @@ public class MapRouter {
 		map.put("/BookShop/sign-in-process.html", new SignInProcessAction());
 		map.put("/BookShop/", new MainAction());
 		map.put("/BookShop/change-lang.html", new LangAction());
+		map.put("/BookShop/book.html", new BookAction());
 	}
 	
 	public static IAction getAction(String path) throws RouterException {

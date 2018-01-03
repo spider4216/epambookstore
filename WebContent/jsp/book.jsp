@@ -1,0 +1,1 @@
+<span>${book.getName()}</span>

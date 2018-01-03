@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.epam.component.dao.book.exception.DaoBookException;
 import com.epam.component.view.Viewer;
 import com.epam.entity.Book;
 import com.epam.service.BookService;

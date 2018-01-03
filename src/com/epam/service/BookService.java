@@ -46,8 +46,24 @@ public class BookService {
 		return bookDao.deleteBook(entity);
 	}
 	
-	public Book findById(Integer id) throws DaoBookException {
-		return bookDao.findBook(id);
+	public Book findById(Integer id) throws BookServiceException {
+		// TODO вынести в другое место. Сделать как билдер. Но вот куда?
+		try {
+			ResultSet rs = bookDao.findBook(id);
+			Book book = new Book();
+			book.setId(rs.getInt("id"));
+			book.setName(rs.getString("name"));
+			book.setPrice(rs.getDouble("price"));
+			book.setAuthor(rs.getString("author"));
+			book.setDescription(rs.getString("description"));
+			book.setIsbn(rs.getString("isbn"));
+			book.setPage(rs.getInt("page"));
+			book.setCategoryId(rs.getInt("category_id"));
+			
+			return book;
+		} catch (SQLException | DaoBookException e) {
+			throw new BookServiceException("Cannot find book", e);
+		}
 	}
 	
 	public ArrayList<Book> findAll() throws BookServiceException {
