@@ -42,12 +42,12 @@ public class MysqlUserDao implements IUserDao {
 	}
 	
 	public ResultSet findOneByUsername(String username) throws DaoUserException {
-		String sqlInsert = "SELECT * FROM user WHERE username = ?";
+		String sqlFind = "SELECT * FROM user WHERE username = ?";
 
 		ResultSet res = null;
 
 		try {
-			PreparedStatement pr = connection.prepareStatement(sqlInsert);
+			PreparedStatement pr = connection.prepareStatement(sqlFind);
 			pr.setString(1, username);
 			res = pr.executeQuery();
 			res.next();

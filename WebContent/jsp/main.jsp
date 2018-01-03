@@ -25,7 +25,7 @@
 				<ul class="nav navbar-nav">
 					<c:forEach items="${categories}" var="item">
 						<li>
-							<a href="/BookShop/category/${item.getId()}">${item.getName()}</a>
+							<a href="/BookShop/category.html?id=${item.getId()}">${item.getName()}</a>
 						</li>
 					</c:forEach>
 				</ul>

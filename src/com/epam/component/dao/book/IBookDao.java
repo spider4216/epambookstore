@@ -14,4 +14,6 @@ public interface IBookDao {
 	public ResultSet findBooks() throws DaoBookException;
 	
 	public Book findBook(Integer id) throws DaoBookException;
+	
+	public ResultSet findAllByCategoryId(Integer id) throws DaoBookException;
 }

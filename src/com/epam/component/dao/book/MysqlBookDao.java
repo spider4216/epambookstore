@@ -64,6 +64,20 @@ public class MysqlBookDao implements IBookDao {
 		}
 	}
 	
+	public ResultSet findAllByCategoryId(Integer id) throws DaoBookException {
+		String sqlFind = "SELECT * FROM books WHERE category_id = ?";		
+		try {
+			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			pr.setInt(1, id);
+			
+			ResultSet rs = pr.executeQuery();
+			
+			return rs;
+		} catch (SQLException e) {
+			throw new DaoBookException("Cannot find book", e);
+		}
+	}
+	
 	public Book findBook(Integer id) throws DaoBookException {
 		String sqlFind = "SELECT * FROM books WHERE id = ?";
 		

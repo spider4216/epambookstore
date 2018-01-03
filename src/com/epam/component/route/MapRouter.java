@@ -9,13 +9,13 @@ import com.epam.action.SignInMainAction;
 import com.epam.action.SignInProcessAction;
 import com.epam.action.SignUpMainAction;
 import com.epam.action.SignUpProcessAction;
-import com.epam.action.SortAction;
+import com.epam.action.CategoryAction;
 
 public class MapRouter {
 	private static HashMap<String, IAction> map = new HashMap<>();
 	
 	static {
-		map.put("/BookShop/sort/science.html", new SortAction());
+		map.put("/BookShop/category.html", new CategoryAction());
 		map.put("/BookShop/sign-in.html", new SignInMainAction());
 		map.put("/BookShop/sign-up.html", new SignUpMainAction());
 		map.put("/BookShop/sign-up-process.html", new SignUpProcessAction());
