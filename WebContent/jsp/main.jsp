@@ -21,6 +21,16 @@
 		</div>
 	
 		<div class="navbar-collapse collapse">
+			<c:if test="${not empty categories}">
+				<ul class="nav navbar-nav">
+					<c:forEach items="${categories}" var="item">
+						<li>
+							<a href="/BookShop/category/${item.getId()}">${item.getName()}</a>
+						</li>
+					</c:forEach>
+				</ul>
+			</c:if>
+		
 			<c:if test="${empty ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER)}">
 				<ul class="nav navbar-nav navbar-right">
 					<li>

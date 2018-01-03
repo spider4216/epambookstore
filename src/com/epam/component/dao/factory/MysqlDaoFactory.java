@@ -8,6 +8,9 @@ import java.util.ResourceBundle;
 import com.epam.component.dao.book.IBookDao;
 import com.epam.component.dao.book.MysqlBookDao;
 import com.epam.component.dao.book.exception.DaoBookException;
+import com.epam.component.dao.category.ICategoryDao;
+import com.epam.component.dao.category.exception.DaoCategoryException;
+import com.epam.component.dao.category.exception.MysqlCategoryDao;
 import com.epam.component.dao.factory.exception.MysqlDaoException;
 import com.epam.component.dao.user.IUserDao;
 import com.epam.component.dao.user.MysqlUserDao;
@@ -56,6 +59,18 @@ public class MysqlDaoFactory extends DaoFactory {
 		}
 		
 		return new MysqlUserDao(con);
+	}
+	
+	public ICategoryDao getCategoryDao() throws DaoCategoryException {
+		// TODO DRY
+		Connection con = null;
+		try {
+			con = createConnection();
+		} catch (MysqlDaoException e) {
+			throw new DaoCategoryException("Problem with create connection", e);
+		}
+		
+		return new MysqlCategoryDao(con);
 	}
 
 }

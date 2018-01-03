@@ -35,7 +35,7 @@ public class DispatcherServlet extends HttpServlet {
 		// Put Session to Service Locator
 		ServiceLocator sl = ServiceLocator.getInstance();
 		sl.setService(ServiceLocatorEnum.SESSION, request.getSession(true));
-				
+
 		try {
 			Init.execute(request, response);
 		} catch (ServiceLocatorException e) {
