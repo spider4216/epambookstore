@@ -47,21 +47,26 @@ public class BookService {
 	}
 	
 	public Book findById(Integer id) throws BookServiceException {
+		Lang lang = null;
+		
 		// TODO вынести в другое место. Сделать как билдер. Но вот куда?
 		try {
+			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 			ResultSet rs = bookDao.findBook(id);
+			String columnSuffix = lang.getLangAsString().equals(new Locale("en").getLanguage()) != true ? "_" + lang.getLangAsString() : "";
 			Book book = new Book();
 			book.setId(rs.getInt("id"));
-			book.setName(rs.getString("name"));
+			book.setName(rs.getString("name" + columnSuffix));
 			book.setPrice(rs.getDouble("price"));
-			book.setAuthor(rs.getString("author"));
-			book.setDescription(rs.getString("description"));
+			book.setAuthor(rs.getString("author" + columnSuffix));
+			book.setDescription(rs.getString("description" + columnSuffix));
 			book.setIsbn(rs.getString("isbn"));
 			book.setPage(rs.getInt("page"));
 			book.setCategoryId(rs.getInt("category_id"));
+			book.setImgPath(rs.getString("img_path"));
 			
 			return book;
-		} catch (SQLException | DaoBookException e) {
+		} catch (SQLException | DaoBookException | ServiceLocatorException e) {
 			throw new BookServiceException("Cannot find book", e);
 		}
 	}

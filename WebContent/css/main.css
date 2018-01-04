@@ -32,3 +32,21 @@
 	height: 110px;
 	overflow: hidden;
 }
+
+.book-detail img {
+	height: 300px;
+}
+
+.book-detail .price-label {
+	font-size: 21px;
+}
+
+.book-detail .price {
+	font-size: 24px;
+	font-weight: bold;
+	padding-left: 10px;
+}
+
+.book-detail .count-field {
+	width: 55px;
+}

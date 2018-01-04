@@ -1,13 +1,12 @@
 package com.epam.component.dao.category;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.epam.component.dao.book.exception.DaoBookException;
 import com.epam.component.dao.category.exception.DaoCategoryException;
-import com.epam.entity.CategoryEntity;
 
 public class MysqlCategoryDao implements ICategoryDao {
 	private Connection connection = null;
@@ -26,6 +25,20 @@ public class MysqlCategoryDao implements ICategoryDao {
 			return rs;
 		} catch (SQLException e) {
 			throw new DaoCategoryException("Cannot find categories", e);
+		}
+	}
+	
+	public ResultSet findOneById(Integer id) throws DaoCategoryException {
+		String sqlFind = "SELECT * FROM category WHERE id = ?";		
+		try {
+			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			pr.setInt(1, id);
+			ResultSet rs = pr.executeQuery();
+			rs.next();
+			
+			return rs;
+		} catch (SQLException e) {
+			throw new DaoCategoryException("Cannot find category by id", e);
 		}
 	}
 }

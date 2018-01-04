@@ -57,4 +57,30 @@ public class CategoryService {
 				throw new CategoryServiceException("Cannot find categories", e);
 		}
 	}
+
+	public CategoryEntity findOneById(Integer id) throws CategoryServiceException {
+		Lang lang = null;
+		
+		try {
+			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		} catch (ServiceLocatorException e) {
+			throw new CategoryServiceException("Problem with getting all categories", e);
+		}
+		
+		ResultSet rs = null;
+		try {
+			rs = categoryDao.findOneById(id);
+			// TODO DRY
+			String columnSuffix = lang.getLangAsString().equals(new Locale("en").getLanguage()) != true ? "_" + lang.getLangAsString() : "";
+			
+			CategoryEntity category = new CategoryEntity();
+			// TODO вынести в другое место. Сделать как билдер. Но вот куда?
+			category.setId(rs.getInt("id"));
+			category.setName(rs.getString("name" + columnSuffix));
+			
+			return category;
+		} catch (DaoCategoryException | SQLException e) {
+			throw new CategoryServiceException("Cannot find category by id", e);
+		}
+	}
 }
