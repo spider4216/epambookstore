@@ -1,6 +1,14 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
+			<c:if test="${isInBasket == true}">
+				<div class="alert alert-info">
+					${lang.getValue('book_detail_has_already_in_basket')}
+				</div>
+			</c:if>
+		
 			<div class="panel panel-default book-detail">
 				<div class="panel-heading">
 					<h3 class="panel-title">${book.getName()}</h3>
@@ -55,12 +63,18 @@
 					<div class="row">
 						<br />
 						<div class="col-md-12">
-							<div class="input-group">
-      							<span class="input-group-btn">
-        							<button class="btn btn-primary add-to-basket-btn" type="button">${lang.getValue('add_to_basket')}</button>
-      							</span>
-      							<input type="number" name="count_product" min="0" max="9" class="form-control count-field" placeholder="0">
-    						</div>
+							<c:if test="${isInBasket == true}">
+								<a href="#" class="btn btn-warning">${lang.getValue('book_detail_go_to_basket')}</a>
+							</c:if>
+							
+							<c:if test="${isInBasket == false}">
+								<div class="input-group">
+	      							<span class="input-group-btn">
+	        							<button class="btn btn-primary add-to-basket-btn" type="button">${lang.getValue('add_to_basket')}</button>
+	      							</span>
+	      							<input type="number" name="count_product" min="0" max="9" class="form-control count-field" placeholder="0">
+	    						</div>
+							</c:if>
 						</div>
 					</div>
 					
