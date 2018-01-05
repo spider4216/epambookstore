@@ -56,6 +56,8 @@
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/validator.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/BasketClass.js"></script>
+	<script src="js/BasketRun.js"></script>
 </div>
 </body>
 </html>

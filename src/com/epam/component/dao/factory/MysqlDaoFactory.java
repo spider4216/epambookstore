@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.epam.component.dao.basket.IBasketDao;
+import com.epam.component.dao.basket.MysqlBasketDao;
+import com.epam.component.dao.basket.exception.DaoBasketException;
 import com.epam.component.dao.book.IBookDao;
 import com.epam.component.dao.book.MysqlBookDao;
 import com.epam.component.dao.book.exception.DaoBookException;
@@ -71,6 +74,18 @@ public class MysqlDaoFactory extends DaoFactory {
 		}
 		
 		return new MysqlCategoryDao(con);
+	}
+	
+	public IBasketDao getBasketDao() throws DaoBasketException {
+		// TODO DRY
+		Connection con = null;
+		try {
+			con = createConnection();
+		} catch (MysqlDaoException e) {
+			throw new DaoBasketException("Problem with create connection", e);
+		}
+		
+		return new MysqlBasketDao(con);
 	}
 
 }

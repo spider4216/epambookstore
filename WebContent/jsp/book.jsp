@@ -57,9 +57,9 @@
 						<div class="col-md-12">
 							<div class="input-group">
       							<span class="input-group-btn">
-        							<button class="btn btn-primary" type="button">${lang.getValue('add_to_basket')}</button>
+        							<button class="btn btn-primary add-to-basket-btn" type="button">${lang.getValue('add_to_basket')}</button>
       							</span>
-      							<input type="number" min="0" max="9" class="form-control count-field" placeholder="0">
+      							<input type="number" name="count_product" min="0" max="9" class="form-control count-field" placeholder="0">
     						</div>
 						</div>
 					</div>
@@ -69,6 +69,10 @@
 						<div class="col-md-12">
 							<p>${book.getDescription()}</p>
 						</div>
+					</div>
+					
+					<div class="hidden">
+						<input type="hidden" name="product_id" value="${book.getId()}" />
 					</div>
 
 				</div>
