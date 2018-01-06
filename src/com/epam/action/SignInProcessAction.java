@@ -4,6 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.component.flash.FlashMessage;
+import com.epam.component.lang.Lang;
+import com.epam.component.service_locator.ServiceLocator;
+import com.epam.component.service_locator.ServiceLocatorEnum;
+import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.component.validation.ValidatorEnum;
 import com.epam.component.validation.ValidatorFabric;
 import com.epam.component.validation.exception.ValidationException;
@@ -33,17 +37,24 @@ public class SignInProcessAction implements IAction {
 		
 		User entity = null;
 		
+		Lang lang = null;
+		try {
+			lang = (Lang)ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		} catch (ServiceLocatorException e) {
+			throw new ValidationException("Service could not be found", e);
+		}
+		
 		try  {
 			entity = service.findByUsername(username);
 		} catch (UserServiceException e) {
-			fm.setMsg("Incorrect username or password");
+			fm.setMsg(lang.getValue("auth_problem"));
 			response.sendRedirect("/BookShop/sign-in.html");
 			return;
 		}
 		
 		if (!service.isPasswordValid(entity, password)) {
 			// TODO DRY
-			fm.setMsg("Incorrect username or password");
+			fm.setMsg(lang.getValue("auth_problem"));
 			response.sendRedirect("/BookShop/sign-in.html");
 			return;
 		}
@@ -52,7 +63,7 @@ public class SignInProcessAction implements IAction {
 		try {
 			service.login(entity);
 		} catch(UserServiceException e) {
-			fm.setMsg("Incorrect username or password");
+			fm.setMsg(lang.getValue("auth_problem"));
 			response.sendRedirect("/BookShop/sign-in.html");
 			return;
 		}

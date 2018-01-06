@@ -30,7 +30,7 @@ public class UniqueUsername extends ValidatorFabric {
 		}
 
 		if (service.isUserExist(value)) {
-			throw new ValidationException("username_unique_hint");
+			throw new ValidationException(lang.getValue("username_unique_hint"));
 		}
 		
 		return true;

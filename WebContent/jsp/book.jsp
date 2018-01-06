@@ -72,7 +72,7 @@
 	      							<span class="input-group-btn">
 	        							<button class="btn btn-primary add-to-basket-btn" type="button">${lang.getValue('add_to_basket')}</button>
 	      							</span>
-	      							<input type="number" name="count_product" min="0" max="9" class="form-control count-field" placeholder="0">
+	      							<input type="number" name="count_product" value="1" min="1" max="9" class="form-control count-field" placeholder="0">
 	    						</div>
 							</c:if>
 						</div>

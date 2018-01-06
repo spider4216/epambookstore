@@ -16,6 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.action.IAction;
+import com.epam.action.SignInMainAction;
+import com.epam.action.SignInProcessAction;
+import com.epam.action.SignUpMainAction;
+import com.epam.action.SignUpProcessAction;
 import com.epam.component.lang.Lang;
 import com.epam.component.route.MapRouter;
 import com.epam.component.route.RouterException;
@@ -56,6 +60,25 @@ public class DispatcherServlet extends HttpServlet {
 			request.setAttribute("errMsg", e.getMessage());
 			Viewer.execute(request, response, "error.jsp");
 			return;
+		}
+		
+		// Redirect to login if not auth
+		if (
+				!(action instanceof SignInMainAction) &&
+				!(action instanceof SignInProcessAction) &&
+				!(action instanceof SignUpMainAction) &&
+				!(action instanceof SignUpProcessAction)
+			) {
+			// Redirect to auth page if user not log in
+			try {
+				if (ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER) == null) {
+					response.sendRedirect("/BookShop/sign-in.html");
+				}
+			} catch (ServiceLocatorException e) {
+				request.setAttribute("errMsg", e.getMessage());
+				Viewer.execute(request, response, "error.jsp");
+				return;
+			}
 		}
 		
 		try {
