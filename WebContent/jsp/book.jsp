@@ -64,7 +64,7 @@
 						<br />
 						<div class="col-md-12">
 							<c:if test="${isInBasket == true}">
-								<a href="#" class="btn btn-warning">${lang.getValue('book_detail_go_to_basket')}</a>
+								<a href="/BookShop/basket.html" class="btn btn-warning">${lang.getValue('book_detail_go_to_basket')}</a>
 							</c:if>
 							
 							<c:if test="${isInBasket == false}">

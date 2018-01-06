@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import com.epam.component.dao.basket.exception.DaoBasketException;
+import com.epam.component.dao.book.exception.DaoBookException;
 import com.epam.component.dao.category.exception.DaoCategoryException;
 import com.epam.component.dao.user.exception.DaoUserException;
 import com.epam.entity.BasketEntity;
@@ -49,6 +51,19 @@ public class MysqlBasketDao implements IBasketDao{
 			return rs;
 		} catch (SQLException e) {
 			throw new DaoBasketException("Cannot find basket by product and user id", e);
+		}
+	}
+	
+	public ResultSet findAllByUserId(Integer userId) throws DaoBasketException {
+		String sqlFind = "SELECT bt.*, bk.* FROM basket bt INNER JOIN books bk ON bt.book_id = bk.id WHERE bt.user_id = ?";
+		try {
+			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			pr.setInt(1, userId);
+			ResultSet rs = pr.executeQuery();
+			
+			return rs;
+		} catch (SQLException e) {
+			throw new DaoBasketException("Cannot find basket products by user id", e);
 		}
 	}
 }

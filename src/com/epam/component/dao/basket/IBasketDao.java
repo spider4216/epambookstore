@@ -9,4 +9,6 @@ public interface IBasketDao {
 	public Integer insert(BasketEntity entity) throws DaoBasketException;
 	
 	public ResultSet findOneByProductAndUserId(Integer productId, Integer userId) throws DaoBasketException;
+	
+	public ResultSet findAllByUserId(Integer userId) throws DaoBasketException;
 }

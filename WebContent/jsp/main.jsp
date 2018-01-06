@@ -35,7 +35,7 @@
 			<c:if test="${empty ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER)}">
 				<ul class="nav navbar-nav navbar-right">
 					<li>
-						<a href="/BookShop/sign-in.html">Sign-in</a>
+						<a href="/BookShop/sign-in.html">${requestScope.lang.getValue('sign_in')}</a>
 					</li>
 					
 					<li class="dropdown">
@@ -45,6 +45,14 @@
             				<li><a href="/BookShop/change-lang.html?lang=ru">RU</a></li>
           				</ul>
         			</li>
+				</ul>
+			</c:if>
+			
+			<c:if test="${not empty ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER)}">
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="/BookShop/basket.html">${requestScope.lang.getValue('basket_title')}</a>
+					</li>
 				</ul>
 			</c:if>
 		</div>
