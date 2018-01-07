@@ -31,30 +31,29 @@
 					</c:forEach>
 				</ul>
 			</c:if>
-		
-			<c:if test="${empty ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER)}">
-				<ul class="nav navbar-nav navbar-right">
+			
+			<ul class="nav navbar-nav navbar-right">
+			
+				<c:if test="${empty ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER)}">
 					<li>
 						<a href="/BookShop/sign-in.html">${requestScope.lang.getValue('sign_in')}</a>
 					</li>
-					
-					<li class="dropdown">
-          				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${lang.getValue('language')} <span class="caret"></span></a>
-          				<ul class="dropdown-menu">
-            				<li><a href="/BookShop/change-lang.html?lang=en">EN</a></li>
-            				<li><a href="/BookShop/change-lang.html?lang=ru">RU</a></li>
-          				</ul>
-        			</li>
-				</ul>
-			</c:if>
-			
-			<c:if test="${not empty ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER)}">
-				<ul class="nav navbar-nav navbar-right">
+				</c:if>
+				
+				<c:if test="${not empty ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER)}">
 					<li>
 						<a href="/BookShop/basket.html">${requestScope.lang.getValue('basket_title')}</a>
 					</li>
-				</ul>
-			</c:if>
+				</c:if>
+			
+				<li class="dropdown">
+         			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${lang.getValue('language')} <span class="caret"></span></a>
+        			<ul class="dropdown-menu">
+          				<li><a href="/BookShop/change-lang.html?lang=en">EN</a></li>
+           				<li><a href="/BookShop/change-lang.html?lang=ru">RU</a></li>
+       				</ul>
+       			</li>
+			</ul>
 		</div>
 	</div>
 </nav>

@@ -14,7 +14,7 @@ import com.epam.service.BasketService;
 import com.epam.service.BookService;
 import com.epam.service.UserService;
 
-public class AddToBasket implements IAction {
+public class AddToBasketAction implements IAction {
 	// TODO catch exceptions in action and response to client
 	// TODO block form after click in view
 	// TODO alert message js

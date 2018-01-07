@@ -11,4 +11,6 @@ public interface IBasketDao {
 	public ResultSet findOneByProductAndUserId(Integer productId, Integer userId) throws DaoBasketException;
 	
 	public ResultSet findAllByUserId(Integer userId) throws DaoBasketException;
+	
+	public Boolean deleteByUserAndBookId(Integer userId, Integer bookId) throws DaoBasketException;
 }

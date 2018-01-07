@@ -11,9 +11,10 @@ import com.epam.component.dao.book.exception.DaoBookException;
 import com.epam.component.dao.category.exception.DaoCategoryException;
 import com.epam.component.dao.user.exception.DaoUserException;
 import com.epam.entity.BasketEntity;
+import com.epam.entity.Book;
 import com.epam.entity.User;
 
-public class MysqlBasketDao implements IBasketDao{
+public class MysqlBasketDao implements IBasketDao {
 	private Connection connection = null;
 	
 	public MysqlBasketDao(Connection connection) {
@@ -64,6 +65,22 @@ public class MysqlBasketDao implements IBasketDao{
 			return rs;
 		} catch (SQLException e) {
 			throw new DaoBasketException("Cannot find basket products by user id", e);
+		}
+	}
+	
+	public Boolean deleteByUserAndBookId(Integer userId, Integer bookId) throws DaoBasketException {
+		String sqlDelete = "DELETE FROM basket WHERE user_id = ? AND book_id = ?";
+		
+		try {
+			PreparedStatement pr = connection.prepareStatement(sqlDelete);
+			pr.setInt(1, userId);
+			pr.setInt(2, bookId);
+			
+			pr.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new DaoBasketException("Cannot delete books from basket", e);
 		}
 	}
 }

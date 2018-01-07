@@ -103,4 +103,20 @@ public class BasketService {
 			throw new BasketServiceException("Cannot find books in basket", e);
 		}
 	}
+	
+	public Boolean deleteByUserAndBookId(Integer userId, Integer bookId) throws BasketServiceException {
+		Lang lang = null;
+		
+		try {
+			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		} catch (ServiceLocatorException e) {
+			throw new BasketServiceException("Problem with getting all books from basket", e);
+		}
+		
+		try {
+			return basketDao.deleteByUserAndBookId(userId, bookId);
+		} catch (DaoBasketException e) {
+			throw new BasketServiceException(lang.getValue("cannot_delete_books_from_basket"), e);
+		}
+	}
 }

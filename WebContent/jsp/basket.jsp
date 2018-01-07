@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="com.epam.component.flash.FlashMessage"%>
 
 <div class="container-fluid">
 	<div class="row">
@@ -13,6 +14,12 @@
 					<c:if test="${empty basket}">
 						<div class="alert alert-info">
 							${lang.getValue('basket_is_empty_hint')}
+						</div>
+					</c:if>
+					
+					<c:if test="${FlashMessage.getInstance().hasMsg() == true}">
+						<div class="alert alert-info" role="alert">
+							<c:out value="${FlashMessage.getInstance().getMsg()}" />
 						</div>
 					</c:if>
 					
@@ -31,7 +38,7 @@
 									<td>${item.getCount()}</td>
 									<td>${item.book.getPrice()}</td>
 									<td>
-										<a href="/BookShop/delete-book-from-cart.html?id=${item.book.getId()}">${lang.getValue('basket_book_delete')}</a>
+										<a href="/BookShop/delete-book-from-basket.html?id=${item.book.getId()}">${lang.getValue('basket_book_delete')}</a>
 									</td>
 								</tr>
 							</c:forEach>
