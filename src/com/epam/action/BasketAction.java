@@ -19,7 +19,10 @@ public class BasketAction implements IAction {
 		
 		User user = (User) ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER); 
 		ArrayList<BasketEntity> basket = basketService.findAllProductsByUserId(user.getId());
+		Double totalSum = basketService.totalSumByCollection(basket);
+		
 		request.setAttribute("basket", basket);
+		request.setAttribute("totalSum", totalSum);
 		
 		Viewer.execute(request, response, "basket.jsp");
 	}

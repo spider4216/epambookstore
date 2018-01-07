@@ -43,9 +43,15 @@
 								</tr>
 							</c:forEach>
 						</table>
-					</c:if>					
+						
+						<div class="total-price pull-right">
+							<span class="total-sum-label">${lang.getValue('basket_total_sum')}:</span>
+							<span class="total-price">${totalSum}</span>
+						</div>
+					</c:if>
 				</div>
 			</div>
+			
 		</div>
 	</div>
 </div>

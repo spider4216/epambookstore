@@ -50,3 +50,12 @@
 .book-detail .count-field {
 	width: 55px;
 }
+
+.total-price .total-sum-label {
+	font-size: 18px;
+}
+
+.total-price .total-price {
+	font-size: 20px;
+	font-weight: bold;
+}

@@ -119,4 +119,14 @@ public class BasketService {
 			throw new BasketServiceException(lang.getValue("cannot_delete_books_from_basket"), e);
 		}
 	}
+	
+	public Double totalSumByCollection(ArrayList<BasketEntity> collection) {
+		Double sum = 0.0;
+		
+		for (BasketEntity item : collection) {
+			sum += item.getBook().getPrice() * item.getCount();
+		}
+		
+		return sum;
+	}
 }
