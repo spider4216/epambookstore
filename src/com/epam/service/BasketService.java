@@ -129,4 +129,20 @@ public class BasketService {
 		
 		return sum;
 	}
+	
+	public Boolean deleteUserBasketBooks(Integer userId) throws BasketServiceException {
+		Lang lang = null;
+		
+		try {
+			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		} catch (ServiceLocatorException e) {
+			throw new BasketServiceException("Problem with getting all books from basket", e);
+		}
+		
+		try {
+			return basketDao.deleteAllByUserId(userId);
+		} catch (DaoBasketException e) {
+			throw new BasketServiceException(lang.getValue("cannot_delete_books_from_basket"), e);
+		}
+	}
 }

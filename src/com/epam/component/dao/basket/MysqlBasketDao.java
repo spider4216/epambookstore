@@ -80,6 +80,21 @@ public class MysqlBasketDao implements IBasketDao {
 			return true;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+			throw new DaoBasketException("Cannot delete book from basket", e);
+		}
+	}
+	
+	public Boolean deleteAllByUserId(Integer userId) throws DaoBasketException {
+		String sqlDelete = "DELETE FROM basket WHERE user_id = ?";
+		
+		try {
+			PreparedStatement pr = connection.prepareStatement(sqlDelete);
+			pr.setInt(1, userId);
+			
+			pr.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			throw new DaoBasketException("Cannot delete books from basket", e);
 		}
 	}

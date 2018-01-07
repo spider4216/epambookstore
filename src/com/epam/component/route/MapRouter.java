@@ -11,6 +11,7 @@ import com.epam.action.SignUpMainAction;
 import com.epam.action.SignUpProcessAction;
 import com.epam.action.AddToBasketAction;
 import com.epam.action.BasketAction;
+import com.epam.action.BasketClearAction;
 import com.epam.action.BasketDeleteBookAction;
 import com.epam.action.BookAction;
 import com.epam.action.CategoryAction;
@@ -30,6 +31,7 @@ public class MapRouter {
 		map.put("/BookShop/ajax/add-to-basket.html", new AddToBasketAction());
 		map.put("/BookShop/basket.html", new BasketAction());
 		map.put("/BookShop/delete-book-from-basket.html", new BasketDeleteBookAction());
+		map.put("/BookShop/clear-basket.html", new BasketClearAction());
 	}
 	
 	public static IAction getAction(String path) throws RouterException {

@@ -11,16 +11,14 @@
 				</div>
 				
 				<div class="panel-body">
-					<c:if test="${empty basket}">
-						<div class="alert alert-info">
-							${lang.getValue('basket_is_empty_hint')}
-						</div>
-					</c:if>
-					
 					<c:if test="${FlashMessage.getInstance().hasMsg() == true}">
 						<div class="alert alert-info" role="alert">
 							<c:out value="${FlashMessage.getInstance().getMsg()}" />
 						</div>
+					</c:if>
+					
+					<c:if test="${empty basket}">
+						<span>${lang.getValue('basket_is_empty_hint')}</span>
 					</c:if>
 					
 					<c:if test="${not empty basket}">
@@ -44,10 +42,24 @@
 							</c:forEach>
 						</table>
 						
-						<div class="total-price pull-right">
-							<span class="total-sum-label">${lang.getValue('basket_total_sum')}:</span>
-							<span class="total-price">${totalSum}</span>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="total-price pull-right">
+									<span class="total-sum-label">${lang.getValue('basket_total_sum')}:</span>
+									<span class="total-price">${totalSum}</span>
+								</div>
+							</div>
 						</div>
+						
+						<div class="row">
+							<div class="col-md-12">
+								<div class="buttons-block">
+									<a href="/BookShop/clear-basket.html" class="btn btn-danger">${lang.getValue('basket_clear_btn_caption')}</a>
+								</div>
+							</div>
+						</div>
+						
+						
 					</c:if>
 				</div>
 			</div>
