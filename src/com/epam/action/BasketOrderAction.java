@@ -3,6 +3,8 @@ package com.epam.action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.component.ajax_respons.AjaxResponse;
+import com.epam.component.ajax_respons.AjaxResponseStatus;
 import com.epam.component.flash.FlashMessage;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
@@ -20,7 +22,13 @@ public class BasketOrderAction implements IAction {
 		
 		FlashMessage fm = FlashMessage.getInstance();
 		fm.setMsg(lang.getValue("basket_ordered_success_hint"));
-		response.sendRedirect("/BookShop/basket.html");
+		
+		new AjaxResponse()
+		.setRequest(request)
+		.setResponse(response)
+		.setStatus(AjaxResponseStatus.STATUS_OK)
+		.setMessage(lang.getValue("basket_ordered_success_hint"))
+		.response();
 	}
 	
 }

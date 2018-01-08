@@ -36,7 +36,7 @@
 									<td>${item.getCount()}</td>
 									<td>${item.book.getPrice()}</td>
 									<td>
-										<a href="/BookShop/delete-book-from-basket.html?id=${item.book.getId()}">${lang.getValue('basket_book_delete')}</a>
+										<button data-book-id="${item.book.getId()}" class="btn btn-default basket-book-item">${lang.getValue('basket_book_delete')}</button>
 									</td>
 								</tr>
 							</c:forEach>
@@ -54,8 +54,8 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="buttons-block">
-									<a href="/BookShop/clear-basket.html" class="btn btn-danger">${lang.getValue('basket_clear_btn_caption')}</a>
-									<a href="/BookShop/order-books.html" class="btn btn-primary">${lang.getValue('basket_order_btn_caption')}</a>
+									<button class="btn btn-danger clear-basket-btn">${lang.getValue('basket_clear_btn_caption')}</button>
+									<button class="btn btn-primary order-basket-btn">${lang.getValue('basket_order_btn_caption')}</button>
 								</div>
 							</div>
 						</div>

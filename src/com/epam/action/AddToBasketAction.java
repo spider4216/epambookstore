@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epam.component.ajax_respons.AjaxResponse;
 import com.epam.component.ajax_respons.AjaxResponseStatus;
+import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.entity.BasketEntity;
@@ -21,6 +22,7 @@ public class AddToBasketAction implements IAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Integer id = Integer.parseInt(request.getParameter("id"));
 		Integer count = Integer.parseInt(request.getParameter("count"));
+		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		
 		BookService bookService = new BookService();
 		Book book = bookService.findById(id);
@@ -40,7 +42,7 @@ public class AddToBasketAction implements IAction {
 		.setRequest(request)
 		.setResponse(response)
 		.setStatus(AjaxResponseStatus.STATUS_OK)
-		.setMessage("Everything is ok")
+		.setMessage(lang.getValue("book_added_to_basket_success_hint"))
 		.response();
 	}
 

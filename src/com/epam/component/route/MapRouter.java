@@ -32,9 +32,9 @@ public class MapRouter {
 		map.put("/BookShop/book.html", new BookAction());
 		map.put("/BookShop/ajax/add-to-basket.html", new AddToBasketAction());
 		map.put("/BookShop/basket.html", new BasketAction());
-		map.put("/BookShop/delete-book-from-basket.html", new BasketDeleteBookAction());
-		map.put("/BookShop/clear-basket.html", new BasketClearAction());
-		map.put("/BookShop/order-books.html", new BasketOrderAction());
+		map.put("/BookShop/ajax/delete-book-from-basket.html", new BasketDeleteBookAction());
+		map.put("/BookShop/ajax/clear-basket.html", new BasketClearAction());
+		map.put("/BookShop/ajax/order-books.html", new BasketOrderAction());
 		map.put("/BookShop/history.html", new HistoryAction());
 	}
 	
