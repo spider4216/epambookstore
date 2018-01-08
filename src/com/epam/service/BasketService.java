@@ -94,8 +94,8 @@ public class BasketService {
 				basket.setBookId(rs.getInt("bt.book_id"));
 				basket.setCount(rs.getInt("bt.count"));
 				basket.setIsHistory(rs.getInt("bt.is_history"));
+				basket.setCreateDate(rs.getString("bt.create_date"));
 				basket.setBook(book);
-				
 				
 				basketCollection.add(basket);
 			}
@@ -199,6 +199,7 @@ public class BasketService {
 				basket.setBookId(rs.getInt("bt.book_id"));
 				basket.setCount(rs.getInt("bt.count"));
 				basket.setIsHistory(rs.getInt("bt.is_history"));
+				basket.setCreateDate(rs.getString("bt.create_date"));
 				basket.setBook(book);
 				
 				

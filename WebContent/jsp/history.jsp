@@ -25,7 +25,7 @@
 									<td>${item.book.getName()}</td>
 									<td>${item.getCount()}</td>
 									<td>${item.book.getPrice()}</td>
-									<td>history_date</td>
+									<td>${item.getCreateDate()}</td>
 								</tr>
 							</c:forEach>
 						</table>

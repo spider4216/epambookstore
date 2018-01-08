@@ -1,5 +1,7 @@
 package com.epam.entity;
 
+import java.util.Date;
+
 public class BasketEntity {
 	private Integer id;
 	
@@ -10,6 +12,9 @@ public class BasketEntity {
 	private Integer count;
 	
 	private Integer is_history = 0;
+	
+	// TODO think about date type
+	private String create_date;
 	
 	/**
 	 * Virtual field like a relation one to one
@@ -62,5 +67,13 @@ public class BasketEntity {
 
 	public void setIsHistory(Integer is_history) {
 		this.is_history = is_history;
+	}
+
+	public String getCreateDate() {
+		return create_date;
+	}
+
+	public void setCreateDate(String create_date) {
+		this.create_date = create_date;
 	}
 }
