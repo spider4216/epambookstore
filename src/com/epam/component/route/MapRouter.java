@@ -16,6 +16,7 @@ import com.epam.action.BasketDeleteBookAction;
 import com.epam.action.BasketOrderAction;
 import com.epam.action.BookAction;
 import com.epam.action.CategoryAction;
+import com.epam.action.HistoryAction;
 
 public class MapRouter {
 	private static HashMap<String, IAction> map = new HashMap<>();
@@ -34,6 +35,7 @@ public class MapRouter {
 		map.put("/BookShop/delete-book-from-basket.html", new BasketDeleteBookAction());
 		map.put("/BookShop/clear-basket.html", new BasketClearAction());
 		map.put("/BookShop/order-books.html", new BasketOrderAction());
+		map.put("/BookShop/history.html", new HistoryAction());
 	}
 	
 	public static IAction getAction(String path) throws RouterException {

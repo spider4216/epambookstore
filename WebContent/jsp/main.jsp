@@ -42,6 +42,10 @@
 				
 				<c:if test="${not empty ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER)}">
 					<li>
+						<a href="/BookShop/history.html">${requestScope.lang.getValue('history_title')}</a>
+					</li>
+					
+					<li>
 						<a href="/BookShop/basket.html">${requestScope.lang.getValue('basket_title')}</a>
 					</li>
 				</c:if>

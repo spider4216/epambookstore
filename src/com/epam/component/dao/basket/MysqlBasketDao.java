@@ -113,4 +113,17 @@ public class MysqlBasketDao implements IBasketDao {
 			throw new DaoBasketException("Cannot mark books as history in basket", e);
 		}
 	}
+	
+	public ResultSet findAllInUserHistory(Integer userId) throws DaoBasketException {
+		String sqlFind = "SELECT bt.*, bk.* FROM basket bt INNER JOIN books bk ON bt.book_id = bk.id WHERE bt.user_id = ? AND is_history = 1";
+		try {
+			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			pr.setInt(1, userId);
+			ResultSet rs = pr.executeQuery();
+			
+			return rs;
+		} catch (SQLException e) {
+			throw new DaoBasketException("Cannot find products in history", e);
+		}
+	}
 }
