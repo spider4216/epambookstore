@@ -55,6 +55,7 @@
 							<div class="col-md-12">
 								<div class="buttons-block">
 									<a href="/BookShop/clear-basket.html" class="btn btn-danger">${lang.getValue('basket_clear_btn_caption')}</a>
+									<a href="/BookShop/order-books.html" class="btn btn-primary">${lang.getValue('basket_order_btn_caption')}</a>
 								</div>
 							</div>
 						</div>

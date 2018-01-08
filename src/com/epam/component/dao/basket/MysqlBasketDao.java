@@ -22,13 +22,14 @@ public class MysqlBasketDao implements IBasketDao {
 	}
 	
 	public Integer insert(BasketEntity entity) throws DaoBasketException {
-		String sqlInsert = "INSERT INTO basket (user_id, book_id, count) VALUES (?, ?, ?)";
+		String sqlInsert = "INSERT INTO basket (user_id, book_id, count, is_history) VALUES (?, ?, ?, ?)";
 		
 		try {
 			PreparedStatement pr = connection.prepareStatement(sqlInsert);
 			pr.setInt(1, entity.getUserId());
 			pr.setInt(2, entity.getBookId());
 			pr.setInt(3, entity.getCount());
+			pr.setInt(4, entity.getIsHistory());
 
 			return pr.executeUpdate();
 		} catch (SQLException e) {
@@ -37,7 +38,7 @@ public class MysqlBasketDao implements IBasketDao {
 	}
 	
 	public ResultSet findOneByProductAndUserId(Integer productId, Integer userId) throws DaoBasketException {
-		String sqlFind = "SELECT * FROM basket WHERE book_id = ? AND user_id = ?";		
+		String sqlFind = "SELECT * FROM basket WHERE book_id = ? AND user_id = ? AND is_history = 0";		
 		try {
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
 			pr.setInt(1, productId);
@@ -56,7 +57,7 @@ public class MysqlBasketDao implements IBasketDao {
 	}
 	
 	public ResultSet findAllByUserId(Integer userId) throws DaoBasketException {
-		String sqlFind = "SELECT bt.*, bk.* FROM basket bt INNER JOIN books bk ON bt.book_id = bk.id WHERE bt.user_id = ?";
+		String sqlFind = "SELECT bt.*, bk.* FROM basket bt INNER JOIN books bk ON bt.book_id = bk.id WHERE bt.user_id = ? AND is_history = 0";
 		try {
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
 			pr.setInt(1, userId);
@@ -69,7 +70,7 @@ public class MysqlBasketDao implements IBasketDao {
 	}
 	
 	public Boolean deleteByUserAndBookId(Integer userId, Integer bookId) throws DaoBasketException {
-		String sqlDelete = "DELETE FROM basket WHERE user_id = ? AND book_id = ?";
+		String sqlDelete = "DELETE FROM basket WHERE user_id = ? AND book_id = ? AND is_history = 0";
 		
 		try {
 			PreparedStatement pr = connection.prepareStatement(sqlDelete);
@@ -85,7 +86,7 @@ public class MysqlBasketDao implements IBasketDao {
 	}
 	
 	public Boolean deleteAllByUserId(Integer userId) throws DaoBasketException {
-		String sqlDelete = "DELETE FROM basket WHERE user_id = ?";
+		String sqlDelete = "DELETE FROM basket WHERE user_id = ? AND is_history = 0";
 		
 		try {
 			PreparedStatement pr = connection.prepareStatement(sqlDelete);
@@ -96,6 +97,20 @@ public class MysqlBasketDao implements IBasketDao {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new DaoBasketException("Cannot delete books from basket", e);
+		}
+	}
+	
+	public Integer markAsHistoryByUserId(Integer userId) throws DaoBasketException {
+		String sqlDelete = "UPDATE basket SET is_history = 1 WHERE user_id = ? AND is_history = 0";
+		
+		try {
+			PreparedStatement pr = connection.prepareStatement(sqlDelete);
+			pr.setInt(1, userId);
+			
+			return pr.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new DaoBasketException("Cannot mark books as history in basket", e);
 		}
 	}
 }

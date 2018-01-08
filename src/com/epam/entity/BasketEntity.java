@@ -9,6 +9,8 @@ public class BasketEntity {
 	
 	private Integer count;
 	
+	private Integer is_history = 0;
+	
 	/**
 	 * Virtual field like a relation one to one
 	 */
@@ -52,5 +54,13 @@ public class BasketEntity {
 
 	public void setBook(Book book) {
 		this.book = book;
+	}
+
+	public Integer getIsHistory() {
+		return is_history;
+	}
+
+	public void setIsHistory(Integer is_history) {
+		this.is_history = is_history;
 	}
 }

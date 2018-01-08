@@ -15,4 +15,6 @@ public interface IBasketDao {
 	public Boolean deleteByUserAndBookId(Integer userId, Integer bookId) throws DaoBasketException;
 	
 	public Boolean deleteAllByUserId(Integer userId) throws DaoBasketException;
+	
+	public Integer markAsHistoryByUserId(Integer userId) throws DaoBasketException;
 }

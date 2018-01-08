@@ -18,6 +18,7 @@ import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.entity.BasketEntity;
 import com.epam.entity.Book;
 import com.epam.entity.CategoryEntity;
+import com.epam.entity.User;
 import com.epam.service.exception.BasketServiceException;
 import com.epam.service.exception.BookServiceException;
 import com.epam.service.exception.CategoryServiceException;
@@ -92,6 +93,7 @@ public class BasketService {
 				basket.setUserId(rs.getInt("bt.user_id"));
 				basket.setBookId(rs.getInt("bt.book_id"));
 				basket.setCount(rs.getInt("bt.count"));
+				basket.setIsHistory(rs.getInt("bt.is_history"));
 				basket.setBook(book);
 				
 				
@@ -144,5 +146,20 @@ public class BasketService {
 		} catch (DaoBasketException e) {
 			throw new BasketServiceException(lang.getValue("cannot_delete_books_from_basket"), e);
 		}
+	}
+	
+	public Boolean markBooksAsHistoryByUser(User entity) throws BasketServiceException {
+		Integer res = null;
+		try {
+			res = basketDao.markAsHistoryByUserId(entity.getId());
+		} catch (DaoBasketException e) {
+			throw new BasketServiceException("Cannot mark user's books as history", e);
+		}
+		
+		if (res <= 0) {
+			return false;
+		}
+		
+		return true;
 	}
 }
