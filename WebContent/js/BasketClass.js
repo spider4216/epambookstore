@@ -1,32 +1,46 @@
-// TODO DRY wrap ajax methods
+/**
+ * @author Yuriy Sirotenko
+ */
 function BasketClass() {
 	
 	/**
+	 * Add to basket button element
+	 * 
 	 * @private
 	 */
 	var basketSelector = $(".add-to-basket-btn");
 	
 	/**
+	 * Product id
+	 * 
 	 * @private
 	 */
 	var productId = $("input[name='product_id']").val();
 	
 	/**
+	 * Count of product
+	 * 
 	 * @private
 	 */
 	var productCountElementName = "input[name='count_product']";
 	
 	/**
+	 * Clear basket button element
+	 * 
 	 * @private
 	 */
 	var basketClearBtn = $(".clear-basket-btn");
 	
 	/**
+	 * Item of book in basket. Collection's element
+	 * 
 	 * @private
 	 */
 	var basketLinkDeleteItem = $(".basket-book-item");
 	
 	/**
+	 * Order basket button element
+	 * 
 	 * @private
 	 */
 	var orderBasketBtn = $(".order-basket-btn");
@@ -42,6 +56,8 @@ function BasketClass() {
 	}
 	
 	/**
+	 * Add to basket event
+	 * 
 	 * @private
 	 */
 	var attachBasketAddEvent = function() {
@@ -51,6 +67,8 @@ function BasketClass() {
 	}
 	
 	/**
+	 * Clear basket event
+	 * 
 	 * @private
 	 */
 	var attachBasketClearEvent = function() {
@@ -60,6 +78,8 @@ function BasketClass() {
 	}
 	
 	/**
+	 * Delete from basket event
+	 * 
 	 * @private
 	 */
 	var attachBasketItemDeleteEvent = function() {
@@ -69,6 +89,8 @@ function BasketClass() {
 	}
 	
 	/**
+	 * Order event
+	 * 
 	 * @private
 	 */
 	var attachOrderEvent = function() {
@@ -78,6 +100,8 @@ function BasketClass() {
 	}
 	
 	/**
+	 * Add to basket handler
+	 * 
 	 * @private
 	 */
 	var addBasketHandler = function(element) {
@@ -87,83 +111,49 @@ function BasketClass() {
 			return;
 		}
 		
-		$.ajax({
-			url: "/BookShop/ajax/add-to-basket.html",
-			method: "post",
-			data: { id : productId, count : productCount },
-			dataType: "json",
-			beforeSend: function() {
-				element.prop('disabled', true);
-			},
-			complete: function() {
-				element.prop('disabled', false);
-			},
-			success: function(res) {
-				$.jGrowl(res.message);
-				setTimeout(function() {
-					location.reload();
-				}, 1500);
-			}
-		})
+		ajaxHelperMethod("/BookShop/ajax/add-to-basket.html", "post", { id : productId, count : productCount }, element);
 	}
 	
 	/**
+	 * Clear basket handler
+	 * 
 	 * @private
 	 */
 	var clearBasketHandler = function(element) {
-		$.ajax({
-			url: "/BookShop/ajax/clear-basket.html",
-			method: "post",
-			dataType: "json",
-			beforeSend: function() {
-				element.prop('disabled', true);
-			},
-			complete: function() {
-				element.prop('disabled', false);
-			},
-			success: function(res) {
-				$.jGrowl(res.message);
-				setTimeout(function() {
-					location.reload();
-				}, 1500);
-			}
-		})
+		ajaxHelperMethod("/BookShop/ajax/clear-basket.html", "post", null, element);
 	}
 	
 	/**
+	 * Delete item from basket handler
+	 * 
 	 * @private
 	 */
 	var deleteItemBasketHandler = function(element) {
 		var id = element.attr("data-book-id");
 		
-		$.ajax({
-			url: "/BookShop/ajax/delete-book-from-basket.html",
-			method: "get",
-			data : {id: id},
-			dataType: "json",
-			beforeSend: function() {
-				element.prop('disabled', true);
-			},
-			complete: function() {
-				element.prop('disabled', false);
-			},
-			success: function(res) {
-				$.jGrowl(res.message);
-				setTimeout(function() {
-					location.reload();
-				}, 1500);
-			}
-		})
+		ajaxHelperMethod("/BookShop/ajax/delete-book-from-basket.html", "get", {id: id}, element);
 	}
 	
 	/**
+	 * Order handler
+	 * 
 	 * @private
 	 */
 	var orderBasketHandler = function(element) {
+		ajaxHelperMethod("/BookShop/ajax/order-books.html", "post", null, element);
+	}
+	
+	/**
+	 * Ajax helper
+	 * 
+	 * @private
+	 */
+	var ajaxHelperMethod = function(url, method, data, element) {
 		$.ajax({
-			url: "/BookShop/ajax/order-books.html",
-			method: "post",
+			url: url,
+			method: method,
 			dataType: "json",
+			data: data,
 			beforeSend: function() {
 				element.prop('disabled', true);
 			},
@@ -176,6 +166,6 @@ function BasketClass() {
 					location.reload();
 				}, 1500);
 			}
-		})
+		});
 	}
 }

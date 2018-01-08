@@ -1,4 +1,4 @@
-package com.epam.component.ajax_respons;
+package com.epam.component.ajax_response;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,23 +11,11 @@ public class AjaxResponse {
 	private AjaxResponseStatus status;
 	
 	private String message;
-	
-	private HttpServletRequest request;
-	
+		
 	private HttpServletResponse response;
 
 	public AjaxResponseStatus getStatus() {
 		return status;
-	}
-
-	public AjaxResponse setStatus(AjaxResponseStatus status) {
-		this.status = status;
-		
-		return this;
-	}
-
-	public String getMessage() {
-		return message;
 	}
 
 	public AjaxResponse setMessage(String message) {
@@ -36,27 +24,23 @@ public class AjaxResponse {
 		return this;
 	}
 
-	public HttpServletRequest getRequest() {
-		return request;
-	}
-
-	public AjaxResponse setRequest(HttpServletRequest request) {
-		this.request = request;
-		
-		return this;
-	}
-
-	public HttpServletResponse getResponse() {
-		return response;
-	}
-
 	public AjaxResponse setResponse(HttpServletResponse response) {
 		this.response = response;
 		
 		return this;
 	}
 	
-	public void response() throws IOException {
+	public void responseOk()  throws IOException {
+		status = AjaxResponseStatus.STATUS_OK;
+		response();
+	}
+
+	public void responseErr()  throws IOException {
+		status = AjaxResponseStatus.STATUS_ERROR;
+		response();
+	}
+	
+	private void response() throws IOException {
 //		HashMap<String, String> data = new HashMap<>();
 		
 //		data.put("status", status);

@@ -3,8 +3,7 @@ package com.epam.action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.epam.component.ajax_respons.AjaxResponse;
-import com.epam.component.ajax_respons.AjaxResponseStatus;
+import com.epam.component.ajax_response.AjaxResponse;
 import com.epam.component.flash.FlashMessage;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
@@ -19,16 +18,11 @@ public class BasketClearAction implements IAction {
 		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		BasketService basketService = new BasketService();
 		basketService.deleteUserBasketBooks(user.getId());
-		//TODO think about ajax
 		FlashMessage fm = FlashMessage.getInstance();
 		fm.setMsg(lang.getValue("basket_clear_success_flash_message"));
 		
-		new AjaxResponse()
-		.setRequest(request)
-		.setResponse(response)
-		.setStatus(AjaxResponseStatus.STATUS_OK)
-		.setMessage(lang.getValue("basket_clear_success_flash_message"))
-		.response();
+		AjaxResponse ar = (AjaxResponse) ServiceLocator.getInstance().getService(ServiceLocatorEnum.AJAX_RESPONSE);
+		ar.setMessage(lang.getValue("basket_clear_success_flash_message")).responseOk();
 	}
 
 }

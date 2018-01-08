@@ -4,4 +4,5 @@ public enum ServiceLocatorEnum {
 	SESSION,
 	USER,
 	LANG,
+	AJAX_RESPONSE
 }

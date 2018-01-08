@@ -3,8 +3,7 @@ package com.epam.action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.epam.component.ajax_respons.AjaxResponse;
-import com.epam.component.ajax_respons.AjaxResponseStatus;
+import com.epam.component.ajax_response.AjaxResponse;
 import com.epam.component.flash.FlashMessage;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
@@ -24,12 +23,8 @@ public class BasketDeleteBookAction implements IAction {
 		FlashMessage fm = FlashMessage.getInstance();
 		fm.setMsg(lang.getValue("delete_book_from_basket_success"));
 		
-		new AjaxResponse()
-		.setRequest(request)
-		.setResponse(response)
-		.setStatus(AjaxResponseStatus.STATUS_OK)
-		.setMessage(lang.getValue("delete_book_from_basket_success"))
-		.response();
+		AjaxResponse ar = (AjaxResponse) ServiceLocator.getInstance().getService(ServiceLocatorEnum.AJAX_RESPONSE);
+		ar.setMessage(lang.getValue("delete_book_from_basket_success")).responseOk();
 	}
 
 }
