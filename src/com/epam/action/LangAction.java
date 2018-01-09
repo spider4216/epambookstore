@@ -10,6 +10,11 @@ import com.epam.component.lang.LangList;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 
+/**
+ * Action for change language
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class LangAction implements IAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String frontLang = request.getParameter("lang");

@@ -12,6 +12,11 @@ import com.epam.entity.BasketEntity;
 import com.epam.entity.User;
 import com.epam.service.BasketService;
 
+/**
+ * History main action
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class HistoryAction implements IAction {
 
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

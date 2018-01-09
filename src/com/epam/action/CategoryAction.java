@@ -12,6 +12,11 @@ import com.epam.entity.Book;
 import com.epam.service.BookService;
 import com.epam.service.exception.BookServiceException;
 
+/**
+ * Main action for category domain
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class CategoryAction implements IAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws BookServiceException, ServletException, IOException {
 		BookService service = new BookService();

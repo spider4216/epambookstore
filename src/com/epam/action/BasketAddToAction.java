@@ -13,7 +13,13 @@ import com.epam.entity.User;
 import com.epam.service.BasketService;
 import com.epam.service.BookService;
 
-public class AddToBasketAction implements IAction {
+/**
+ * Add product into basket
+ * Ajax request was expected by this action
+ * 
+ * @author Yuriy Sirotenko
+ */
+public class BasketAddToAction implements IAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Integer id = Integer.parseInt(request.getParameter("id"));
 		Integer count = Integer.parseInt(request.getParameter("count"));
@@ -35,5 +41,4 @@ public class AddToBasketAction implements IAction {
 		AjaxResponse ar = (AjaxResponse) ServiceLocator.getInstance().getService(ServiceLocatorEnum.AJAX_RESPONSE);
 		ar.setMessage(lang.getValue("book_added_to_basket_success_hint")).responseOk();
 	}
-
 }

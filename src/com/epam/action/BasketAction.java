@@ -13,6 +13,11 @@ import com.epam.entity.Book;
 import com.epam.entity.User;
 import com.epam.service.BasketService;
 
+/**
+ * Main action for basket domain
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class BasketAction implements IAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		BasketService basketService = new BasketService();
@@ -26,5 +31,4 @@ public class BasketAction implements IAction {
 		
 		Viewer.execute(request, response, "basket.jsp");
 	}
-
 }

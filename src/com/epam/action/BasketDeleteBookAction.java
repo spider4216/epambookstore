@@ -11,8 +11,13 @@ import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.entity.User;
 import com.epam.service.BasketService;
 
+/**
+ * Action for delete product from basket
+ * Ajax request was expected by this action
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class BasketDeleteBookAction implements IAction {
-
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		BasketService basketService = new BasketService();
 		User user = (User) ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER);
@@ -26,5 +31,4 @@ public class BasketDeleteBookAction implements IAction {
 		AjaxResponse ar = (AjaxResponse) ServiceLocator.getInstance().getService(ServiceLocatorEnum.AJAX_RESPONSE);
 		ar.setMessage(lang.getValue("delete_book_from_basket_success")).responseOk();
 	}
-
 }

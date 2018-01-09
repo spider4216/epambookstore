@@ -9,7 +9,7 @@ import com.epam.action.SignInMainAction;
 import com.epam.action.SignInProcessAction;
 import com.epam.action.SignUpMainAction;
 import com.epam.action.SignUpProcessAction;
-import com.epam.action.AddToBasketAction;
+import com.epam.action.BasketAddToAction;
 import com.epam.action.BasketAction;
 import com.epam.action.BasketClearAction;
 import com.epam.action.BasketDeleteBookAction;
@@ -30,7 +30,7 @@ public class MapRouter {
 		map.put("/BookShop/", new MainAction());
 		map.put("/BookShop/change-lang.html", new LangAction());
 		map.put("/BookShop/book.html", new BookAction());
-		map.put("/BookShop/ajax/add-to-basket.html", new AddToBasketAction());
+		map.put("/BookShop/ajax/add-to-basket.html", new BasketAddToAction());
 		map.put("/BookShop/basket.html", new BasketAction());
 		map.put("/BookShop/ajax/delete-book-from-basket.html", new BasketDeleteBookAction());
 		map.put("/BookShop/ajax/clear-basket.html", new BasketClearAction());

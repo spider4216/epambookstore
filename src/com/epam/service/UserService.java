@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.user.MysqlUserDao;
 import com.epam.component.dao.user.exception.DaoUserException;
+import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
@@ -80,12 +81,14 @@ public class UserService {
 		return bigInt.toString(16);
 	}
 	
-	public Boolean isPasswordValid(User entity, String password) throws NoSuchAlgorithmException {
-		if (entity.getPassword().equals(passwordHash(password))) {
-			return true;
+	public Boolean isPasswordValid(User entity, String password) throws NoSuchAlgorithmException, ServiceLocatorException, UserServiceException {
+		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		
+		if (!entity.getPassword().equals(passwordHash(password))) {
+			throw new UserServiceException(lang.getValue("invalid_login_or_password"));
 		}
 		
-		return false;
+		return true;
 	}
 	
 	public Boolean login(User entity) throws UserServiceException {

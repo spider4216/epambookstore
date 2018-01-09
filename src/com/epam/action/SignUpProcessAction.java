@@ -1,27 +1,33 @@
 package com.epam.action;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.epam.component.dao.user.exception.DaoUserException;
 import com.epam.component.flash.FlashMessage;
+import com.epam.component.lang.Lang;
+import com.epam.component.service_locator.ServiceLocator;
+import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.validation.ValidatorEnum;
 import com.epam.component.validation.ValidatorFabric;
 import com.epam.component.validation.exception.ValidationException;
 import com.epam.entity.User;
 import com.epam.service.UserService;
 
+/**
+ * Sign up process - action
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class SignUpProcessAction implements IAction {
 
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// TODO flash message into service locator
 		FlashMessage fm = FlashMessage.getInstance();
+		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		ValidatorFabric validatorPassword = ValidatorFabric.initial(ValidatorEnum.PASSWORD);
 		ValidatorFabric validatorUsername = ValidatorFabric.initial(ValidatorEnum.USERNAME);
 		ValidatorFabric validatorUsernameUnique = ValidatorFabric.initial(ValidatorEnum.USERNAME_UNIQUE);
-		// TODO Int validation
 		
 		try {
 			validatorPassword.execute(request.getParameter("password"));
@@ -33,24 +39,17 @@ public class SignUpProcessAction implements IAction {
 			return;
 		}
 		
-		
 		UserService userService = new UserService();
 		User user = new User();
 		user.setUsername(request.getParameter("username"));
-		// TODO DB unique username
-		// TODO not null in database
 		user.setPassword(userService.passwordHash(request.getParameter("password")));
 		user.setFirstName(request.getParameter("first_name"));
 		user.setLastName(request.getParameter("last_name"));
 		user.setGender(Integer.parseInt(request.getParameter("gender")));
 		
-		Boolean res = userService.insert(user);
+		userService.insert(user);
 		
-		if (res != true) {
-			throw new Exception("Cannot insert user");
-		}
-		
-		fm.setMsg("You were successfully registered!");
+		fm.setMsg(lang.getValue("successfully_registered_message"));
 		
 		response.sendRedirect("/BookShop/sign-in.html");
 	}

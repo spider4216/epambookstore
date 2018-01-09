@@ -11,8 +11,13 @@ import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.entity.User;
 import com.epam.service.BasketService;
 
+/**
+ * Order action
+ * Ajax request was expected by this action
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class BasketOrderAction implements IAction {
-
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		User user = (User) ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER);
 		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
@@ -25,5 +30,4 @@ public class BasketOrderAction implements IAction {
 		AjaxResponse ar = (AjaxResponse) ServiceLocator.getInstance().getService(ServiceLocatorEnum.AJAX_RESPONSE);
 		ar.setMessage(lang.getValue("basket_ordered_success_hint")).responseOk();
 	}
-	
 }

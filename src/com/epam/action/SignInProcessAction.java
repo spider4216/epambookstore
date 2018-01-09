@@ -7,7 +7,6 @@ import com.epam.component.flash.FlashMessage;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
-import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.component.validation.ValidatorEnum;
 import com.epam.component.validation.ValidatorFabric;
 import com.epam.component.validation.exception.ValidationException;
@@ -15,8 +14,12 @@ import com.epam.entity.User;
 import com.epam.service.UserService;
 import com.epam.service.exception.UserServiceException;
 
+/**
+ * Process of sign in - action
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class SignInProcessAction implements IAction {
-
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		FlashMessage fm = FlashMessage.getInstance();
 		UserService service = new UserService();
@@ -35,34 +38,14 @@ public class SignInProcessAction implements IAction {
 			return;
 		}
 		
+		Lang lang = (Lang)ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		User entity = null;
-		
-		Lang lang = null;
-		try {
-			lang = (Lang)ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new ValidationException("Service could not be found", e);
-		}
 		
 		try  {
 			entity = service.findByUsername(username);
-		} catch (UserServiceException e) {
-			fm.setMsg(lang.getValue("auth_problem"));
-			response.sendRedirect("/BookShop/sign-in.html");
-			return;
-		}
-		
-		if (!service.isPasswordValid(entity, password)) {
-			// TODO DRY
-			fm.setMsg(lang.getValue("auth_problem"));
-			response.sendRedirect("/BookShop/sign-in.html");
-			return;
-		}
-		
-		// TODO DRY
-		try {
+			service.isPasswordValid(entity, password);
 			service.login(entity);
-		} catch(UserServiceException e) {
+		} catch (UserServiceException e) {
 			fm.setMsg(lang.getValue("auth_problem"));
 			response.sendRedirect("/BookShop/sign-in.html");
 			return;
