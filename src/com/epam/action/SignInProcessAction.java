@@ -21,7 +21,7 @@ import com.epam.service.exception.UserServiceException;
  */
 public class SignInProcessAction implements IAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		FlashMessage fm = FlashMessage.getInstance();
+		FlashMessage fm = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
 		UserService service = new UserService();
 		
 		String username = request.getParameter("username");

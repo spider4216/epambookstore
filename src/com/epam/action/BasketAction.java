@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.component.flash.FlashMessage;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.view.Viewer;
@@ -26,6 +27,9 @@ public class BasketAction implements IAction {
 		ArrayList<BasketEntity> basket = basketService.findAllProductsByUserId(user.getId());
 		Double totalSum = basketService.totalSumByCollection(basket);
 		
+		FlashMessage fm = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
+		
+		request.setAttribute("fm", fm);
 		request.setAttribute("basket", basket);
 		request.setAttribute("totalSum", totalSum);
 		

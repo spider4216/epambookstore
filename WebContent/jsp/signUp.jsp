@@ -7,9 +7,9 @@
 				<h3 class="panel-title">${requestScope.lang.getValue('sign_up')}</h3>
 			</div>
 			
-			<c:if test="${FlashMessage.getInstance().hasMsg() == true}">
+			<c:if test="${fm.hasMsg() == true}">
 			<div class="alert alert-info" role="alert">
-				<c:out value="${FlashMessage.getInstance().getMsg()}" />
+				<c:out value="${fm.getMsg()}" />
 			</div>
 			</c:if>
 			

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.epam.component.ajax_response.AjaxResponse;
+import com.epam.component.flash.FlashMessage;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
@@ -45,6 +46,18 @@ public class Init {
 		}
 		
 		AjaxResponse ar = new AjaxResponse().setResponse(response);
-		ServiceLocator.getInstance().setService(ServiceLocatorEnum.AJAX_RESPONSE, ar);
+		
+		try {
+			ServiceLocator.getInstance().getService(ServiceLocatorEnum.AJAX_RESPONSE);
+		} catch (ServiceLocatorException e) {
+			ServiceLocator.getInstance().setService(ServiceLocatorEnum.AJAX_RESPONSE, ar);
+		}
+		
+		try {
+			ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
+		} catch (ServiceLocatorException e) {
+			FlashMessage fm = new FlashMessage();
+			ServiceLocator.getInstance().setService(ServiceLocatorEnum.FLASH_MESSAGE, fm);
+		}
 	}
 }

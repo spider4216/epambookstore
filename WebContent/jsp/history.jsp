@@ -31,6 +31,10 @@
 						</table>
 						
 					</c:if>
+					
+					<c:if test="${empty history}">
+						<span>${lang.getValue('history_is_empty')}</span>
+					</c:if>
 				</div>
 			</div>
 			

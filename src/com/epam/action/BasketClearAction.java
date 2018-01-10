@@ -24,10 +24,11 @@ public class BasketClearAction implements IAction {
 		BasketService basketService = new BasketService();
 		basketService.deleteUserBasketBooks(user.getId());
 
-		FlashMessage fm = FlashMessage.getInstance();
+		FlashMessage fm = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
 		fm.setMsg(lang.getValue("basket_clear_success_flash_message"));
 		
 		AjaxResponse ar = (AjaxResponse) ServiceLocator.getInstance().getService(ServiceLocatorEnum.AJAX_RESPONSE);
+		ar.setResponse(response);
 		ar.setMessage(lang.getValue("basket_clear_success_flash_message")).responseOk();
 	}
 }

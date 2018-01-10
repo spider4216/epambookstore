@@ -25,10 +25,11 @@ public class BasketDeleteBookAction implements IAction {
 		basketService.deleteByUserAndBookId(user.getId(), bookId);
 		
 		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		FlashMessage fm = FlashMessage.getInstance();
+		FlashMessage fm = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
 		fm.setMsg(lang.getValue("delete_book_from_basket_success"));
 		
 		AjaxResponse ar = (AjaxResponse) ServiceLocator.getInstance().getService(ServiceLocatorEnum.AJAX_RESPONSE);
+		ar.setResponse(response);
 		ar.setMessage(lang.getValue("delete_book_from_basket_success")).responseOk();
 	}
 }

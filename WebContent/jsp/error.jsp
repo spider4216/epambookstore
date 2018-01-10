@@ -3,9 +3,9 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="alert alert-danger" role="alert">
-				<strong>${requestScope.lang.getValue('error_was_accurred')}</strong>
+				<strong>${lang.getValue('error_was_accurred')}</strong>
 				<span>
-					<c:out value="${requestScope.errMsg}" />
+					<c:out value="${errMsg}" />
 				</span>
 			</div>
 		</div>

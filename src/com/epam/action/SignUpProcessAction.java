@@ -23,7 +23,7 @@ public class SignUpProcessAction implements IAction {
 
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO flash message into service locator
-		FlashMessage fm = FlashMessage.getInstance();
+		FlashMessage fm = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
 		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		ValidatorFabric validatorPassword = ValidatorFabric.initial(ValidatorEnum.PASSWORD);
 		ValidatorFabric validatorUsername = ValidatorFabric.initial(ValidatorEnum.USERNAME);

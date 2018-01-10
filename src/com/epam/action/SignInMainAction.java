@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.component.flash.FlashMessage;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
@@ -26,7 +27,10 @@ public class SignInMainAction implements IAction {
 			throw new AccessControlException(lang.getValue("has_already_sign_in_access_error"));
 		}
 		
+		FlashMessage fm = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
+		
+		request.setAttribute("fm", fm);
+
 		Viewer.execute(request, response, "signIn.jsp");
 	}
-	
 }

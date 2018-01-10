@@ -17,14 +17,6 @@ public class FlashMessage {
 		pool = new HashMap<>();
 	}
 	
-	public static FlashMessage getInstance() {
-	    if (instance == null) {
-	    	instance = new FlashMessage();
-	    }
-
-		return instance;
-	}
-	
 	public void setMsg(String msg) throws ServiceLocatorException {
 		HttpSession session = getSession();
 		
