@@ -8,8 +8,14 @@ import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 
+/**
+ * This component put into Service Locator in init script
+ * If you want to use this component, don't create new instance. Use
+ * Service Locator to get component
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class FlashMessage {
-	private static FlashMessage instance = null;
 	
 	private HashMap<String, String> pool;
 	
@@ -23,6 +29,13 @@ public class FlashMessage {
 		pool.put(session.getId(), msg);
 	}
 	
+	/**
+	 * Get message from pool. If exists, get it and
+	 * delete from pool
+	 * 
+	 * @return
+	 * @throws ServiceLocatorException
+	 */
 	public String getMsg() throws ServiceLocatorException {
 		HttpSession session = getSession();
 		String sId = session.getId();
@@ -37,6 +50,12 @@ public class FlashMessage {
 		return msg;
 	}
 	
+	/**
+	 * Check, is message exist in pool
+	 * 
+	 * @return
+	 * @throws ServiceLocatorException
+	 */
 	public Boolean hasMsg() throws ServiceLocatorException {
 		HttpSession session = getSession();
 		String sId = session.getId();

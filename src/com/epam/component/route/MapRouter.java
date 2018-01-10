@@ -9,6 +9,10 @@ import com.epam.action.SignInMainAction;
 import com.epam.action.SignInProcessAction;
 import com.epam.action.SignUpMainAction;
 import com.epam.action.SignUpProcessAction;
+import com.epam.component.lang.Lang;
+import com.epam.component.service_locator.ServiceLocator;
+import com.epam.component.service_locator.ServiceLocatorEnum;
+import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.action.BasketAddToAction;
 import com.epam.action.BasketAction;
 import com.epam.action.BasketClearAction;
@@ -18,6 +22,13 @@ import com.epam.action.BookAction;
 import com.epam.action.CategoryAction;
 import com.epam.action.HistoryAction;
 
+/**
+ * Main router component. If you create your own action
+ * you have to map this one with url. Each url has suffix ".html" and
+ * prefix "BookShop"
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class MapRouter {
 	private static HashMap<String, IAction> map = new HashMap<>();
 	
@@ -39,8 +50,16 @@ public class MapRouter {
 	}
 	
 	public static IAction getAction(String path) throws RouterException {
+		Lang lang = null;
+		
+		try {
+			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		} catch (ServiceLocatorException e) {
+			throw new RouterException("Problem with service lang", e);
+		}
+		
 		if (!map.containsKey(path)) {
-			throw new RouterException("Route does not exist");
+			throw new RouterException(lang.getValue("route_does_not_exist"));
 		}
 		
 		return map.get(path);

@@ -1,12 +1,20 @@
 package com.epam.component.ajax_response;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Component for ajax response. It is put into ServiceLocator
+ * in init script
+ * 
+ * IMPORTANT
+ * When you get this component from service locator you have to
+ * set new response as argument of setter to prevent issue to do with
+ * null pointer on low layers
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class AjaxResponse {
 	private AjaxResponseStatus status;
 	
@@ -40,12 +48,14 @@ public class AjaxResponse {
 		response();
 	}
 	
+	/**
+	 * It is said that there are a lot of libraries to convert
+	 * HashMap to JSON, but I cannot use any libs according to
+	 * project criteria specified in document which I get when
+	 * start JavaLab course. That's because I have to hardcode json
+	 * as string
+	 */
 	private void response() throws IOException {
-//		HashMap<String, String> data = new HashMap<>();
-		
-//		data.put("status", status);
-//		data.put("message", msg);
-		
 		String resStatus = "err";
 		
 		switch (status) {
@@ -57,7 +67,7 @@ public class AjaxResponse {
 				break;
 		}
 		
-		// TODO Maybe there is api for json?
+		// the reason was wrote in comment above
 		String json = "{\"status\":\""+ resStatus + "\",\"message\":\"" + message + "\"}";
 		
 		response.setContentType("application/json");

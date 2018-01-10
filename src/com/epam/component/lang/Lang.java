@@ -3,6 +3,14 @@ package com.epam.component.lang;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Multilingual component. It is put into Service Locator in init script
+ * If you want to use this component, get it from service locator
+ * Don't create new instance, because it has't any sense and reason to do it.
+ * Use Service Locator
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class Lang {
 	private ResourceBundle bundle;
 	
