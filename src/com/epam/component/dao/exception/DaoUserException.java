@@ -1,4 +1,4 @@
-package com.epam.component.dao.user.exception;
+package com.epam.component.dao.exception;
 
 public class DaoUserException extends Exception {
 	public DaoUserException(String msg, Exception reason) {

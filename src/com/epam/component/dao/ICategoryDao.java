@@ -1,8 +1,8 @@
-package com.epam.component.dao.category;
+package com.epam.component.dao;
 
 import java.sql.ResultSet;
 
-import com.epam.component.dao.category.exception.DaoCategoryException;
+import com.epam.component.dao.exception.DaoCategoryException;
 
 public interface ICategoryDao {
 	public ResultSet findAll() throws DaoCategoryException;

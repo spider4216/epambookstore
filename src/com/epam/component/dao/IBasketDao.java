@@ -1,8 +1,8 @@
-package com.epam.component.dao.basket;
+package com.epam.component.dao;
 
 import java.sql.ResultSet;
 
-import com.epam.component.dao.basket.exception.DaoBasketException;
+import com.epam.component.dao.exception.DaoBasketException;
 import com.epam.entity.BasketEntity;
 
 public interface IBasketDao {

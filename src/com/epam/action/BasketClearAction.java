@@ -8,7 +8,7 @@ import com.epam.component.flash.FlashMessage;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
-import com.epam.entity.User;
+import com.epam.entity.UserEntity;
 import com.epam.service.BasketService;
 
 /**
@@ -19,7 +19,7 @@ import com.epam.service.BasketService;
  */
 public class BasketClearAction implements IAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		User user = (User) ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER);
+		UserEntity user = (UserEntity) ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER);
 		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		BasketService basketService = new BasketService();
 		basketService.deleteUserBasketBooks(user.getId());

@@ -1,4 +1,4 @@
-package com.epam.component.dao.book.exception;
+package com.epam.component.dao.exception;
 
 public class DaoBookException extends Exception {
 	public DaoBookException(String msg, Exception reason) {

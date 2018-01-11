@@ -1,4 +1,4 @@
-package com.epam.component.dao.book;
+package com.epam.component.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.epam.component.dao.book.exception.DaoBookException;
-import com.epam.entity.Book;
+import com.epam.component.dao.exception.DaoBookException;
+import com.epam.entity.BookEntity;
 
 public class MysqlBookDao implements IBookDao {
 	
@@ -18,7 +18,7 @@ public class MysqlBookDao implements IBookDao {
 		this.connection = connection;
 	}
 
-	public Integer insertBook(Book entity) throws DaoBookException {
+	public Integer insertBook(BookEntity entity) throws DaoBookException {
 		String sqlInsert = "INSERT INTO books (name, price, author, description, isbn, pages) VALUES (?, ?, ?, ?, ?, ?)";
 		
 		try {
@@ -37,7 +37,7 @@ public class MysqlBookDao implements IBookDao {
 	}
 
 	// TODO not checking
-	public Boolean deleteBook(Book entity) throws DaoBookException {
+	public Boolean deleteBook(BookEntity entity) throws DaoBookException {
 		String sqlDelete = "DELETE FROM books WHERE id = ?";
 		
 		try {

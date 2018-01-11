@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.component.view.Viewer;
-import com.epam.entity.Book;
+import com.epam.entity.BookEntity;
 import com.epam.service.BookService;
 import com.epam.service.exception.BookServiceException;
 
@@ -20,7 +20,7 @@ import com.epam.service.exception.BookServiceException;
 public class CategoryAction implements IAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws BookServiceException, ServletException, IOException {
 		BookService service = new BookService();
-		ArrayList<Book> bookCollection = service.findAllByCategoryId(Integer.parseInt(request.getParameter("id")));
+		ArrayList<BookEntity> bookCollection = service.findAllByCategoryId(Integer.parseInt(request.getParameter("id")));
 		
 		request.setAttribute("books", bookCollection);
 		

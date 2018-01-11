@@ -1,4 +1,4 @@
-package com.epam.component.dao.factory.exception;
+package com.epam.component.dao.exception;
 
 public class MysqlDaoException extends Exception {
 	public MysqlDaoException(String msg, Exception reason) {

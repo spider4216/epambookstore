@@ -11,7 +11,7 @@ import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.validation.ValidatorEnum;
 import com.epam.component.validation.ValidatorFabric;
 import com.epam.component.validation.exception.ValidationException;
-import com.epam.entity.User;
+import com.epam.entity.UserEntity;
 import com.epam.service.UserService;
 
 /**
@@ -40,7 +40,7 @@ public class SignUpProcessAction implements IAction {
 		}
 		
 		UserService userService = new UserService();
-		User user = new User();
+		UserEntity user = new UserEntity();
 		user.setUsername(request.getParameter("username"));
 		user.setPassword(userService.passwordHash(request.getParameter("password")));
 		user.setFirstName(request.getParameter("first_name"));

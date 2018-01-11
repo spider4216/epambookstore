@@ -8,8 +8,8 @@ import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.entity.BasketEntity;
-import com.epam.entity.Book;
-import com.epam.entity.User;
+import com.epam.entity.BookEntity;
+import com.epam.entity.UserEntity;
 import com.epam.service.BasketService;
 import com.epam.service.BookService;
 
@@ -26,9 +26,9 @@ public class BasketAddToAction implements IAction {
 		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		
 		BookService bookService = new BookService();
-		Book book = bookService.findById(id);
+		BookEntity book = bookService.findById(id);
 		
-		User user = (User) ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER);
+		UserEntity user = (UserEntity) ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER);
 		
 		BasketEntity entity = new BasketEntity();
 		entity.setCount(count);

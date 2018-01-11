@@ -19,7 +19,7 @@ public class BasketEntity {
 	/**
 	 * Virtual field like a relation one to one
 	 */
-	private Book book;
+	private BookEntity book;
 
 	public Integer getId() {
 		return id;
@@ -53,11 +53,11 @@ public class BasketEntity {
 		this.count = count;
 	}
 
-	public Book getBook() {
+	public BookEntity getBook() {
 		return book;
 	}
 
-	public void setBook(Book book) {
+	public void setBook(BookEntity book) {
 		this.book = book;
 	}
 

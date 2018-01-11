@@ -1,15 +1,15 @@
-package com.epam.component.dao.book;
+package com.epam.component.dao;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import com.epam.component.dao.book.exception.DaoBookException;
-import com.epam.entity.Book;
+import com.epam.component.dao.exception.DaoBookException;
+import com.epam.entity.BookEntity;
 
 public interface IBookDao {
-	public Integer insertBook(Book entity) throws DaoBookException;
+	public Integer insertBook(BookEntity entity) throws DaoBookException;
 	
-	public Boolean deleteBook(Book entity) throws DaoBookException;
+	public Boolean deleteBook(BookEntity entity) throws DaoBookException;
 	
 	public ResultSet findBooks() throws DaoBookException;
 	

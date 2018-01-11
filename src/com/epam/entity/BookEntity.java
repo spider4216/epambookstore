@@ -5,7 +5,7 @@ package com.epam.entity;
  * 
  * @author Yuriy Sitotenko
  */
-public class Book {
+public class BookEntity {
 	
 	private Integer id;
 	

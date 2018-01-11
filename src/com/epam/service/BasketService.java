@@ -5,20 +5,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import com.epam.component.dao.basket.MysqlBasketDao;
-import com.epam.component.dao.basket.exception.DaoBasketException;
-import com.epam.component.dao.book.MysqlBookDao;
-import com.epam.component.dao.book.exception.DaoBookException;
-import com.epam.component.dao.category.exception.DaoCategoryException;
+import com.epam.component.dao.MysqlBasketDao;
+import com.epam.component.dao.MysqlBookDao;
+import com.epam.component.dao.exception.DaoBasketException;
+import com.epam.component.dao.exception.DaoBookException;
+import com.epam.component.dao.exception.DaoCategoryException;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.entity.BasketEntity;
-import com.epam.entity.Book;
+import com.epam.entity.BookEntity;
 import com.epam.entity.CategoryEntity;
-import com.epam.entity.User;
+import com.epam.entity.UserEntity;
 import com.epam.service.exception.BasketServiceException;
 import com.epam.service.exception.BookServiceException;
 import com.epam.service.exception.CategoryServiceException;
@@ -75,7 +75,7 @@ public class BasketService {
 			String columnSuffix = lang.getLangAsString().equals(new Locale("en").getLanguage()) != true ? "_" + lang.getLangAsString() : "";
 
 			while (rs.next()) {
-				Book book = new Book();
+				BookEntity book = new BookEntity();
 				// TODO вынести в другое место. Сделать как билдер. Но вот куда?
 				book.setId(rs.getInt("bk.id"));
 				book.setName(rs.getString("bk.name" + columnSuffix));
@@ -148,7 +148,7 @@ public class BasketService {
 		}
 	}
 	
-	public Boolean markBooksAsHistoryByUser(User entity) throws BasketServiceException {
+	public Boolean markBooksAsHistoryByUser(UserEntity entity) throws BasketServiceException {
 		Integer res = null;
 		try {
 			res = basketDao.markAsHistoryByUserId(entity.getId());
@@ -180,7 +180,7 @@ public class BasketService {
 			String columnSuffix = lang.getLangAsString().equals(new Locale("en").getLanguage()) != true ? "_" + lang.getLangAsString() : "";
 
 			while (rs.next()) {
-				Book book = new Book();
+				BookEntity book = new BookEntity();
 				// TODO вынести в другое место. Сделать как билдер. Но вот куда?
 				book.setId(rs.getInt("bk.id"));
 				book.setName(rs.getString("bk.name" + columnSuffix));

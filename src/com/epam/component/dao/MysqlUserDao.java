@@ -1,12 +1,12 @@
-package com.epam.component.dao.user;
+package com.epam.component.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.epam.component.dao.user.exception.DaoUserException;
-import com.epam.entity.User;
+import com.epam.component.dao.exception.DaoUserException;
+import com.epam.entity.UserEntity;
 
 public class MysqlUserDao implements IUserDao {
 	
@@ -16,7 +16,7 @@ public class MysqlUserDao implements IUserDao {
 		this.connection = connection;
 	}
 	
-	public Integer insertUser(User entity) throws DaoUserException {
+	public Integer insertUser(UserEntity entity) throws DaoUserException {
 		String sqlInsert = "INSERT INTO user (username, password, first_name, last_name, gender) VALUES (?, ?, ?, ?, ?)";
 		
 		try {
@@ -37,7 +37,7 @@ public class MysqlUserDao implements IUserDao {
 		return null;
 	}
 
-	public User findOneById(Integer id) throws DaoUserException {
+	public UserEntity findOneById(Integer id) throws DaoUserException {
 		return null;
 	}
 	

@@ -8,14 +8,14 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpSession;
 
+import com.epam.component.dao.MysqlUserDao;
+import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.dao.factory.DaoFactory;
-import com.epam.component.dao.user.MysqlUserDao;
-import com.epam.component.dao.user.exception.DaoUserException;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
-import com.epam.entity.User;
+import com.epam.entity.UserEntity;
 import com.epam.service.exception.UserServiceException;
 
 public class UserService {
@@ -30,7 +30,7 @@ public class UserService {
 		}
 	}
 
-	public Boolean insert(User entity) throws DaoUserException {
+	public Boolean insert(UserEntity entity) throws DaoUserException {
 		Integer res = userDao.insertUser(entity);
 		
 		if (res <= 0) {
@@ -51,14 +51,14 @@ public class UserService {
 	}
 	
 	// TODO write in documentation fact that every service have to return entity
-	public User findByUsername(String username) throws UserServiceException {
+	public UserEntity findByUsername(String username) throws UserServiceException {
 		ResultSet res;
 		try {
 			res = userDao.findOneByUsername(username);
 		} catch (DaoUserException e) {
 			throw new UserServiceException("Cannot find user with username specified", e);
 		}
-		User entity = new User();
+		UserEntity entity = new UserEntity();
 		// TODO builder by ResultSet
 		try {
 			entity.setId(res.getInt("id"));
@@ -81,7 +81,7 @@ public class UserService {
 		return bigInt.toString(16);
 	}
 	
-	public Boolean isPasswordValid(User entity, String password) throws NoSuchAlgorithmException, ServiceLocatorException, UserServiceException {
+	public Boolean isPasswordValid(UserEntity entity, String password) throws NoSuchAlgorithmException, ServiceLocatorException, UserServiceException {
 		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		
 		if (!entity.getPassword().equals(passwordHash(password))) {
@@ -91,7 +91,7 @@ public class UserService {
 		return true;
 	}
 	
-	public Boolean login(User entity) throws UserServiceException {
+	public Boolean login(UserEntity entity) throws UserServiceException {
 		HttpSession session = null;
 		try {
 			session = (HttpSession)ServiceLocator.getInstance().getService(ServiceLocatorEnum.SESSION);
@@ -108,7 +108,7 @@ public class UserService {
 		return true;
 	}
 	
-	public User currentUser() throws UserServiceException {
+	public UserEntity currentUser() throws UserServiceException {
 		
 		// TODO DRY
 		HttpSession session = null;
@@ -124,7 +124,7 @@ public class UserService {
 		} catch (DaoUserException e) {
 			throw new UserServiceException("Cannot find user with username specified", e);
 		}
-		User entity = new User();
+		UserEntity entity = new UserEntity();
 		// TODO builder by ResultSet
 		// TODO DRY
 		try {

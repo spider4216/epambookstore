@@ -1,4 +1,4 @@
-package com.epam.component.dao.basket;
+package com.epam.component.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.epam.component.dao.basket.exception.DaoBasketException;
-import com.epam.component.dao.book.exception.DaoBookException;
-import com.epam.component.dao.category.exception.DaoCategoryException;
-import com.epam.component.dao.user.exception.DaoUserException;
+import com.epam.component.dao.exception.DaoBasketException;
+import com.epam.component.dao.exception.DaoBookException;
+import com.epam.component.dao.exception.DaoCategoryException;
+import com.epam.component.dao.exception.DaoUserException;
 import com.epam.entity.BasketEntity;
-import com.epam.entity.Book;
-import com.epam.entity.User;
+import com.epam.entity.BookEntity;
+import com.epam.entity.UserEntity;
 
 public class MysqlBasketDao implements IBasketDao {
 	private Connection connection = null;

@@ -10,7 +10,7 @@ import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.validation.ValidatorEnum;
 import com.epam.component.validation.ValidatorFabric;
 import com.epam.component.validation.exception.ValidationException;
-import com.epam.entity.User;
+import com.epam.entity.UserEntity;
 import com.epam.service.UserService;
 import com.epam.service.exception.UserServiceException;
 
@@ -39,7 +39,7 @@ public class SignInProcessAction implements IAction {
 		}
 		
 		Lang lang = (Lang)ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		User entity = null;
+		UserEntity entity = null;
 		
 		try  {
 			entity = service.findByUsername(username);

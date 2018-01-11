@@ -1,13 +1,13 @@
 package com.epam.component.dao.factory;
 
-import com.epam.component.dao.basket.IBasketDao;
-import com.epam.component.dao.basket.exception.DaoBasketException;
-import com.epam.component.dao.book.IBookDao;
-import com.epam.component.dao.book.exception.DaoBookException;
-import com.epam.component.dao.category.ICategoryDao;
-import com.epam.component.dao.category.exception.DaoCategoryException;
-import com.epam.component.dao.user.IUserDao;
-import com.epam.component.dao.user.exception.DaoUserException;
+import com.epam.component.dao.IBasketDao;
+import com.epam.component.dao.IBookDao;
+import com.epam.component.dao.ICategoryDao;
+import com.epam.component.dao.IUserDao;
+import com.epam.component.dao.exception.DaoBasketException;
+import com.epam.component.dao.exception.DaoBookException;
+import com.epam.component.dao.exception.DaoCategoryException;
+import com.epam.component.dao.exception.DaoUserException;
 
 public abstract class DaoFactory {
 	public static final int MYSQL = 1;

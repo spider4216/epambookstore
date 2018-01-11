@@ -1,4 +1,4 @@
-package com.epam.component.dao.category.exception;
+package com.epam.component.dao.exception;
 
 public class DaoCategoryException extends Exception {
 	public DaoCategoryException(String msg) {

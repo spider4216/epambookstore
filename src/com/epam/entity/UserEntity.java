@@ -1,6 +1,6 @@
 package com.epam.entity;
 
-public class User {
+public class UserEntity {
 	private Integer id;
 	
 	private String username;

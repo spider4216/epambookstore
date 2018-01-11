@@ -12,7 +12,7 @@ import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
-import com.epam.entity.User;
+import com.epam.entity.UserEntity;
 import com.epam.service.UserService;
 import com.epam.service.exception.UserServiceException;
 
@@ -39,7 +39,7 @@ public class Init {
 		
 		try {
 			UserService us = new UserService();
-			User user = us.currentUser();
+			UserEntity user = us.currentUser();
 			ServiceLocator.getInstance().setService(ServiceLocatorEnum.USER, user);
 		} catch (UserServiceException e) {
 			ServiceLocator.getInstance().setService(ServiceLocatorEnum.USER, null);

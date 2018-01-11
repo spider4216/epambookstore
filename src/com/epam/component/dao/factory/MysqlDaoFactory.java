@@ -5,19 +5,19 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import com.epam.component.dao.basket.IBasketDao;
-import com.epam.component.dao.basket.MysqlBasketDao;
-import com.epam.component.dao.basket.exception.DaoBasketException;
-import com.epam.component.dao.book.IBookDao;
-import com.epam.component.dao.book.MysqlBookDao;
-import com.epam.component.dao.book.exception.DaoBookException;
-import com.epam.component.dao.category.ICategoryDao;
-import com.epam.component.dao.category.MysqlCategoryDao;
-import com.epam.component.dao.category.exception.DaoCategoryException;
-import com.epam.component.dao.factory.exception.MysqlDaoException;
-import com.epam.component.dao.user.IUserDao;
-import com.epam.component.dao.user.MysqlUserDao;
-import com.epam.component.dao.user.exception.DaoUserException;
+import com.epam.component.dao.MysqlBasketDao;
+import com.epam.component.dao.MysqlBookDao;
+import com.epam.component.dao.MysqlCategoryDao;
+import com.epam.component.dao.MysqlUserDao;
+import com.epam.component.dao.IBasketDao;
+import com.epam.component.dao.IBookDao;
+import com.epam.component.dao.ICategoryDao;
+import com.epam.component.dao.IUserDao;
+import com.epam.component.dao.exception.DaoBasketException;
+import com.epam.component.dao.exception.DaoBookException;
+import com.epam.component.dao.exception.DaoCategoryException;
+import com.epam.component.dao.exception.DaoUserException;
+import com.epam.component.dao.exception.MysqlDaoException;
 
 public class MysqlDaoFactory extends DaoFactory {
 	

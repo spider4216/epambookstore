@@ -5,14 +5,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import com.epam.component.dao.book.MysqlBookDao;
-import com.epam.component.dao.book.exception.DaoBookException;
+import com.epam.component.dao.MysqlBookDao;
+import com.epam.component.dao.exception.DaoBookException;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
-import com.epam.entity.Book;
+import com.epam.entity.BookEntity;
 import com.epam.service.exception.BookServiceException;
 
 /**
@@ -32,7 +32,7 @@ public class BookService {
 		}
 	}
 	
-	public Boolean insert(Book entity) throws DaoBookException {
+	public Boolean insert(BookEntity entity) throws DaoBookException {
 		Integer res = bookDao.insertBook(entity);
 		
 		if (res <= 0) {
@@ -42,11 +42,11 @@ public class BookService {
 		return true;
 	}
 	
-	public Boolean delete(Book entity) throws DaoBookException {
+	public Boolean delete(BookEntity entity) throws DaoBookException {
 		return bookDao.deleteBook(entity);
 	}
 	
-	public Book findById(Integer id) throws BookServiceException {
+	public BookEntity findById(Integer id) throws BookServiceException {
 		Lang lang = null;
 		
 		// TODO вынести в другое место. Сделать как билдер. Но вот куда?
@@ -54,7 +54,7 @@ public class BookService {
 			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 			ResultSet rs = bookDao.findBook(id);
 			String columnSuffix = lang.getLangAsString().equals(new Locale("en").getLanguage()) != true ? "_" + lang.getLangAsString() : "";
-			Book book = new Book();
+			BookEntity book = new BookEntity();
 			book.setId(rs.getInt("id"));
 			book.setName(rs.getString("name" + columnSuffix));
 			book.setPrice(rs.getDouble("price"));
@@ -71,7 +71,7 @@ public class BookService {
 		}
 	}
 	
-	public ArrayList<Book> findAll() throws BookServiceException {
+	public ArrayList<BookEntity> findAll() throws BookServiceException {
 		Lang lang = null;
 		
 		try {
@@ -80,14 +80,14 @@ public class BookService {
 			throw new BookServiceException("Problem with getting all books", e);
 		}
 
-		ArrayList<Book> bookCollection = new ArrayList<>();
+		ArrayList<BookEntity> bookCollection = new ArrayList<>();
 		ResultSet rs = null;
 		try {
 			rs = bookDao.findBooks();
 			String columnSuffix = lang.getLangAsString().equals(new Locale("en").getLanguage()) != true ? "_" + lang.getLangAsString() : "";
 
 			while (rs.next()) {
-				Book book = new Book();
+				BookEntity book = new BookEntity();
 				// TODO вынести в другое место. Сделать как билдер. Но вот куда?
 				book.setId(rs.getInt("id"));
 				book.setName(rs.getString("name" + columnSuffix));
@@ -108,7 +108,7 @@ public class BookService {
 	}
 	
 	// TODO DRY
-	public ArrayList<Book> findAllByCategoryId(Integer id) throws BookServiceException {
+	public ArrayList<BookEntity> findAllByCategoryId(Integer id) throws BookServiceException {
 		Lang lang = null;
 		
 		try {
@@ -117,14 +117,14 @@ public class BookService {
 			throw new BookServiceException("Problem with getting books by category", e);
 		}
 
-		ArrayList<Book> bookCollection = new ArrayList<>();
+		ArrayList<BookEntity> bookCollection = new ArrayList<>();
 		ResultSet rs = null;
 		try {
 			rs = bookDao.findAllByCategoryId(id);
 			String columnSuffix = lang.getLangAsString().equals(new Locale("en").getLanguage()) != true ? "_" + lang.getLangAsString() : "";
 
 			while (rs.next()) {
-				Book book = new Book();
+				BookEntity book = new BookEntity();
 				// TODO вынести в другое место. Сделать как билдер. Но вот куда?
 				book.setId(rs.getInt("id"));
 				book.setName(rs.getString("name" + columnSuffix));

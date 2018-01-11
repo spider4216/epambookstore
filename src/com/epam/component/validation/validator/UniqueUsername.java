@@ -1,6 +1,6 @@
 package com.epam.component.validation.validator;
 
-import com.epam.component.dao.user.exception.DaoUserException;
+import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;

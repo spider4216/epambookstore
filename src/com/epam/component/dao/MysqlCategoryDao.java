@@ -1,4 +1,4 @@
-package com.epam.component.dao.category;
+package com.epam.component.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.epam.component.dao.category.exception.DaoCategoryException;
+import com.epam.component.dao.exception.DaoCategoryException;
 
 public class MysqlCategoryDao implements ICategoryDao {
 	private Connection connection = null;
