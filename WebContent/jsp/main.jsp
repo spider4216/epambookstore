@@ -71,6 +71,8 @@
 	<script src="js/jquery.jgrowl.min.js"></script>
 	<script src="js/BasketClass.js"></script>
 	<script src="js/BasketRun.js"></script>
+	<script src="js/SearchClass.js"></script>
+	<script src="js/SearchRun.js"></script>
 </div>
 </body>
 </html>

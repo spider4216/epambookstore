@@ -6,8 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import com.epam.component.dao.exception.DaoBookException;
+import com.epam.component.lang.Lang;
+import com.epam.component.service_locator.ServiceLocator;
+import com.epam.component.service_locator.ServiceLocatorEnum;
+import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.entity.BookEntity;
 
 public class MysqlBookDao implements IBookDao {
@@ -74,6 +79,23 @@ public class MysqlBookDao implements IBookDao {
 			
 			return rs;
 		} catch (SQLException e) {
+			throw new DaoBookException("Cannot find book", e);
+		}
+	}
+	
+	public ResultSet findAllLikeName(String name) throws DaoBookException {
+		try {
+			Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+			String columnSuffix = lang.getLangAsString().equals(new Locale("en").getLanguage()) != true ? "_" + lang.getLangAsString() : "";
+			
+			String sqlFind = "SELECT * FROM books WHERE name" + columnSuffix +" LIKE ?";
+			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			pr.setString(1, "%" + name + "%");
+			
+			ResultSet rs = pr.executeQuery();
+			
+			return rs;
+		} catch (SQLException | ServiceLocatorException e) {
 			throw new DaoBookException("Cannot find book", e);
 		}
 	}

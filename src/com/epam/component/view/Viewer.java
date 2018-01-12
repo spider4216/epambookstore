@@ -26,4 +26,8 @@ public class Viewer {
 		
 		request.getRequestDispatcher("/jsp/main.jsp").include(request, response);
 	}
+	
+	public static void renderPartial(HttpServletRequest request, HttpServletResponse response, String name) throws ServletException, IOException {
+		request.getRequestDispatcher("/jsp/" + name).include(request, response);
+	}
 }

@@ -16,4 +16,6 @@ public interface IBookDao {
 	public ResultSet findBook(Integer id) throws DaoBookException;
 	
 	public ResultSet findAllByCategoryId(Integer id) throws DaoBookException;
+	
+	public ResultSet findAllLikeName(String name) throws DaoBookException;
 }
