@@ -16,13 +16,19 @@ import com.epam.service.BookService;
 public class SearchAction implements IAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String searchFor = request.getParameter("text");
+		String categoryId = request.getParameter("categoryId");
 		
 		BookService bookService = new BookService();
-		ArrayList<BookEntity> collection = bookService.searchByName(searchFor);
+		ArrayList<BookEntity> collection = null;
+		
+		if (categoryId == null) {
+			collection = bookService.searchByName(searchFor);
+		} else {
+			collection = bookService.searchByNameAndCategoryId(searchFor, Integer.parseInt(categoryId));
+		}
 		
 		request.setAttribute("books", collection);
 		
 		Viewer.renderPartial(request, response, "bookList.jsp");
 	}
-
 }

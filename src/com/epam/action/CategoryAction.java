@@ -23,6 +23,7 @@ public class CategoryAction implements IAction {
 		ArrayList<BookEntity> bookCollection = service.findAllByCategoryId(Integer.parseInt(request.getParameter("id")));
 		
 		request.setAttribute("books", bookCollection);
+		request.setAttribute("category_id", request.getParameter("id"));
 		
 		Viewer.execute(request, response, "category.jsp");
 	}

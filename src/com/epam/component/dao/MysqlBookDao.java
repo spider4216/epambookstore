@@ -100,6 +100,24 @@ public class MysqlBookDao implements IBookDao {
 		}
 	}
 	
+	public ResultSet findAllLikeNameByCategoryId(String name, Integer categoryId) throws DaoBookException {
+		try {
+			Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+			String columnSuffix = lang.getLangAsString().equals(new Locale("en").getLanguage()) != true ? "_" + lang.getLangAsString() : "";
+			
+			String sqlFind = "SELECT * FROM books WHERE name" + columnSuffix +" LIKE ? AND category_id = ?";
+			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			pr.setString(1, "%" + name + "%");
+			pr.setInt(2, categoryId);
+			
+			ResultSet rs = pr.executeQuery();
+			
+			return rs;
+		} catch (SQLException | ServiceLocatorException e) {
+			throw new DaoBookException("Cannot find book", e);
+		}
+	}
+	
 	public ResultSet findBook(Integer id) throws DaoBookException {
 		String sqlFind = "SELECT * FROM books WHERE id = ?";
 		

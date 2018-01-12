@@ -1,14 +1,29 @@
+/**
+ * Class for search books
+ * 
+ * @author Yuriy Sirotenko
+ */
 function SearchClass() {
 	
 	/**
 	 * @private
 	 */
 	var searchSelector = $("input[name='search_field']");
+
+	/**
+	 * @private
+	 */
+	var searchByCategorySelector = $("input[name='search_field_by_category']");
 	
 	/**
 	 * @private
 	 */
-	var  bookContainer = $(".book-container");
+	var bookContainer = $(".book-container");
+	
+	/**
+	 * @private
+	 */
+	var categoryId = $("input[name='category_id']").val();
 	
 	/**
 	 * @public
@@ -22,12 +37,33 @@ function SearchClass() {
 	 */
 	var typeEvent = function() {
 		searchSelector.keyup(function() {
-			typeHandler();
+			typeMainHandler();
+		});
+		
+		searchByCategorySelector.keyup(function() {
+			typeCategoryHandler();
 		});
 	}
 	
-	var typeHandler = function() {
-		var text = searchSelector.val();
+	/**
+	 * @private
+	 */
+	var typeCategoryHandler = function() {
+		typeHandler(searchByCategorySelector);
+	}
+	
+	/**
+	 * @private
+	 */
+	var typeMainHandler = function() {
+		typeHandler(searchSelector);
+	}
+	
+	/**
+	 * @private
+	 */
+	var typeHandler = function(field) {
+		var text = field.val();
 		var countCharacter = text.length;
 		
 		if (countCharacter < 4) {
@@ -38,7 +74,7 @@ function SearchClass() {
 			url: "/BookShop/ajax/search.html",
 			method: "post",
 			dataType: "html",
-			data: {text: text},
+			data: {text: text, categoryId: categoryId},
 			beforeSend: function() {
 				// TODO disabled container and show loader
 			},
