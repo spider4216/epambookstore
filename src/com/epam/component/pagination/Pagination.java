@@ -4,10 +4,17 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.epam.component.service_locator.ServiceLocator;
+import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.entity.BookEntity;
 import com.epam.service.BookService;
 import com.epam.service.exception.BookServiceException;
 
+/**
+ * Pagination component
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class Pagination {
 	public final Integer COUNT_ITEM = 10;
 	
@@ -17,6 +24,9 @@ public class Pagination {
 		this.request = request;
 	}
 	
+	/**
+	 * Get current page number
+	 */
 	public Integer getCurrentPageNumber() {
 		String pageNum = request.getParameter("page");
 		
@@ -27,10 +37,16 @@ public class Pagination {
 		return Integer.parseInt(pageNum);
 	}
 	
+	/**
+	 * Get next page number
+	 */
 	public Integer getNextPageNumber() {
 		return getCurrentPageNumber() + 1;
 	}
 	
+	/**
+	 * Get previous page number
+	 */
 	public Integer getPreviousPageNumber() {
 		if (getCurrentPageNumber() == 1) {
 			return 1;
@@ -39,14 +55,20 @@ public class Pagination {
 		return getCurrentPageNumber() - 1;
 	}
 	
+	/**
+	 * Is previous page disabled
+	 */
 	public Boolean isPreviousDisabled() {
 		return getCurrentPageNumber() == 1 ? true : false;
 	}
 	
+	/**
+	 * Is next page disabled
+	 */
 	public Boolean isNextDisabled() {
 		try {
 			BookService bookeService = new BookService();
-			ArrayList<BookEntity> collection = bookeService.findNextPageBooks();
+			ArrayList<BookEntity> collection = bookeService.findNextPageBooks(getCurrentStartOffset() + COUNT_ITEM, COUNT_ITEM);
 			
 			if (collection.isEmpty()) {
 				return true;
@@ -58,13 +80,16 @@ public class Pagination {
 		}
 	}
 	
-	public Integer getStartOffset() {
+	/**
+	 * Get current start offset
+	 */
+	public Integer getCurrentStartOffset() {
 		Integer currentPageNum = getCurrentPageNumber();
-		
+
 		if (currentPageNum == 1) {
 			return 0;
 		}
-		
+
 		return (currentPageNum * COUNT_ITEM) - COUNT_ITEM;
 	}
 }
