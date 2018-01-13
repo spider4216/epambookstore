@@ -76,14 +76,25 @@ function SearchClass() {
 			dataType: "html",
 			data: {text: text, categoryId: categoryId},
 			beforeSend: function() {
-				// TODO disabled container and show loader
+				blockElement(bookContainer);
 			},
 			complete: function() {
-				// TODO enabled container
+				unblockElement(bookContainer);
 			},
 			success: function(res) {
 				bookContainer.html(res);
 			}
 		});
+	}
+	
+	var blockElement = function(element) {
+		element.block({
+			message: null,
+			overlayCSS: {backgroundColor: '#efefef'}
+		});
+	}
+	
+	var unblockElement = function(element) {
+		element.unblock();
 	}
 }
