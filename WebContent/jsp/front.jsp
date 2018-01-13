@@ -68,7 +68,7 @@
 										
 										<c:if test="${pager.isNextDisabled() == true}">
 											<li class="disabled">
-												<a href="/BookShop/#">${lang.getValue('pager_next')}</a>
+												<a href="/BookShop/?page=${pager.getCurrentPageNumber()}">${lang.getValue('pager_next')}</a>
 											</li>
 										</c:if>
 										

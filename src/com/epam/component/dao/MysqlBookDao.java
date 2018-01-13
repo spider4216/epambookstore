@@ -82,6 +82,25 @@ public class MysqlBookDao implements IBookDao {
 	}
 	
 	/**
+	 * Find all books according to pagination params and category id
+	 */
+	public ResultSet findBooksByCategoryIdWithPagination(Integer categoryId, Integer offset, Integer limit) throws DaoBookException {
+		try {
+			String sqlFind = "SELECT * FROM books WHERE category_id = ? LIMIT ?,?";
+			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			pr.setInt(1, categoryId);
+			pr.setInt(2, offset);
+			pr.setInt(3, limit);
+			
+			ResultSet rs = pr.executeQuery();
+			
+			return rs;
+		} catch (SQLException e) {
+			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
+		}
+	}
+	
+	/**
 	 * Find all books by category id
 	 */
 	public ResultSet findAllByCategoryId(Integer id) throws DaoBookException {		

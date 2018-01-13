@@ -81,6 +81,24 @@ public class Pagination {
 	}
 	
 	/**
+	 * Is next page disabled
+	 */
+	public Boolean isNextForCategoryDisabled(Integer categoryId) {
+		try {
+			BookService bookeService = new BookService();
+			ArrayList<BookEntity> collection = bookeService.findNextPageCategoryBooks(categoryId, getCurrentStartOffset() + COUNT_ITEM, COUNT_ITEM);
+			
+			if (collection.isEmpty()) {
+				return true;
+			}
+			
+			return false;
+		} catch (BookServiceException e) {
+			return true;
+		}
+	}
+	
+	/**
 	 * Get current start offset
 	 */
 	public Integer getCurrentStartOffset() {

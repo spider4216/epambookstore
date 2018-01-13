@@ -91,6 +91,24 @@ public class BookService {
 	}
 	
 	/**
+	 * Find books with limit and position for pagination and category id
+	 */
+	public ArrayList<BookEntity> findNextPageCategoryBooks(Integer categoryId, Integer offset, Integer limit) throws BookServiceException {		
+		try {
+			ArrayList<BookEntity> bookCollection = new ArrayList<>();
+			ResultSet result = bookDao.findBooksByCategoryIdWithPagination(categoryId, offset, limit);
+
+			while (result.next()) {
+				bookCollection.add(bookSetter(result));
+			}
+
+			return bookCollection;
+		} catch (DaoBookException | SQLException e) {
+			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
+		}
+	}
+	
+	/**
 	 * Search by name
 	 */
 	public ArrayList<BookEntity> searchByName(String name) throws BookServiceException {
