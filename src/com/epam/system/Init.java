@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import com.epam.component.ajax_response.AjaxResponse;
 import com.epam.component.flash.FlashMessage;
 import com.epam.component.lang.Lang;
+import com.epam.component.pagination.Pagination;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
@@ -58,6 +59,13 @@ public class Init {
 		} catch (ServiceLocatorException e) {
 			FlashMessage fm = new FlashMessage();
 			ServiceLocator.getInstance().setService(ServiceLocatorEnum.FLASH_MESSAGE, fm);
+		}
+		
+		try {
+			ServiceLocator.getInstance().getService(ServiceLocatorEnum.PAGINATION);
+		} catch (ServiceLocatorException e) {
+			Pagination pagination = new Pagination();
+			ServiceLocator.getInstance().setService(ServiceLocatorEnum.PAGINATION, pagination);
 		}
 	}
 }

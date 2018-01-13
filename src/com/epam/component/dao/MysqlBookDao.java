@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import com.epam.component.dao.exception.DaoBookException;
 import com.epam.component.lang.Lang;
+import com.epam.component.pagination.Pagination;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
@@ -57,14 +58,36 @@ public class MysqlBookDao implements IBookDao {
 	}
 
 	public ResultSet findBooks() throws DaoBookException {
-		String sqlFind = "SELECT * FROM books";		
 		try {
-			Statement pr = connection.createStatement();
+			Pagination pager = (Pagination) ServiceLocator.getInstance().getService(ServiceLocatorEnum.PAGINATION);
 			
-			ResultSet rs = pr.executeQuery(sqlFind);
+			String sqlFind = "SELECT * FROM books LIMIT ?,?";
+			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			pr.setInt(1, pager.getStartOffset());
+			pr.setInt(2, pager.COUNT_ITEM);
+			
+			ResultSet rs = pr.executeQuery();
 			
 			return rs;
-		} catch (SQLException e) {
+		} catch (SQLException | ServiceLocatorException e) {
+			throw new DaoBookException("Cannot find book", e);
+		}
+	}
+	
+	// TODO DRY
+	public ResultSet findNextPageBooks() throws DaoBookException {
+		try {
+			Pagination pager = (Pagination) ServiceLocator.getInstance().getService(ServiceLocatorEnum.PAGINATION);
+			
+			String sqlFind = "SELECT * FROM books LIMIT ?,?";
+			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			pr.setInt(1, pager.getStartOffset() + pager.COUNT_ITEM);
+			pr.setInt(2, pager.COUNT_ITEM);
+			
+			ResultSet rs = pr.executeQuery();
+			
+			return rs;
+		} catch (SQLException | ServiceLocatorException e) {
 			throw new DaoBookException("Cannot find book", e);
 		}
 	}

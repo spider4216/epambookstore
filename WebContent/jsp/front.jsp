@@ -19,34 +19,69 @@
 				</div>
 				
 				<div class="row">
-					<div class="book-container">
-						<c:forEach items="${books}" var="item">
-							<div class="col-md-3">
-								<div class="thumbnail thumbnail-book-card">
-									<div class="thumb-img">
-										<img src="${item.getImgPath()}" alt="" class="img-thumbnail">
+					<div class="col-md-12">
+						<div class="book-container">
+							<div class="row">
+								<c:forEach items="${books}" var="item">
+									<div class="col-md-3">
+										<div class="thumbnail thumbnail-book-card">
+											<div class="thumb-img">
+												<img src="${item.getImgPath()}" alt="" class="img-thumbnail">
+											</div>
+											
+											<div class="thumb-content">
+												<div class="thumb-title">
+													<h3>
+														<c:out value="${item.getName()}" />
+													</h3>
+												</div>
+												
+												<div class="thumb-description">
+													<p>
+														<c:out value="${item.getDescription()}" />
+													</p>
+												</div>
+												
+												<div class="thumb-footer">
+													<a href="/BookShop/book.html?id=${item.getId()}" class="btn btn-default" role="button">${lang.getValue('more')}</a>
+												</div>
+											</div>
+										</div>
 									</div>
-									
-									<div class="thumb-content">
-										<div class="thumb-title">
-											<h3>
-												<c:out value="${item.getName()}" />
-											</h3>
-										</div>
-										
-										<div class="thumb-description">
-											<p>
-												<c:out value="${item.getDescription()}" />
-											</p>
-										</div>
-										
-										<div class="thumb-footer">
-											<a href="/BookShop/book.html?id=${item.getId()}" class="btn btn-default" role="button">${lang.getValue('more')}</a>
-										</div>
-									</div>
-								</div>
+								</c:forEach>
 							</div>
-						</c:forEach>
+	
+							<div class="row">
+								<nav aria-label="...">
+									<ul class="pager">
+										<c:if test="${pager.isPreviousDisabled() == true}">
+											<li class="disabled">
+												<a href="/BookShop/#" class="disabled">${lang.getValue('pager_previous')}</a>
+											</li>
+										</c:if>
+										
+										<c:if test="${pager.isPreviousDisabled() == false}">
+											<li>
+												<a href="/BookShop/?page=${pager.getPreviousPageNumber()}">${lang.getValue('pager_previous')}</a>
+											</li>
+										</c:if>
+										
+										<c:if test="${pager.isNextDisabled() == true}">
+											<li class="disabled">
+												<a href="/BookShop/#">${lang.getValue('pager_next')}</a>
+											</li>
+										</c:if>
+										
+										<c:if test="${pager.isNextDisabled() == false}">
+											<li>
+												<a href="/BookShop/?page=${pager.getNextPageNumber()}">${lang.getValue('pager_next')}</a>
+											</li>
+										</c:if>
+									
+									</ul>
+								</nav>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

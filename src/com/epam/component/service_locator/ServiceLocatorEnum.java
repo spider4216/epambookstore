@@ -6,4 +6,5 @@ public enum ServiceLocatorEnum {
 	LANG,
 	AJAX_RESPONSE,
 	FLASH_MESSAGE,
+	PAGINATION,
 }
