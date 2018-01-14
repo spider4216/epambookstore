@@ -10,6 +10,7 @@ import com.epam.component.dao.MysqlBookDao;
 import com.epam.component.dao.exception.DaoBasketException;
 import com.epam.component.dao.exception.DaoBookException;
 import com.epam.component.dao.exception.DaoCategoryException;
+import com.epam.component.dao.exception.MysqlDaoException;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
@@ -37,10 +38,10 @@ public class BasketService {
 			throw new BasketServiceException("Problem with lang", e);
 		}
 		
-		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 		try {
+			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 			basketDao = (MysqlBasketDao)MYSQLFactory.getBasketDao();
-		} catch (DaoBasketException e) {
+		} catch (DaoBasketException | MysqlDaoException e) {
 			throw new BasketServiceException("service_basket_create_dao_err", e);
 		}
 	}

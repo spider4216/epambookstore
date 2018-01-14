@@ -8,6 +8,7 @@ import com.epam.component.dao.exception.DaoBasketException;
 import com.epam.component.dao.exception.DaoBookException;
 import com.epam.component.dao.exception.DaoCategoryException;
 import com.epam.component.dao.exception.DaoUserException;
+import com.epam.component.dao.exception.MysqlDaoException;
 
 public abstract class DaoFactory {
 	public static final int MYSQL = 1;
@@ -20,7 +21,7 @@ public abstract class DaoFactory {
 
 	public abstract IBasketDao getBasketDao() throws DaoBasketException;
 	
-	public static DaoFactory getDaoFactory(Integer whichFactory) {
+	public static DaoFactory getDaoFactory(Integer whichFactory) throws MysqlDaoException {
 		switch (whichFactory) {
 			case MYSQL :
 				return new MysqlDaoFactory();

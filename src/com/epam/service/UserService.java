@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.epam.component.dao.MysqlUserDao;
 import com.epam.component.dao.exception.DaoUserException;
+import com.epam.component.dao.exception.MysqlDaoException;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
@@ -37,10 +38,10 @@ public class UserService {
 			throw new UserServiceException("Cannot get lang", e);
 		}
 		
-		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 		try {
+			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 			userDao = (MysqlUserDao)MYSQLFactory.getUserDao();
-		} catch (DaoUserException e) {
+		} catch (DaoUserException | MysqlDaoException e) {
 			throw new UserServiceException(lang.getValue("service_user_get_dao_err"));
 		}
 	}

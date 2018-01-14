@@ -18,6 +18,8 @@ import com.epam.entity.BasketEntity;
  * @author Yuriy Sirotenko
  */
 public class MysqlBasketDao implements IBasketDao {
+	private static final Integer EMPTY_BASKET = 0;
+	
 	private Connection connection = null;
 	
 	private Lang lang = null;
@@ -44,7 +46,9 @@ public class MysqlBasketDao implements IBasketDao {
 			pr.setInt(3, entity.getCount());
 			pr.setInt(4, entity.getIsHistory());
 
-			return pr.executeUpdate();
+			Integer res = pr.executeUpdate();
+
+			return res;
 		} catch (SQLException e) {
 			throw new DaoBasketException(lang.getValue("dao_basket_drop_into_basket_err"), e);
 		}
@@ -62,7 +66,7 @@ public class MysqlBasketDao implements IBasketDao {
 			ResultSet res = pr.executeQuery();
 			res.next();
 						
-			if (res.getRow() <= 0) {
+			if (res.getRow() <= EMPTY_BASKET) {
 				throw new DaoBasketException(lang.getValue("dao_basket_product_not_found"));
 			}
 			

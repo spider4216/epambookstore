@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import com.epam.component.dao.MysqlCategoryDao;
 import com.epam.component.dao.exception.DaoCategoryException;
+import com.epam.component.dao.exception.MysqlDaoException;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
@@ -33,10 +34,10 @@ public class CategoryService {
 			throw new CategoryServiceException("cannot get lang", e);
 		}
 		
-		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 		try {
+			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 			categoryDao = (MysqlCategoryDao)MYSQLFactory.getCategoryDao();
-		} catch (DaoCategoryException e) {
+		} catch (DaoCategoryException | MysqlDaoException e) {
 			throw new CategoryServiceException(lang.getValue("service_category_get_dao_err"), e);
 		}
 	}
