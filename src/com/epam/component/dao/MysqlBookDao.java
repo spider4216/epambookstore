@@ -26,7 +26,7 @@ public class MysqlBookDao implements IBookDao {
 	public MysqlBookDao(Connection connection) throws DaoBookException {
 		this.connection = connection;
 		try {
-			this.lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		} catch (ServiceLocatorException e) {
 			throw new DaoBookException("Problem with book dao", e);
 		}

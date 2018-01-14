@@ -13,74 +13,74 @@ import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.entity.CategoryEntity;
+import com.epam.service.exception.BookServiceException;
 import com.epam.service.exception.CategoryServiceException;
 
-// TODO Навести порядок. DRY во всем DAO
+/**
+ * Service for category
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class CategoryService {
 	private MysqlCategoryDao categoryDao;
 	
+	private Lang lang;
+	
 	public CategoryService() throws CategoryServiceException {
+		try {
+			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		} catch (ServiceLocatorException e) {
+			throw new CategoryServiceException("cannot get lang", e);
+		}
+		
 		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 		try {
 			categoryDao = (MysqlCategoryDao)MYSQLFactory.getCategoryDao();
 		} catch (DaoCategoryException e) {
-			throw new CategoryServiceException("Cannot getting category dao", e);
+			throw new CategoryServiceException(lang.getValue("service_category_get_dao_err"), e);
 		}
 	}
-	
+
+	/**
+	 * Find all categories
+	 */
 	public ArrayList<CategoryEntity> findAll() throws CategoryServiceException {
-		Lang lang = null;
-		
 		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new CategoryServiceException("Problem with getting all categories", e);
-		}
+			ArrayList<CategoryEntity> categoryCollection = new ArrayList<>();
+			ResultSet res = categoryDao.findAll();
 
-		ArrayList<CategoryEntity> categoryCollection = new ArrayList<>();
-		ResultSet rs = null;
-		try {
-			rs = categoryDao.findAll();
-			// TODO DRY
-			String columnSuffix = lang.getLangAsString().equals(new Locale("en").getLanguage()) != true ? "_" + lang.getLangAsString() : "";
-
-			while (rs.next()) {
-				CategoryEntity category = new CategoryEntity();
-				// TODO вынести в другое место. Сделать как билдер. Но вот куда?
-				category.setId(rs.getInt("id"));
-				category.setName(rs.getString("name" + columnSuffix));
-				categoryCollection.add(category);
+			while (res.next()) {
+				categoryCollection.add(categorySetter(res));
 			}
 
 			return categoryCollection;
 		} catch (DaoCategoryException | SQLException e) {
-				throw new CategoryServiceException("Cannot find categories", e);
+			throw new CategoryServiceException(lang.getValue("service_category_empty_err"), e);
 		}
 	}
 
+	/**
+	 * Find category by id
+	 */
 	public CategoryEntity findOneById(Integer id) throws CategoryServiceException {
-		Lang lang = null;
-		
 		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new CategoryServiceException("Problem with getting all categories", e);
-		}
-		
-		ResultSet rs = null;
-		try {
-			rs = categoryDao.findOneById(id);
-			// TODO DRY
-			String columnSuffix = lang.getLangAsString().equals(new Locale("en").getLanguage()) != true ? "_" + lang.getLangAsString() : "";
+			ResultSet res = categoryDao.findOneById(id);
 			
-			CategoryEntity category = new CategoryEntity();
-			// TODO вынести в другое место. Сделать как билдер. Но вот куда?
-			category.setId(rs.getInt("id"));
-			category.setName(rs.getString("name" + columnSuffix));
-			
-			return category;
+			return categorySetter(res);
 		} catch (DaoCategoryException | SQLException e) {
-			throw new CategoryServiceException("Cannot find category by id", e);
+			throw new CategoryServiceException(lang.getValue("service_category_empty_err"), e);
 		}
+	}
+	
+	/**
+	 * Setter category entity
+	 */
+	private CategoryEntity categorySetter(ResultSet result) throws SQLException {
+		String columnSuffix = lang.getColumnSuffix();
+		CategoryEntity category = new CategoryEntity();
+		category.setId(result.getInt("id"));
+		category.setName(result.getString("name" + columnSuffix));
+		
+		return category;
 	}
 }
