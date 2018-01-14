@@ -18,28 +18,49 @@ import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.entity.UserEntity;
 import com.epam.service.exception.UserServiceException;
 
+/**
+ * User service
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class UserService {
+	private static final Integer EMPTY_USER = 0;
+	
 	private MysqlUserDao userDao;
 	
+	private Lang lang;
+	
 	public UserService() throws UserServiceException {
+		try {
+			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		} catch (ServiceLocatorException e) {
+			throw new UserServiceException("Cannot get lang", e);
+		}
+		
 		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 		try {
 			userDao = (MysqlUserDao)MYSQLFactory.getUserDao();
 		} catch (DaoUserException e) {
-			throw new UserServiceException("cannot get dao for user service");
+			throw new UserServiceException(lang.getValue("service_user_get_dao_err"));
 		}
 	}
 
+	/**
+	 * Insert user
+	 */
 	public Boolean insert(UserEntity entity) throws DaoUserException {
 		Integer res = userDao.insertUser(entity);
 		
-		if (res <= 0) {
+		if (res <= EMPTY_USER) {
 			return false;
 		}
 		
 		return true;
 	}
 	
+	/**
+	 * Check is user exist
+	 */
 	public Boolean isUserExist(String username) {
 		try {
 			userDao.findOneByUsername(username);
@@ -49,31 +70,22 @@ public class UserService {
 		
 		return true;
 	}
-	
-	// TODO write in documentation fact that every service have to return entity
+
+	/**
+	 * Find user by username
+	 */
 	public UserEntity findByUsername(String username) throws UserServiceException {
-		ResultSet res;
 		try {
-			res = userDao.findOneByUsername(username);
-		} catch (DaoUserException e) {
-			throw new UserServiceException("Cannot find user with username specified", e);
+			ResultSet res = userDao.findOneByUsername(username);
+			return userSetter(res);
+		} catch (SQLException | DaoUserException e) {
+			throw new UserServiceException(lang.getValue("service_user_cannot_find_user"), e);
 		}
-		UserEntity entity = new UserEntity();
-		// TODO builder by ResultSet
-		try {
-			entity.setId(res.getInt("id"));
-			entity.setUsername(res.getString("username"));
-			entity.setPassword(res.getString("password"));
-			entity.setFirstName(res.getString("first_name"));
-			entity.setLastName(res.getString("last_name"));
-			entity.setGender(res.getInt("gender"));
-		} catch (SQLException e) {
-			throw new UserServiceException("Problem with getting data in user service", e);
-		}
-		
-		return entity;
 	}
 	
+	/**
+	 * Hash Password
+	 */
 	public String passwordHash(String password) throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		byte[] mdPass = md.digest(password.getBytes());
@@ -81,6 +93,9 @@ public class UserService {
 		return bigInt.toString(16);
 	}
 	
+	/**
+	 * Check is password valid
+	 */
 	public Boolean isPasswordValid(UserEntity entity, String password) throws NoSuchAlgorithmException, ServiceLocatorException, UserServiceException {
 		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		
@@ -91,52 +106,46 @@ public class UserService {
 		return true;
 	}
 	
+	/**
+	 * Login process
+	 */
 	public Boolean login(UserEntity entity) throws UserServiceException {
-		HttpSession session = null;
 		try {
-			session = (HttpSession)ServiceLocator.getInstance().getService(ServiceLocatorEnum.SESSION);
-		} catch (ServiceLocatorException e) {
-			throw new UserServiceException("cannot login", e);
-		}
-		
-		try {
+			HttpSession session = (HttpSession)ServiceLocator.getInstance().getService(ServiceLocatorEnum.SESSION);
 			userDao.updateSissionIdByUsername(entity.getUsername(), session.getId());
-		} catch (DaoUserException e) {
-			throw new UserServiceException("cannot auth. Problem with session set", e);
+		} catch (DaoUserException | ServiceLocatorException e) {
+			throw new UserServiceException(lang.getValue("service_user_auth_problem"), e);
 		}
 		
 		return true;
 	}
 	
+	/**
+	 * Get current user
+	 */
 	public UserEntity currentUser() throws UserServiceException {
 		
-		// TODO DRY
-		HttpSession session = null;
 		try {
-			session = (HttpSession)ServiceLocator.getInstance().getService(ServiceLocatorEnum.SESSION);
-		} catch (ServiceLocatorException e) {
-			throw new UserServiceException("cannot get current user", e);
+			HttpSession session = (HttpSession) ServiceLocator.getInstance().getService(ServiceLocatorEnum.SESSION);
+			ResultSet res = userDao.findOneBySessionId(session.getId());
+			return userSetter(res);
+		} catch (DaoUserException | ServiceLocatorException | SQLException e) {
+			throw new UserServiceException(lang.getValue("service_user_current_user_err"), e);
 		}
-		
-		ResultSet res;
-		try {
-			res = userDao.findOneBySessionId(session.getId());
-		} catch (DaoUserException e) {
-			throw new UserServiceException("Cannot find user with username specified", e);
-		}
+	}
+	
+	/**
+	 * Set data to user entity
+	 */
+	private UserEntity userSetter(ResultSet result) throws SQLException {
 		UserEntity entity = new UserEntity();
-		// TODO builder by ResultSet
-		// TODO DRY
-		try {
-			entity.setId(res.getInt("id"));
-			entity.setUsername(res.getString("username"));
-			entity.setPassword(res.getString("password"));
-			entity.setFirstName(res.getString("first_name"));
-			entity.setLastName(res.getString("last_name"));
-			entity.setGender(res.getInt("gender"));
-		} catch (SQLException e) {
-			throw new UserServiceException("Problem with getting data in user service by session id", e);
-		}
+		
+		entity.setId(result.getInt("id"));
+		entity.setUsername(result.getString("username"));
+		entity.setPassword(result.getString("password"));
+		entity.setFirstName(result.getString("first_name"));
+		entity.setLastName(result.getString("last_name"));
+		entity.setGender(result.getInt("gender"));
 		
 		return entity;
 	}
