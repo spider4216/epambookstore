@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoCategoryException;
+import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
@@ -18,13 +20,9 @@ import com.epam.component.service_locator.ServiceLocatorException;
  * @author Yuriy Sirotenko
  */
 public class MysqlCategoryDao implements ICategoryDao {
-	private Connection connection = null;
-	
 	private Lang lang = null;
 	
-	public MysqlCategoryDao(Connection connection) throws DaoCategoryException {
-		this.connection = connection;
-		
+	public MysqlCategoryDao() throws DaoCategoryException {
 		try {
 			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		} catch (ServiceLocatorException e) {
@@ -37,13 +35,15 @@ public class MysqlCategoryDao implements ICategoryDao {
 	 */
 	public ResultSet findAll() throws DaoCategoryException {
 		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
 			String sqlFind = "SELECT * FROM category";
 			Statement pr = connection.createStatement();
 			
 			ResultSet res = pr.executeQuery(sqlFind);
-			
+
 			return res;
-		} catch (SQLException e) {
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoCategoryException(lang.getValue("dao_category_empty_err"), e);
 		}
 	}
@@ -53,6 +53,8 @@ public class MysqlCategoryDao implements ICategoryDao {
 	 */
 	public ResultSet findOneById(Integer id) throws DaoCategoryException {		
 		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
 			String sqlFind = "SELECT * FROM category WHERE id = ?";
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
 			pr.setInt(1, id);
@@ -60,7 +62,7 @@ public class MysqlCategoryDao implements ICategoryDao {
 			res.next();
 			
 			return res;
-		} catch (SQLException e) {
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoCategoryException(lang.getValue("dao_category_empty_err"), e);
 		}
 	}

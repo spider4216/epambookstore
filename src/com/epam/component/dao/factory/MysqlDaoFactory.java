@@ -19,58 +19,20 @@ import com.epam.component.dao.exception.MysqlDaoException;
 
 public class MysqlDaoFactory extends DaoFactory {
 	
-	private ConnectionPool connectionPool;
-	
-	public MysqlDaoFactory() throws MysqlDaoException {
-		try {
-			connectionPool = ConnectionPool.getInstance();
-		} catch (ConnectionPoolException e) {
-			throw new MysqlDaoException("cannot create connection pool", e);
-		}
-	}
-
 	public IBookDao getBookDao() throws DaoBookException {
-		Connection con = null;
-		try {
-			con = connectionPool.getConnection();
-		} catch (ConnectionPoolException e) {
-			throw new DaoBookException("Problem with create connection", e);
-		}
-		
-		return new MysqlBookDao(con);
+		return new MysqlBookDao();
 	}
 	
 	public IUserDao getUserDao() throws DaoUserException {
-		Connection con = null;
-		try {
-			con = connectionPool.getConnection();
-		} catch (ConnectionPoolException e) {
-			throw new DaoUserException("Problem with create connection", e);
-		}
-		
-		return new MysqlUserDao(con);
+		return new MysqlUserDao();
 	}
 	
 	public ICategoryDao getCategoryDao() throws DaoCategoryException {
-		Connection con = null;
-		try {
-			con = connectionPool.getConnection();
-		} catch (ConnectionPoolException e) {
-			throw new DaoCategoryException("Problem with create connection", e);
-		}
-		
-		return new MysqlCategoryDao(con);
+		return new MysqlCategoryDao();
 	}
 	
 	public IBasketDao getBasketDao() throws DaoBasketException {
-		Connection con = null;
-		try {
-			con = connectionPool.getConnection();
-		} catch (ConnectionPoolException e) {
-			throw new DaoBasketException("Problem with create connection", e);
-		}
-		
-		return new MysqlBasketDao(con);
+		return new MysqlBasketDao();
 	}
 
 }

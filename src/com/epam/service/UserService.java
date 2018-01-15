@@ -9,8 +9,10 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpSession;
 
 import com.epam.component.dao.MysqlUserDao;
+import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.dao.exception.MysqlDaoException;
+import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
@@ -52,6 +54,12 @@ public class UserService {
 	public Boolean insert(UserEntity entity) throws DaoUserException {
 		Integer res = userDao.insertUser(entity);
 		
+		try {
+			ConnectionPool.getInstance().release();
+		} catch (ConnectionPoolException e) {
+			throw new DaoUserException("err to do with insert", e);
+		}
+		
 		if (res <= EMPTY_USER) {
 			return false;
 		}
@@ -65,7 +73,8 @@ public class UserService {
 	public Boolean isUserExist(String username) {
 		try {
 			userDao.findOneByUsername(username);
-		} catch (DaoUserException e) {
+			ConnectionPool.getInstance().release();
+		} catch (DaoUserException | ConnectionPoolException e) {
 			return false;
 		}
 		
@@ -78,8 +87,10 @@ public class UserService {
 	public UserEntity findByUsername(String username) throws UserServiceException {
 		try {
 			ResultSet res = userDao.findOneByUsername(username);
-			return userSetter(res);
-		} catch (SQLException | DaoUserException e) {
+			UserEntity user = userSetter(res);
+			ConnectionPool.getInstance().release();
+			return user;
+		} catch (SQLException | DaoUserException | ConnectionPoolException e) {
 			throw new UserServiceException(lang.getValue("service_user_cannot_find_user"), e);
 		}
 	}
@@ -114,7 +125,8 @@ public class UserService {
 		try {
 			HttpSession session = (HttpSession)ServiceLocator.getInstance().getService(ServiceLocatorEnum.SESSION);
 			userDao.updateSissionIdByUsername(entity.getUsername(), session.getId());
-		} catch (DaoUserException | ServiceLocatorException e) {
+			ConnectionPool.getInstance().release();
+		} catch (DaoUserException | ServiceLocatorException | ConnectionPoolException e) {
 			throw new UserServiceException(lang.getValue("service_user_auth_problem"), e);
 		}
 		
@@ -129,8 +141,10 @@ public class UserService {
 		try {
 			HttpSession session = (HttpSession) ServiceLocator.getInstance().getService(ServiceLocatorEnum.SESSION);
 			ResultSet res = userDao.findOneBySessionId(session.getId());
-			return userSetter(res);
-		} catch (DaoUserException | ServiceLocatorException | SQLException e) {
+			UserEntity user = userSetter(res);
+			ConnectionPool.getInstance().release();
+			return user;
+		} catch (DaoUserException | ServiceLocatorException | SQLException | ConnectionPoolException e) {
 			throw new UserServiceException(lang.getValue("service_user_current_user_err"), e);
 		}
 	}

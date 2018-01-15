@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 
 import com.epam.component.dao.exception.ConnectionPoolException;
 
-class ConnectionPool {
+public class ConnectionPool {
 	private static ConnectionPool instance;
 	
 	private ArrayList<Connection> freeConnection = new ArrayList<>();
@@ -103,5 +103,9 @@ class ConnectionPool {
 		}
 		
 		freeConnection.clear();
+	}
+	
+	public Integer getConnectionCount() {
+		return freeConnection.size();
 	}
 }

@@ -5,8 +5,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.epam.component.dao.MysqlBookDao;
+import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoBookException;
 import com.epam.component.dao.exception.MysqlDaoException;
+import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
@@ -43,14 +45,25 @@ public class BookService {
 	 * Delete one book by entity
 	 */
 	public Boolean delete(BookEntity entity) throws DaoBookException {
-		return bookDao.deleteBook(entity.getId());
+		Boolean res = bookDao.deleteBook(entity.getId());
+		
+		try {
+			ConnectionPool.getInstance().release();
+		} catch (ConnectionPoolException e) {
+			// TODO translate
+			throw new DaoBookException("problem with delete book", e);
+		}
+		
+		return res;
 	}
 
 	public BookEntity findById(Integer id) throws BookServiceException {
 		try {
 			ResultSet result = bookDao.findBook(id);
-			return bookSetter(result);
-		} catch (SQLException | DaoBookException e) {
+			BookEntity res = bookSetter(result);
+			ConnectionPool.getInstance().release();
+			return res;
+		} catch (SQLException | DaoBookException | ConnectionPoolException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
 		}
 	}
@@ -66,9 +79,11 @@ public class BookService {
 			while (result.next()) {
 				bookCollection.add(bookSetter(result));
 			}
+			
+			ConnectionPool.getInstance().release();
 
 			return bookCollection;
-		} catch (DaoBookException | SQLException e) {
+		} catch (DaoBookException | SQLException | ConnectionPoolException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
 		}
 	}
@@ -84,9 +99,11 @@ public class BookService {
 			while (result.next()) {
 				bookCollection.add(bookSetter(result));
 			}
+			
+			ConnectionPool.getInstance().release();
 
 			return bookCollection;
-		} catch (DaoBookException | SQLException e) {
+		} catch (DaoBookException | SQLException | ConnectionPoolException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
 		}
 	}
@@ -102,9 +119,11 @@ public class BookService {
 			while (result.next()) {
 				bookCollection.add(bookSetter(result));
 			}
+			
+			ConnectionPool.getInstance().release();
 
 			return bookCollection;
-		} catch (DaoBookException | SQLException e) {
+		} catch (DaoBookException | SQLException | ConnectionPoolException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
 		}
 	}
@@ -120,9 +139,11 @@ public class BookService {
 			while (result.next()) {
 				bookCollection.add(bookSetter(result));
 			}
+			
+			ConnectionPool.getInstance().release();
 
 			return bookCollection;
-		} catch (DaoBookException | SQLException e) {
+		} catch (DaoBookException | SQLException | ConnectionPoolException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
 		}
 	}
@@ -138,9 +159,11 @@ public class BookService {
 			while (result.next()) {
 				bookCollection.add(bookSetter(result));
 			}
+			
+			ConnectionPool.getInstance().release();
 
 			return bookCollection;
-		} catch (DaoBookException | SQLException e) {
+		} catch (DaoBookException | SQLException | ConnectionPoolException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
 		}
 	}

@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import com.epam.component.dao.MysqlCategoryDao;
+import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoCategoryException;
 import com.epam.component.dao.exception.MysqlDaoException;
+import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
@@ -53,9 +55,11 @@ public class CategoryService {
 			while (res.next()) {
 				categoryCollection.add(categorySetter(res));
 			}
+			
+			ConnectionPool.getInstance().release();
 
 			return categoryCollection;
-		} catch (DaoCategoryException | SQLException e) {
+		} catch (DaoCategoryException | SQLException | ConnectionPoolException e) {
 			throw new CategoryServiceException(lang.getValue("service_category_empty_err"), e);
 		}
 	}
@@ -66,9 +70,10 @@ public class CategoryService {
 	public CategoryEntity findOneById(Integer id) throws CategoryServiceException {
 		try {
 			ResultSet res = categoryDao.findOneById(id);
-			
-			return categorySetter(res);
-		} catch (DaoCategoryException | SQLException e) {
+			CategoryEntity category = categorySetter(res);
+			ConnectionPool.getInstance().release();
+			return category;
+		} catch (DaoCategoryException | SQLException | ConnectionPoolException e) {
 			throw new CategoryServiceException(lang.getValue("service_category_empty_err"), e);
 		}
 	}

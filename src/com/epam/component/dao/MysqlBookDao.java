@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoBookException;
+import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
@@ -19,12 +21,9 @@ import com.epam.component.service_locator.ServiceLocatorException;
  */
 public class MysqlBookDao implements IBookDao {
 	
-	private Connection connection = null;
-	
 	private Lang lang = null;
 	
-	public MysqlBookDao(Connection connection) throws DaoBookException {
-		this.connection = connection;
+	public MysqlBookDao() throws DaoBookException {
 		try {
 			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		} catch (ServiceLocatorException e) {
@@ -37,13 +36,16 @@ public class MysqlBookDao implements IBookDao {
 	 */
 	public Boolean deleteBook(Integer id) throws DaoBookException {
 		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
 			String sqlDelete = "DELETE FROM books WHERE id = ?";
 			PreparedStatement pr = connection.prepareStatement(sqlDelete);
 			pr.setInt(1, id);
 			
 			pr.executeUpdate();
+			
 			return true;
-		} catch (SQLException e) {
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_delete_err"), e);
 		}
 	}
@@ -53,12 +55,14 @@ public class MysqlBookDao implements IBookDao {
 	 */
 	public ResultSet findBooks() throws DaoBookException {
 		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
 			String sqlFind = "SELECT * FROM books";
 			Statement pr = connection.createStatement();
 			ResultSet rs = pr.executeQuery(sqlFind);
 			
 			return rs;
-		} catch (SQLException e) {
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
 	}
@@ -68,6 +72,8 @@ public class MysqlBookDao implements IBookDao {
 	 */
 	public ResultSet findBooksWithPagination(Integer offset, Integer limit) throws DaoBookException {
 		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
 			String sqlFind = "SELECT * FROM books LIMIT ?,?";
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
 			pr.setInt(1, offset);
@@ -76,7 +82,7 @@ public class MysqlBookDao implements IBookDao {
 			ResultSet rs = pr.executeQuery();
 			
 			return rs;
-		} catch (SQLException e) {
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
 	}
@@ -86,6 +92,8 @@ public class MysqlBookDao implements IBookDao {
 	 */
 	public ResultSet findBooksByCategoryIdWithPagination(Integer categoryId, Integer offset, Integer limit) throws DaoBookException {
 		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
 			String sqlFind = "SELECT * FROM books WHERE category_id = ? LIMIT ?,?";
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
 			pr.setInt(1, categoryId);
@@ -95,7 +103,7 @@ public class MysqlBookDao implements IBookDao {
 			ResultSet rs = pr.executeQuery();
 			
 			return rs;
-		} catch (SQLException e) {
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
 	}
@@ -105,14 +113,16 @@ public class MysqlBookDao implements IBookDao {
 	 */
 	public ResultSet findAllByCategoryId(Integer id) throws DaoBookException {		
 		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
 			String sqlFind = "SELECT * FROM books WHERE category_id = ?";
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
 			pr.setInt(1, id);
 
-			ResultSet rs = pr.executeQuery();
-
-			return rs;
-		} catch (SQLException e) {
+			ResultSet res = pr.executeQuery();
+			
+			return res;
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
 	}
@@ -122,16 +132,18 @@ public class MysqlBookDao implements IBookDao {
 	 */
 	public ResultSet findAllLikeName(String name) throws DaoBookException {
 		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
 			String columnSuffix = lang.getColumnSuffix();
 			
 			String sqlFind = "SELECT * FROM books WHERE name" + columnSuffix +" LIKE ?";
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
 			pr.setString(1, "%" + name + "%");
 			
-			ResultSet rs = pr.executeQuery();
+			ResultSet res = pr.executeQuery();
 			
-			return rs;
-		} catch (SQLException e) {
+			return res;
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
 	}
@@ -141,6 +153,8 @@ public class MysqlBookDao implements IBookDao {
 	 */
 	public ResultSet findAllLikeNameByCategoryId(String name, Integer categoryId) throws DaoBookException {
 		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
 			String columnSuffix = lang.getColumnSuffix();
 
 			String sqlFind = "SELECT * FROM books WHERE name" + columnSuffix +" LIKE ? AND category_id = ?";
@@ -148,10 +162,10 @@ public class MysqlBookDao implements IBookDao {
 			pr.setString(1, "%" + name + "%");
 			pr.setInt(2, categoryId);
 			
-			ResultSet rs = pr.executeQuery();
+			ResultSet res = pr.executeQuery();
 			
-			return rs;
-		} catch (SQLException e) {
+			return res;
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
 	}
@@ -163,14 +177,16 @@ public class MysqlBookDao implements IBookDao {
 		String sqlFind = "SELECT * FROM books WHERE id = ?";
 		
 		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
 			pr.setInt(1, id);
 			
-			ResultSet rs = pr.executeQuery();
-			rs.next();
+			ResultSet res = pr.executeQuery();
+			res.next();
 			
-			return rs;
-		} catch (SQLException e) {
+			return res;
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
 	}

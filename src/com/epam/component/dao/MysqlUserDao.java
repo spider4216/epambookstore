@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoUserException;
+import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
@@ -20,13 +22,9 @@ import com.epam.entity.UserEntity;
 public class MysqlUserDao implements IUserDao {
 	private static final Integer EMPTY_USER = 0;
 	
-	private Connection connection = null;
-	
 	private Lang lang = null;
 	
-	public MysqlUserDao(Connection connection) throws DaoUserException {
-		this.connection = connection;
-		
+	public MysqlUserDao() throws DaoUserException {
 		try {
 			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		} catch (ServiceLocatorException e) {
@@ -39,15 +37,19 @@ public class MysqlUserDao implements IUserDao {
 	 */
 	public Integer insertUser(UserEntity entity) throws DaoUserException {
 		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
 			String sqlInsert = "INSERT INTO user (username, password, first_name, last_name, gender) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement pr = connection.prepareStatement(sqlInsert);
 			pr.setString(1, entity.getUsername());
 			pr.setString(2, entity.getPassword());
 			pr.setString(3, entity.getFirstName());
 			pr.setString(4, entity.getLastName());
-			pr.setInt(5, entity.getGender());			
-			return pr.executeUpdate();
-		} catch (SQLException e) {
+			pr.setInt(5, entity.getGender());
+			
+			Integer res = pr.executeUpdate();
+			
+			return res;
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoUserException(lang.getValue("dao_user_cannot_inser_err"), e);
 		}
 	}
@@ -57,18 +59,21 @@ public class MysqlUserDao implements IUserDao {
 	 */
 	public ResultSet findOneByUsername(String username) throws DaoUserException {
 		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			System.out.println(123);
 			String sqlFind = "SELECT * FROM user WHERE username = ?";
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
 			pr.setString(1, username);
 			ResultSet res = pr.executeQuery();
+			
 			res.next();
-						
+
 			if (res.getRow() <= EMPTY_USER) {
 				throw new DaoUserException(lang.getValue("dao_user_not_found"));
 			}
 
 			return res;
-		} catch (SQLException e) {
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoUserException(lang.getValue("dao_user_not_found"), e);
 		}
 	}
@@ -78,12 +83,17 @@ public class MysqlUserDao implements IUserDao {
 	 */
 	public Integer updateSissionIdByUsername(String username, String sessionId) throws DaoUserException {
 		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
 			String sqlUpdate = "UPDATE user SET session_id = ? where username = ?";
 			PreparedStatement pr = connection.prepareStatement(sqlUpdate);
 			pr.setString(1, sessionId);
 			pr.setString(2, username);
-			return pr.executeUpdate();
-		} catch (SQLException e) {
+			
+			Integer res = pr.executeUpdate();
+			
+			return res;
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoUserException(lang.getValue("dao_user_session_update_err"), e);
 		}
 	}
@@ -93,18 +103,20 @@ public class MysqlUserDao implements IUserDao {
 	 */
 	public ResultSet findOneBySessionId(String sessionId) throws DaoUserException {
 		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
 			String sqlSelect = "SELECT * FROM user WHERE session_id = ?";
 			PreparedStatement pr = connection.prepareStatement(sqlSelect);
 			pr.setString(1, sessionId);
 			ResultSet res = pr.executeQuery();
 			res.next();
-						
+
 			if (res.getRow() <= EMPTY_USER) {
 				throw new DaoUserException(lang.getValue("dao_user_not_found"));
 			}
 
 			return res;
-		} catch (SQLException e) {
+		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoUserException(lang.getValue("dao_user_not_found"), e);
 		}
 	}
