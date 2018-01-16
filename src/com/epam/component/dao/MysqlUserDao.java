@@ -12,6 +12,7 @@ import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
+import com.epam.constant.RoleConstant;
 import com.epam.entity.UserEntity;
 
 /**
@@ -38,13 +39,14 @@ public class MysqlUserDao implements IUserDao {
 	public Integer insertUser(UserEntity entity) throws DaoUserException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
-			String sqlInsert = "INSERT INTO user (username, password, first_name, last_name, gender) VALUES (?, ?, ?, ?, ?)";
+			String sqlInsert = "INSERT INTO user (username, password, first_name, last_name, gender, role_id) VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement pr = connection.prepareStatement(sqlInsert);
 			pr.setString(1, entity.getUsername());
 			pr.setString(2, entity.getPassword());
 			pr.setString(3, entity.getFirstName());
 			pr.setString(4, entity.getLastName());
 			pr.setInt(5, entity.getGender());
+			pr.setInt(6, RoleConstant.USER);
 			
 			Integer res = pr.executeUpdate();
 			

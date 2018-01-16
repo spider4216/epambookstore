@@ -1,5 +1,7 @@
 package com.epam.entity;
 
+import com.epam.constant.RoleConstant;
+
 public class UserEntity {
 	private Integer id;
 	
@@ -14,6 +16,13 @@ public class UserEntity {
 	private Integer gender;
 	
 	private String session_id;
+	
+	private Integer role_id = RoleConstant.USER;
+	
+	/**
+	 * Virtual field like a relation one to one
+	 */
+	private RoleEntity role;
 
 	public Integer getId() {
 		return id;
@@ -69,5 +78,21 @@ public class UserEntity {
 
 	public void setSessionId(String session_id) {
 		this.session_id = session_id;
+	}
+
+	public Integer getRoleId() {
+		return role_id;
+	}
+
+	public void setRoleId(Integer role_id) {
+		this.role_id = role_id;
+	}
+
+	public RoleEntity getRole() {
+		return role;
+	}
+
+	public void setRole(RoleEntity role) {
+		this.role = role;
 	}
 }

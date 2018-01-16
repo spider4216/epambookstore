@@ -18,7 +18,9 @@ import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
+import com.epam.entity.RoleEntity;
 import com.epam.entity.UserEntity;
+import com.epam.service.exception.RoleServiceException;
 import com.epam.service.exception.UserServiceException;
 
 /**
@@ -152,7 +154,7 @@ public class UserService {
 	/**
 	 * Set data to user entity
 	 */
-	private UserEntity userSetter(ResultSet result) throws SQLException {
+	private UserEntity userSetter(ResultSet result) throws SQLException, UserServiceException {
 		UserEntity entity = new UserEntity();
 		
 		entity.setId(result.getInt("id"));
@@ -161,6 +163,17 @@ public class UserService {
 		entity.setFirstName(result.getString("first_name"));
 		entity.setLastName(result.getString("last_name"));
 		entity.setGender(result.getInt("gender"));
+		
+		Integer roleId = result.getInt("role_id");
+		
+		try {
+			RoleService roleService = new RoleService();
+			RoleEntity role = roleService.findOneById(roleId);
+			entity.setRole(role);
+		} catch (RoleServiceException e) {
+			// TODO translate
+			throw new UserServiceException("cannot get role for user", e);
+		}
 		
 		return entity;
 	}
