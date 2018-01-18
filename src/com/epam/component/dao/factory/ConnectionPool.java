@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 import com.epam.component.dao.exception.ConnectionPoolException;
 
 public class ConnectionPool {
-	private static ConnectionPool instance;
+	private static ConnectionPool instance = null;
 	
 	private ArrayList<Connection> freeConnection = new ArrayList<>();
 	
@@ -23,6 +23,13 @@ public class ConnectionPool {
 	private String pass;
 	
 	private Integer maxConnection;
+	
+	/**
+	 * Need for transaction
+	 */
+	private Boolean useSingleConnection = false;
+	
+	private Connection singleConnection = null;
 
 	public ConnectionPool() throws ConnectionPoolException {
 		ResourceBundle resource = ResourceBundle.getBundle("com.epam.config.db");
@@ -52,6 +59,17 @@ public class ConnectionPool {
 	}
 	
 	public synchronized Connection getConnection() throws ConnectionPoolException {
+		// Need for transaction
+		// Comments more properly
+		// move to method
+		if (useSingleConnection == true) {
+			if (singleConnection == null) {
+				singleConnection = newConnection();
+			}
+			
+			return singleConnection;
+		}
+		
 		Connection con = null;
 		
 		if (!freeConnection.isEmpty()) {
@@ -84,7 +102,7 @@ public class ConnectionPool {
 	}
 	
 	public synchronized void freeConnection(Connection con) {
-		if ((con != null) && (freeConnection.size() <= maxConnection)) {
+		if (useSingleConnection != true && (con != null) && (freeConnection.size() <= maxConnection)) {
 			freeConnection.add(con);
 		}
 	}
@@ -107,5 +125,9 @@ public class ConnectionPool {
 	
 	public Integer getConnectionCount() {
 		return freeConnection.size();
+	}
+	
+	public void useOneConnection(Boolean val) {
+		useSingleConnection = val;
 	}
 }

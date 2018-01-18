@@ -118,8 +118,11 @@ public class OrderService {
 	
 	public Boolean createOrder(Integer userId) throws OrderServiceException {
 		Connection connection = null;
+		ConnectionPool connectionPool = null;
 		
 		try {
+			connectionPool = ConnectionPool.getInstance();
+			connectionPool.useOneConnection(true);
 			connection = (Connection) ConnectionPool.getInstance().getConnection();
 			connection.setAutoCommit(false);
 		} catch (ConnectionPoolException | SQLException e) {
@@ -137,6 +140,7 @@ public class OrderService {
 		try {
 			basketService = new BasketService();
 		} catch (BasketServiceException e) {
+			connectionPool.useOneConnection(false);
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
@@ -148,6 +152,7 @@ public class OrderService {
 		try {
 			basketCollection = basketService.findAllProductsByUserId(userId);
 		} catch (BasketServiceException e) {
+			connectionPool.useOneConnection(false);
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
@@ -160,6 +165,7 @@ public class OrderService {
 		try {
 			orderToProductService = new OrderToProductService();
 		} catch (OrderToProductServiceException e) {
+			connectionPool.useOneConnection(false);
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
@@ -167,10 +173,9 @@ public class OrderService {
 			}
 			throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
 		}
-		
+
 		for (BasketEntity item : basketCollection) {
 			OrderToProductEntity orderToProductEntity = new OrderToProductEntity();
-			
 			orderToProductEntity.setBookId(item.getBook().getId());
 			orderToProductEntity.setCount(item.getCount());
 			orderToProductEntity.setOrderId(orderId);
@@ -178,6 +183,7 @@ public class OrderService {
 			try {
 				orderToProductService.insert(orderToProductEntity);
 			} catch (OrderToProductServiceException e) {
+				connectionPool.useOneConnection(false);
 				try {
 					connection.rollback();
 				} catch (SQLException e1) {
@@ -190,6 +196,7 @@ public class OrderService {
 		try {
 			basketService.deleteUserBasketBooks(userId);
 		} catch (BasketServiceException e) {
+			connectionPool.useOneConnection(false);
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
@@ -201,8 +208,11 @@ public class OrderService {
 		try {
 			connection.commit();
 		} catch (SQLException e) {
+			connectionPool.useOneConnection(false);
 			throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
 		}
+		
+		connectionPool.useOneConnection(false);
 		
 		return true;
 	}
