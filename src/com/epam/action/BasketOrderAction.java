@@ -10,6 +10,7 @@ import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.entity.UserEntity;
 import com.epam.service.BasketService;
+import com.epam.service.OrderService;
 
 /**
  * Order action
@@ -21,8 +22,9 @@ public class BasketOrderAction implements IAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		UserEntity user = (UserEntity) ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER);
 		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		BasketService basketService = new BasketService();
-		basketService.markBooksAsHistoryByUser(user);
+		
+		OrderService orderService = new OrderService();
+		orderService.createOrder(user.getId());
 		
 		FlashMessage fm = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
 		fm.setMsg(lang.getValue("basket_ordered_success_hint"));

@@ -1,9 +1,11 @@
 package com.epam.service;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.epam.action.BasketOrderAction;
 import com.epam.component.dao.MysqlCategoryDao;
 import com.epam.component.dao.MysqlOrderDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
@@ -16,9 +18,12 @@ import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
+import com.epam.constant.OrderStatus;
+import com.epam.entity.BasketEntity;
 import com.epam.entity.OrderEntity;
 import com.epam.entity.OrderToProductEntity;
 import com.epam.entity.UserEntity;
+import com.epam.service.exception.BasketServiceException;
 import com.epam.service.exception.OrderServiceException;
 import com.epam.service.exception.OrderToProductServiceException;
 
@@ -109,5 +114,96 @@ public class OrderService {
 		}
 		
 		return id;
+	}
+	
+	public Boolean createOrder(Integer userId) throws OrderServiceException {
+		Connection connection = null;
+		
+		try {
+			connection = (Connection) ConnectionPool.getInstance().getConnection();
+			connection.setAutoCommit(false);
+		} catch (ConnectionPoolException | SQLException e) {
+			throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
+		}
+		
+		OrderEntity orderEntity = new OrderEntity();
+		orderEntity.setUserId(userId);
+		orderEntity.setStatus(OrderStatus.UNDER_CONSIDERATION);
+		
+		OrderService orderService = new OrderService();
+		Integer orderId = orderService.insert(orderEntity);
+		
+		BasketService basketService;
+		try {
+			basketService = new BasketService();
+		} catch (BasketServiceException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e1);
+			}
+			throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
+		}
+		ArrayList<BasketEntity> basketCollection;
+		try {
+			basketCollection = basketService.findAllProductsByUserId(userId);
+		} catch (BasketServiceException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e1);
+			}
+			throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
+		}
+		
+		OrderToProductService orderToProductService;
+		try {
+			orderToProductService = new OrderToProductService();
+		} catch (OrderToProductServiceException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e1);
+			}
+			throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
+		}
+		
+		for (BasketEntity item : basketCollection) {
+			OrderToProductEntity orderToProductEntity = new OrderToProductEntity();
+			
+			orderToProductEntity.setBookId(item.getBook().getId());
+			orderToProductEntity.setCount(item.getCount());
+			orderToProductEntity.setOrderId(orderId);
+
+			try {
+				orderToProductService.insert(orderToProductEntity);
+			} catch (OrderToProductServiceException e) {
+				try {
+					connection.rollback();
+				} catch (SQLException e1) {
+					throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e1);
+				}
+				throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
+			}
+		}
+		
+		try {
+			basketService.deleteUserBasketBooks(userId);
+		} catch (BasketServiceException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e1);
+			}
+			throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
+		}
+		
+		try {
+			connection.commit();
+		} catch (SQLException e) {
+			throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
+		}
+		
+		return true;
 	}
 }

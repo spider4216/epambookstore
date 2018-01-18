@@ -84,7 +84,6 @@ public class DispatcherServlet extends HttpServlet {
 		try {
 			action.execute(request, response);
 		} catch (Exception e) {
-			System.out.println(123);
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 			request.setAttribute("errMsg", e.getMessage());
