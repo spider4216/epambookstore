@@ -96,6 +96,19 @@ public class UserService {
 	}
 	
 	/**
+	 * Find user by id
+	 */
+	public UserEntity findById(Integer id) throws UserServiceException {
+		try {
+			ResultSet res = userDao.findOneById(id);
+			UserEntity user = userSetter(res);
+			return user;
+		} catch (SQLException | DaoUserException e) {
+			throw new UserServiceException(lang.getValue("service_user_cannot_find_user"), e);
+		}
+	}
+	
+	/**
 	 * Hash Password
 	 */
 	public String passwordHash(String password) throws NoSuchAlgorithmException {

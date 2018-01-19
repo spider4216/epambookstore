@@ -31,4 +31,9 @@ public interface IUserDao {
 	 * Find user by session id
 	 */
 	public ResultSet findOneBySessionId(String sessionId) throws DaoUserException;
+	
+	/**
+	 * Find user by id
+	 */
+	public ResultSet findOneById(Integer id) throws DaoUserException;
 }

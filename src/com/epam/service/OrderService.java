@@ -22,9 +22,11 @@ import com.epam.constant.OrderStatus;
 import com.epam.entity.BasketEntity;
 import com.epam.entity.OrderEntity;
 import com.epam.entity.OrderToProductEntity;
+import com.epam.entity.UserEntity;
 import com.epam.service.exception.BasketServiceException;
 import com.epam.service.exception.OrderServiceException;
 import com.epam.service.exception.OrderToProductServiceException;
+import com.epam.service.exception.UserServiceException;
 
 public class OrderService {
 	private MysqlOrderDao orderDao;
@@ -76,6 +78,21 @@ public class OrderService {
 		}
 	}
 	
+	public ArrayList<OrderEntity> findAllNotApproved() throws OrderServiceException {
+		try {
+			ArrayList<OrderEntity> orderCollection = new ArrayList<>();
+			ResultSet res = orderDao.findAllByStatus(OrderStatus.UNDER_CONSIDERATION);
+			
+			while (res.next()) {
+				orderCollection.add(orderSetter(res));
+			}
+			
+			return orderCollection;
+		} catch (DaoOrderException | SQLException e) {
+			throw new OrderServiceException(lang.getValue("service_order_empty_err"), e);
+		}
+	}
+	
 	public OrderEntity findOneById(Integer id) throws OrderServiceException {
 		try {
 			ResultSet res = orderDao.findOneById(id);
@@ -110,6 +127,18 @@ public class OrderService {
 		}
 		
 		entity.setProducts(orderProductCollection);
+		
+		UserService userService = null;
+		UserEntity user = null;
+		
+		try {
+			userService = new UserService();
+			user = userService.findById(entity.getUserId());
+		} catch (UserServiceException e) {
+			throw new OrderServiceException(lang.getValue("service_order_user_one_err"), e);
+		}
+		
+		entity.setUser(user);
 		
 		return entity;
 	}

@@ -17,6 +17,11 @@ public class OrderEntity {
 	 * Virtual field like a relation one to many
 	 */
 	private ArrayList<OrderToProductEntity> products;
+	
+	/**
+	 * Virtual field like a relation one to one
+	 */
+	private UserEntity user;
 
 	public Integer getId() {
 		return id;
@@ -56,5 +61,13 @@ public class OrderEntity {
 
 	public void setProducts(ArrayList<OrderToProductEntity> products) {
 		this.products = products;
+	}
+
+	public UserEntity getUser() {
+		return user;
+	}
+
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 }

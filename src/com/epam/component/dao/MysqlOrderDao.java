@@ -61,6 +61,22 @@ public class MysqlOrderDao implements IOrderDao {
 		}
 	}
 
+	public ResultSet findAllByStatus(Integer status) throws DaoOrderException {
+		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
+			String sqlFind = "SELECT * FROM orders where status = ?";
+			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			pr.setInt(1, status);
+			
+			ResultSet res = pr.executeQuery();
+			
+			return res;
+		} catch (SQLException | ConnectionPoolException e) {
+			throw new DaoOrderException(lang.getValue("dao_order_empty_err"), e);
+		}
+	}
+
 	public ResultSet findOneById(Integer id) throws DaoOrderException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();

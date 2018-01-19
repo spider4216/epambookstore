@@ -62,7 +62,6 @@ public class MysqlUserDao implements IUserDao {
 	public ResultSet findOneByUsername(String username) throws DaoUserException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
-			System.out.println(123);
 			String sqlFind = "SELECT * FROM user WHERE username = ?";
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
 			pr.setString(1, username);
@@ -111,6 +110,26 @@ public class MysqlUserDao implements IUserDao {
 			PreparedStatement pr = connection.prepareStatement(sqlSelect);
 			pr.setString(1, sessionId);
 			ResultSet res = pr.executeQuery();
+			res.next();
+
+			if (res.getRow() <= EMPTY_USER) {
+				throw new DaoUserException(lang.getValue("dao_user_not_found"));
+			}
+
+			return res;
+		} catch (SQLException | ConnectionPoolException e) {
+			throw new DaoUserException(lang.getValue("dao_user_not_found"), e);
+		}
+	}
+	
+	public ResultSet findOneById(Integer id) throws DaoUserException {
+		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			String sqlFind = "SELECT * FROM user WHERE id = ?";
+			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			pr.setInt(1, id);
+			ResultSet res = pr.executeQuery();
+			
 			res.next();
 
 			if (res.getRow() <= EMPTY_USER) {
