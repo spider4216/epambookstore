@@ -126,94 +126,112 @@ public class OrderService {
 			connection = (Connection) ConnectionPool.getInstance().getConnection();
 			connection.setAutoCommit(false);
 		} catch (ConnectionPoolException | SQLException e) {
-			throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
+			throwOrderServiceException(e);
 		}
 		
+		// Create order
+		Integer orderId = createItemOrder(connection, connectionPool, userId);
+		// Find basket content
+		ArrayList<BasketEntity> basketCollection = getBasketContent(connection, connectionPool, userId);
+		// Create order to product - many to many
+		createOrderToProduct(connection, connectionPool, orderId, basketCollection);
+		// Clean basket
+		cleanBasket(connection, connectionPool, userId);
+
+		connectionPool.useOneConnection(false);
+		try {
+			connection.commit();
+		} catch (SQLException e) {
+			throwOrderServiceException(e);
+		}
+		
+		return true;
+	}
+	
+	private Integer createItemOrder(Connection connection, ConnectionPool connectionPool, Integer userId) throws OrderServiceException {
 		OrderEntity orderEntity = new OrderEntity();
 		orderEntity.setUserId(userId);
 		orderEntity.setStatus(OrderStatus.UNDER_CONSIDERATION);
 		
-		OrderService orderService = new OrderService();
-		Integer orderId = orderService.insert(orderEntity);
+		Integer orderId = null;
 		
-		BasketService basketService;
 		try {
-			basketService = new BasketService();
-		} catch (BasketServiceException e) {
+			orderId = insert(orderEntity);
+		} catch (OrderServiceException e) {
 			connectionPool.useOneConnection(false);
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
-				throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e1);
+				throwOrderServiceException(e1);
 			}
-			throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
+			throwOrderServiceException(e);
 		}
-		ArrayList<BasketEntity> basketCollection;
+		
+		return orderId;
+	}
+	
+	private ArrayList<BasketEntity> getBasketContent(Connection connection, ConnectionPool connectionPool, Integer userId) throws OrderServiceException {
+		BasketService basketService = null;
+		ArrayList<BasketEntity> basketCollection = null;
 		try {
+			basketService = new BasketService();
 			basketCollection = basketService.findAllProductsByUserId(userId);
 		} catch (BasketServiceException e) {
 			connectionPool.useOneConnection(false);
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
-				throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e1);
+				throwOrderServiceException(e1);
 			}
-			throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
+			throwOrderServiceException(e);
 		}
 		
-		OrderToProductService orderToProductService;
+		return basketCollection;
+	}
+	
+	private Boolean createOrderToProduct(Connection connection, ConnectionPool connectionPool, Integer orderId, ArrayList<BasketEntity> basketCollection) throws OrderServiceException {
 		try {
-			orderToProductService = new OrderToProductService();
+			OrderToProductService orderToProductService = new OrderToProductService();
+			
+			for (BasketEntity item : basketCollection) {
+				OrderToProductEntity orderToProductEntity = new OrderToProductEntity();
+				orderToProductEntity.setBookId(item.getBook().getId());
+				orderToProductEntity.setCount(item.getCount());
+				orderToProductEntity.setOrderId(orderId);
+				
+				orderToProductService.insert(orderToProductEntity);
+			}
 		} catch (OrderToProductServiceException e) {
 			connectionPool.useOneConnection(false);
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
-				throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e1);
+				throwOrderServiceException(e1);
 			}
-			throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
-		}
-
-		for (BasketEntity item : basketCollection) {
-			OrderToProductEntity orderToProductEntity = new OrderToProductEntity();
-			orderToProductEntity.setBookId(item.getBook().getId());
-			orderToProductEntity.setCount(item.getCount());
-			orderToProductEntity.setOrderId(orderId);
-
-			try {
-				orderToProductService.insert(orderToProductEntity);
-			} catch (OrderToProductServiceException e) {
-				connectionPool.useOneConnection(false);
-				try {
-					connection.rollback();
-				} catch (SQLException e1) {
-					throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e1);
-				}
-				throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
-			}
+			throwOrderServiceException(e);
 		}
 		
+		return true;
+	}
+	
+	private Boolean cleanBasket(Connection connection, ConnectionPool connectionPool, Integer userId) throws OrderServiceException {
 		try {
+			BasketService basketService = new BasketService();
 			basketService.deleteUserBasketBooks(userId);
 		} catch (BasketServiceException e) {
 			connectionPool.useOneConnection(false);
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
-				throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e1);
+				throwOrderServiceException(e1);
 			}
-			throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
+			throwOrderServiceException(e);
 		}
-		
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			connectionPool.useOneConnection(false);
-			throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
-		}
-		
-		connectionPool.useOneConnection(false);
 		
 		return true;
+	}
+	
+	private void throwOrderServiceException(Exception e) throws OrderServiceException {
+		throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
 	}
 }
