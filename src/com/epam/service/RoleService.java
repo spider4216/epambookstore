@@ -47,9 +47,8 @@ public class RoleService {
 			ResultSet res = roleDao.findOneById(id);
 			RoleEntity role = roleSetter(res);
 			
-			ConnectionPool.getInstance().release();
 			return role;
-		} catch (DaoRoleException | SQLException | ConnectionPoolException e) {
+		} catch (DaoRoleException | SQLException e) {
 			throw new RoleServiceException(lang.getValue("service_role_empty_err"), e);
 		}
 	}

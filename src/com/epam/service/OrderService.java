@@ -22,7 +22,6 @@ import com.epam.constant.OrderStatus;
 import com.epam.entity.BasketEntity;
 import com.epam.entity.OrderEntity;
 import com.epam.entity.OrderToProductEntity;
-import com.epam.entity.UserEntity;
 import com.epam.service.exception.BasketServiceException;
 import com.epam.service.exception.OrderServiceException;
 import com.epam.service.exception.OrderToProductServiceException;
@@ -56,10 +55,23 @@ public class OrderService {
 				orderCollection.add(orderSetter(res));
 			}
 			
-			ConnectionPool.getInstance().release();
-
 			return orderCollection;
-		} catch (DaoOrderException | SQLException | ConnectionPoolException e) {
+		} catch (DaoOrderException | SQLException e) {
+			throw new OrderServiceException(lang.getValue("service_order_empty_err"), e);
+		}
+	}
+	
+	public ArrayList<OrderEntity> findAllUserOrders(Integer userId) throws OrderServiceException {
+		try {
+			ArrayList<OrderEntity> orderCollection = new ArrayList<>();
+			ResultSet res = orderDao.findAllByUserId(userId);
+
+			while (res.next()) {
+				orderCollection.add(orderSetter(res));
+			}
+			
+			return orderCollection;
+		} catch (DaoOrderException | SQLException e) {
 			throw new OrderServiceException(lang.getValue("service_order_empty_err"), e);
 		}
 	}
@@ -68,9 +80,8 @@ public class OrderService {
 		try {
 			ResultSet res = orderDao.findOneById(id);
 			OrderEntity entity = orderSetter(res);
-			ConnectionPool.getInstance().release();
 			return entity;
-		} catch (DaoOrderException | SQLException | ConnectionPoolException e) {
+		} catch (DaoOrderException | SQLException e) {
 			throw new OrderServiceException(lang.getValue("service_order_empty_err"), e);
 		}
 	}
@@ -108,8 +119,7 @@ public class OrderService {
 		
 		try {
 			id = orderDao.insert(entity);
-			ConnectionPool.getInstance().release();
-		} catch (ConnectionPoolException | DaoOrderException e) {
+		} catch (DaoOrderException e) {
 			throw new OrderServiceException(lang.getValue("service_order_insert_err"), e);
 		}
 		
@@ -229,6 +239,19 @@ public class OrderService {
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Total sum of products in order
+	 */
+	public Double totalSumByCollection(ArrayList<OrderToProductEntity> collection) {
+		Double sum = 0.0;
+		
+		for (OrderToProductEntity item : collection) {
+			sum += item.getBook().getPrice() * item.getCount();
+		}
+		
+		return sum;
 	}
 	
 	private void throwOrderServiceException(Exception e) throws OrderServiceException {

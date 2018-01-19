@@ -59,3 +59,16 @@
 	font-size: 20px;
 	font-weight: bold;
 }
+
+.order-status, .order-number {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.order-status-wait {
+	color: red;
+}
+
+.order-status-done {
+	color: green;
+}

@@ -47,13 +47,6 @@ public class BookService {
 	public Boolean delete(BookEntity entity) throws DaoBookException {
 		Boolean res = bookDao.deleteBook(entity.getId());
 		
-		try {
-			ConnectionPool.getInstance().release();
-		} catch (ConnectionPoolException e) {
-			// TODO translate
-			throw new DaoBookException("problem with delete book", e);
-		}
-		
 		return res;
 	}
 
@@ -61,9 +54,8 @@ public class BookService {
 		try {
 			ResultSet result = bookDao.findBook(id);
 			BookEntity res = bookSetter(result);
-			ConnectionPool.getInstance().release();
 			return res;
-		} catch (SQLException | DaoBookException | ConnectionPoolException e) {
+		} catch (SQLException | DaoBookException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
 		}
 	}
@@ -80,10 +72,8 @@ public class BookService {
 				bookCollection.add(bookSetter(result));
 			}
 			
-			ConnectionPool.getInstance().release();
-
 			return bookCollection;
-		} catch (DaoBookException | SQLException | ConnectionPoolException e) {
+		} catch (DaoBookException | SQLException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
 		}
 	}
@@ -100,10 +90,8 @@ public class BookService {
 				bookCollection.add(bookSetter(result));
 			}
 			
-			ConnectionPool.getInstance().release();
-
 			return bookCollection;
-		} catch (DaoBookException | SQLException | ConnectionPoolException e) {
+		} catch (DaoBookException | SQLException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
 		}
 	}
@@ -120,10 +108,8 @@ public class BookService {
 				bookCollection.add(bookSetter(result));
 			}
 			
-			ConnectionPool.getInstance().release();
-
 			return bookCollection;
-		} catch (DaoBookException | SQLException | ConnectionPoolException e) {
+		} catch (DaoBookException | SQLException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
 		}
 	}
@@ -140,10 +126,8 @@ public class BookService {
 				bookCollection.add(bookSetter(result));
 			}
 			
-			ConnectionPool.getInstance().release();
-
 			return bookCollection;
-		} catch (DaoBookException | SQLException | ConnectionPoolException e) {
+		} catch (DaoBookException | SQLException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
 		}
 	}
@@ -160,10 +144,8 @@ public class BookService {
 				bookCollection.add(bookSetter(result));
 			}
 			
-			ConnectionPool.getInstance().release();
-
 			return bookCollection;
-		} catch (DaoBookException | SQLException | ConnectionPoolException e) {
+		} catch (DaoBookException | SQLException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
 		}
 	}

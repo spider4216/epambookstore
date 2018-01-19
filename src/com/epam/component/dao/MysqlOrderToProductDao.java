@@ -29,7 +29,7 @@ public class MysqlOrderToProductDao implements IOrderToProductDao {
 		}
 	}
 
-	public ResultSet findAllByProductId(Integer id) throws DaoOrderToProductException {
+	public ResultSet findAllByOrderId(Integer id) throws DaoOrderToProductException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);

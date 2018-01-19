@@ -11,7 +11,7 @@ import com.epam.entity.OrderToProductEntity;
  * @author Yuriy Sirotenko
  */
 public interface IOrderToProductDao {
-	public ResultSet findAllByProductId(Integer id) throws DaoOrderToProductException;
+	public ResultSet findAllByOrderId(Integer id) throws DaoOrderToProductException;
 	
 	public Integer insert(OrderToProductEntity entity) throws DaoOrderToProductException;
 }

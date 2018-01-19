@@ -56,10 +56,8 @@ public class CategoryService {
 				categoryCollection.add(categorySetter(res));
 			}
 			
-			ConnectionPool.getInstance().release();
-
 			return categoryCollection;
-		} catch (DaoCategoryException | SQLException | ConnectionPoolException e) {
+		} catch (DaoCategoryException | SQLException e) {
 			throw new CategoryServiceException(lang.getValue("service_category_empty_err"), e);
 		}
 	}
@@ -71,9 +69,8 @@ public class CategoryService {
 		try {
 			ResultSet res = categoryDao.findOneById(id);
 			CategoryEntity category = categorySetter(res);
-			ConnectionPool.getInstance().release();
 			return category;
-		} catch (DaoCategoryException | SQLException | ConnectionPoolException e) {
+		} catch (DaoCategoryException | SQLException e) {
 			throw new CategoryServiceException(lang.getValue("service_category_empty_err"), e);
 		}
 	}

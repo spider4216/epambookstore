@@ -55,8 +55,7 @@ public class BasketService {
 		Integer res = null;
 		try {
 			res = basketDao.insert(entity);
-			ConnectionPool.getInstance().release();
-		} catch (DaoBasketException | ConnectionPoolException e) {
+		} catch (DaoBasketException e) {
 			throw new BasketServiceException(lang.getValue("service_basket_insert_err"), e);
 		}
 		
@@ -73,9 +72,8 @@ public class BasketService {
 	public Boolean isProductInBasket(Integer productId, Integer userId) {
 		try {
 			basketDao.findOneByProductAndUserId(productId, userId);
-			ConnectionPool.getInstance().release();
 			return true;
-		} catch (DaoBasketException | ConnectionPoolException e) {
+		} catch (DaoBasketException e) {
 			return false;
 		}
 	}
@@ -92,10 +90,8 @@ public class BasketService {
 				basketCollection.add(basketSetter(res));
 			}
 			
-			ConnectionPool.getInstance().release();
-
 			return basketCollection;
-		} catch (DaoBasketException | SQLException | ConnectionPoolException e) {
+		} catch (DaoBasketException | SQLException e) {
 			throw new BasketServiceException(lang.getValue("service_basket_empty_err"), e);
 		}
 	}
@@ -136,9 +132,8 @@ public class BasketService {
 	public Boolean deleteByUserAndBookId(Integer userId, Integer bookId) throws BasketServiceException {
 		try {
 			Boolean res = basketDao.deleteByUserAndBookId(userId, bookId);
-			ConnectionPool.getInstance().release();
 			return res;
-		} catch (DaoBasketException | ConnectionPoolException e) {
+		} catch (DaoBasketException e) {
 			throw new BasketServiceException(lang.getValue("cannot_delete_books_from_basket"), e);
 		}
 	}
@@ -162,9 +157,8 @@ public class BasketService {
 	public Boolean deleteUserBasketBooks(Integer userId) throws BasketServiceException {
 		try {
 			Boolean res = basketDao.deleteAllByUserId(userId);
-			ConnectionPool.getInstance().release();
 			return res;
-		} catch (DaoBasketException | ConnectionPoolException e) {
+		} catch (DaoBasketException e) {
 			throw new BasketServiceException(lang.getValue("cannot_delete_books_from_basket"), e);
 		}
 	}
@@ -176,8 +170,7 @@ public class BasketService {
 		Integer res = null;
 		try {
 			res = basketDao.markAsHistoryByUserId(entity.getId());
-			ConnectionPool.getInstance().release();
-		} catch (DaoBasketException | ConnectionPoolException e) {
+		} catch (DaoBasketException e) {
 			throw new BasketServiceException("Cannot mark user's books as history", e);
 		}
 		
@@ -233,10 +226,8 @@ public class BasketService {
 				historyCollection.add(basket);
 			}
 			
-			ConnectionPool.getInstance().release();
-
 			return historyCollection;
-		} catch (DaoBasketException | SQLException | ConnectionPoolException e) {
+		} catch (DaoBasketException | SQLException e) {
 			throw new BasketServiceException("Cannot find history for user", e);
 		}
 	}

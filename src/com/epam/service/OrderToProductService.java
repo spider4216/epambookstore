@@ -16,9 +16,11 @@ import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
+import com.epam.entity.BookEntity;
 import com.epam.entity.CategoryEntity;
 import com.epam.entity.OrderEntity;
 import com.epam.entity.OrderToProductEntity;
+import com.epam.service.exception.BookServiceException;
 import com.epam.service.exception.CategoryServiceException;
 import com.epam.service.exception.OrderServiceException;
 import com.epam.service.exception.OrderToProductServiceException;
@@ -46,16 +48,14 @@ public class OrderToProductService {
 	public ArrayList<OrderToProductEntity> findAllByProductId(Integer id) throws OrderToProductServiceException {
 		try {
 			ArrayList<OrderToProductEntity> orderToProductCollection = new ArrayList<>();
-			ResultSet res = orderToProductDao.findAllByProductId(id);
+			ResultSet res = orderToProductDao.findAllByOrderId(id);
 
 			while (res.next()) {
 				orderToProductCollection.add(orderToProductSetter(res));
 			}
 			
-			ConnectionPool.getInstance().release();
-
 			return orderToProductCollection;
-		} catch (DaoOrderToProductException | SQLException | ConnectionPoolException e) {
+		} catch (DaoOrderToProductException | SQLException e) {
 			throw new OrderToProductServiceException(lang.getValue("service_order_to_product_empty_err"), e);
 		}
 	}
@@ -65,21 +65,31 @@ public class OrderToProductService {
 
 		try {
 			id = orderToProductDao.insert(entity);
-			ConnectionPool.getInstance().release();
-		} catch (ConnectionPoolException | DaoOrderToProductException e) {
+		} catch (DaoOrderToProductException e) {
 			throw new OrderToProductServiceException(lang.getValue("service_order_to_product_insert_err"), e);
 		}
 
 		return id;
 	}
 	
-	private OrderToProductEntity orderToProductSetter(ResultSet result) throws SQLException {
-		OrderToProductEntity entity = new OrderToProductEntity();
-		entity.setId(result.getInt("id"));
-		entity.setBookId(result.getInt("book_id"));
-		entity.setOrderId(result.getInt("order_id"));
-		entity.setCount(result.getInt("count"));
+	private OrderToProductEntity orderToProductSetter(ResultSet result) throws OrderToProductServiceException {
+		BookService bookService = null;
 		
-		return entity;
+		try {
+			OrderToProductEntity entity = new OrderToProductEntity();
+			entity.setId(result.getInt("id"));
+			entity.setBookId(result.getInt("book_id"));
+			entity.setOrderId(result.getInt("order_id"));
+			entity.setCount(result.getInt("count"));
+			
+			bookService = new BookService();
+			BookEntity book = bookService.findById(result.getInt("book_id"));
+			
+			entity.setBook(book);
+			
+			return entity;
+		} catch (SQLException | BookServiceException e) {
+			throw new OrderToProductServiceException(lang.getValue("service_order_to_product_insert_err"), e);
+		}
 	}
 }

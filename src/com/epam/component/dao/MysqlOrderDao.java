@@ -44,6 +44,22 @@ public class MysqlOrderDao implements IOrderDao {
 			throw new DaoOrderException(lang.getValue("dao_order_empty_err"), e);
 		}
 	}
+	
+	public ResultSet findAllByUserId(Integer id) throws DaoOrderException {
+		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
+			String sqlFind = "SELECT * FROM orders where user_id = ?";
+			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			pr.setInt(1, id);
+			
+			ResultSet res = pr.executeQuery();
+
+			return res;
+		} catch (SQLException | ConnectionPoolException e) {
+			throw new DaoOrderException(lang.getValue("dao_order_empty_err"), e);
+		}
+	}
 
 	public ResultSet findOneById(Integer id) throws DaoOrderException {
 		try {
@@ -65,11 +81,16 @@ public class MysqlOrderDao implements IOrderDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			String sqlInsert = "INSERT INTO orders (user_id, status) VALUES (?, ?)";
-			PreparedStatement pr = connection.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pr = connection.prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
 			pr.setInt(1, entity.getUserId());
 			pr.setInt(2, entity.getStatus());
 			
-			Integer id = pr.executeUpdate();
+			pr.executeUpdate();
+			
+			ResultSet res = pr.getGeneratedKeys();
+			res.next();
+
+			Integer id = res.getInt(1);
 			
 			return id;
 		} catch (SQLException | ConnectionPoolException e) {

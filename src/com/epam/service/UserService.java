@@ -53,13 +53,13 @@ public class UserService {
 	/**
 	 * Insert user
 	 */
-	public Boolean insert(UserEntity entity) throws DaoUserException {
-		Integer res = userDao.insertUser(entity);
-		
+	public Boolean insert(UserEntity entity) throws UserServiceException {
+		Integer res;
 		try {
-			ConnectionPool.getInstance().release();
-		} catch (ConnectionPoolException e) {
-			throw new DaoUserException("err to do with insert", e);
+			res = userDao.insertUser(entity);
+		} catch (DaoUserException e) {
+			// TODO translate
+			throw new UserServiceException("problem with insert", e);
 		}
 		
 		if (res <= EMPTY_USER) {
@@ -75,8 +75,7 @@ public class UserService {
 	public Boolean isUserExist(String username) {
 		try {
 			userDao.findOneByUsername(username);
-			ConnectionPool.getInstance().release();
-		} catch (DaoUserException | ConnectionPoolException e) {
+		} catch (DaoUserException e) {
 			return false;
 		}
 		
@@ -90,9 +89,8 @@ public class UserService {
 		try {
 			ResultSet res = userDao.findOneByUsername(username);
 			UserEntity user = userSetter(res);
-			ConnectionPool.getInstance().release();
 			return user;
-		} catch (SQLException | DaoUserException | ConnectionPoolException e) {
+		} catch (SQLException | DaoUserException e) {
 			throw new UserServiceException(lang.getValue("service_user_cannot_find_user"), e);
 		}
 	}
@@ -127,8 +125,7 @@ public class UserService {
 		try {
 			HttpSession session = (HttpSession)ServiceLocator.getInstance().getService(ServiceLocatorEnum.SESSION);
 			userDao.updateSissionIdByUsername(entity.getUsername(), session.getId());
-			ConnectionPool.getInstance().release();
-		} catch (DaoUserException | ServiceLocatorException | ConnectionPoolException e) {
+		} catch (DaoUserException | ServiceLocatorException e) {
 			throw new UserServiceException(lang.getValue("service_user_auth_problem"), e);
 		}
 		
@@ -144,9 +141,8 @@ public class UserService {
 			HttpSession session = (HttpSession) ServiceLocator.getInstance().getService(ServiceLocatorEnum.SESSION);
 			ResultSet res = userDao.findOneBySessionId(session.getId());
 			UserEntity user = userSetter(res);
-			ConnectionPool.getInstance().release();
 			return user;
-		} catch (DaoUserException | ServiceLocatorException | SQLException | ConnectionPoolException e) {
+		} catch (DaoUserException | ServiceLocatorException | SQLException e) {
 			throw new UserServiceException(lang.getValue("service_user_current_user_err"), e);
 		}
 	}

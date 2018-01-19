@@ -8,6 +8,8 @@ public class OrderToProductEntity {
 	private Integer book_id;
 	
 	private Integer count;
+	
+	private BookEntity book;
 
 	public Integer getId() {
 		return id;
@@ -39,5 +41,13 @@ public class OrderToProductEntity {
 
 	public void setCount(Integer count) {
 		this.count = count;
+	}
+
+	public BookEntity getBook() {
+		return book;
+	}
+
+	public void setBook(BookEntity book) {
+		this.book = book;
 	}
 }

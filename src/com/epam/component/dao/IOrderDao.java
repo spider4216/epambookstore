@@ -16,4 +16,6 @@ public interface IOrderDao {
 	public ResultSet findOneById(Integer id) throws DaoOrderException;
 	
 	public Integer insert(OrderEntity entity) throws DaoOrderException;
+	
+	public ResultSet findAllByUserId(Integer id) throws DaoOrderException;
 }
