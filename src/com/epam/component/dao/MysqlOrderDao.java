@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.epam.component.dao.exception.ConnectionPoolException;
+import com.epam.component.dao.exception.DaoBasketException;
 import com.epam.component.dao.exception.DaoCategoryException;
 import com.epam.component.dao.exception.DaoOrderException;
 import com.epam.component.dao.exception.DaoUserException;
@@ -15,6 +16,7 @@ import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
+import com.epam.constant.OrderStatus;
 import com.epam.constant.RoleConstant;
 import com.epam.entity.OrderEntity;
 
@@ -111,6 +113,23 @@ public class MysqlOrderDao implements IOrderDao {
 			return id;
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoOrderException(lang.getValue("dao_order_inser_err"), e);
+		}
+	}
+	
+	public Integer updateStatusAsAcceptById(Integer id) throws DaoOrderException {
+		String sqlDelete = "UPDATE orders SET status = ? WHERE id = ?";
+
+		try {
+			Connection connection = ConnectionPool.getInstance().getConnection();
+			ConnectionPool.getInstance().freeConnection(connection);
+			PreparedStatement pr = connection.prepareStatement(sqlDelete);
+			pr.setInt(1, OrderStatus.APPROVED);
+			pr.setInt(2, id);
+			Integer res = pr.executeUpdate();
+			
+			return res;
+		} catch (SQLException | ConnectionPoolException e) {
+			throw new DaoOrderException(lang.getValue("dao_order_cannot_change_status"), e);
 		}
 	}
 }

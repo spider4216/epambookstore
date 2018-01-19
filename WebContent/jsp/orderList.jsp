@@ -25,6 +25,7 @@
 													<div class="pull-left">
 														<span class="order-number">${lang.getValue('order_label')}</span>
 														<span class="order-number">#${order.getId()}</span>
+														<input type="hidden" name="orderId" value="${order.getId()}" />
 													</div>
 																										
 				  								</div>
@@ -77,6 +78,14 @@
 														<span class="total-sum-label">${lang.getValue('basket_total_sum')}</span>
 														<span class="total-price">${orderService.totalSumByCollection(order.products)}</span>
 													</div>
+												</div>
+											</div>
+											
+											<br />
+											
+											<div class="row">
+												<div class="col-md-12">
+													<input type="button" value="${lang.getValue('order_accept')}" id="accept_order" class="btn btn-primary pull-right" />
 												</div>
 											</div>
 											

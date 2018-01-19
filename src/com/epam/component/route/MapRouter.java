@@ -15,6 +15,7 @@ import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.action.BasketAddToAction;
+import com.epam.action.AcceptOrderAction;
 import com.epam.action.AdminOrderList;
 import com.epam.action.BasketAction;
 import com.epam.action.BasketClearAction;
@@ -51,6 +52,7 @@ public class MapRouter {
 		map.put("/BookShop/history.html", new HistoryAction());
 		map.put("/BookShop/ajax/search.html", new SearchAction());
 		map.put("/BookShop/order-list.html", new AdminOrderList());
+		map.put("/BookShop/ajax/accept-order.html", new AcceptOrderAction());
 	}
 	
 	public static IAction getAction(String path) throws RouterException {

@@ -135,43 +135,4 @@ public class MysqlBasketDao implements IBasketDao {
 			throw new DaoBasketException(lang.getValue("dao_basket_cannot_delete_product"), e);
 		}
 	}
-
-	/**
-	 * @deprecated
-	 */
-	public Integer markAsHistoryByUserId(Integer userId) throws DaoBasketException {
-		String sqlDelete = "UPDATE basket SET is_history = 1 WHERE user_id = ? AND is_history = 0";
-
-		try {
-			Connection connection = ConnectionPool.getInstance().getConnection();
-			ConnectionPool.getInstance().freeConnection(connection);
-			PreparedStatement pr = connection.prepareStatement(sqlDelete);
-			pr.setInt(1, userId);
-			Integer res = pr.executeUpdate();
-			
-			return res;
-		} catch (SQLException | ConnectionPoolException e) {
-			System.out.println(e.getMessage());
-			throw new DaoBasketException("Cannot mark books as history in basket", e);
-		}
-	}
-	
-	/**
-	 * @deprecated
-	 */
-	public ResultSet findAllInUserHistory(Integer userId) throws DaoBasketException {
-		String sqlFind = "SELECT bt.*, bk.* FROM basket bt INNER JOIN books bk ON bt.book_id = bk.id WHERE bt.user_id = ? AND is_history = 1";
-		
-		try {
-			Connection connection = ConnectionPool.getInstance().getConnection();
-			ConnectionPool.getInstance().freeConnection(connection);
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
-			pr.setInt(1, userId);
-			ResultSet rs = pr.executeQuery();
-			
-			return rs;
-		} catch (SQLException | ConnectionPoolException e) {
-			throw new DaoBasketException("Cannot find products in history", e);
-		}
-	}
 }

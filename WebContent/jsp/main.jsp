@@ -74,6 +74,8 @@
 	<script src="js/BasketRun.js"></script>
 	<script src="js/SearchClass.js"></script>
 	<script src="js/SearchRun.js"></script>
+	<script src="js/OrderClass.js"></script>
+	<script src="js/OrderRun.js"></script>
 </div>
 </body>
 </html>

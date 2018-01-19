@@ -20,4 +20,6 @@ public interface IOrderDao {
 	public ResultSet findAllByUserId(Integer id) throws DaoOrderException;
 	
 	public ResultSet findAllByStatus(Integer status) throws DaoOrderException;
+	
+	public Integer updateStatusAsAcceptById(Integer id) throws DaoOrderException;
 }

@@ -9,6 +9,7 @@ import com.epam.action.BasketOrderAction;
 import com.epam.component.dao.MysqlCategoryDao;
 import com.epam.component.dao.MysqlOrderDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
+import com.epam.component.dao.exception.DaoBasketException;
 import com.epam.component.dao.exception.DaoOrderException;
 import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.dao.exception.MysqlDaoException;
@@ -182,6 +183,21 @@ public class OrderService {
 			connection.commit();
 		} catch (SQLException e) {
 			throwOrderServiceException(e);
+		}
+		
+		return true;
+	}
+	
+	public Boolean acceptOrder(Integer id) throws OrderServiceException {
+		Integer res = null;
+		try {
+			res = orderDao.updateStatusAsAcceptById(id);
+		} catch (DaoOrderException e) {
+			throw new OrderServiceException(lang.getValue("service_order_accept_err"), e);
+		}
+		
+		if (res <= 0) {
+			return false;
 		}
 		
 		return true;

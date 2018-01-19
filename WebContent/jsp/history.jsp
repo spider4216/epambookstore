@@ -30,7 +30,7 @@
 													<div class="pull-right">
 														<c:choose>
 															<c:when test="${order.getStatus() == approveStatus}">
-																<span class="order-status">${lang.getValue('order_status_approved')}</span>
+																<span class="order-status order-status-done">${lang.getValue('order_status_approved')}</span>
 															</c:when>
 															
 															<c:when test="${order.getStatus() == underConsiderationStatus}">
@@ -38,7 +38,7 @@
 															</c:when>
 															
 															<c:otherwise>
-																<span class="order-status order-status-done">${lang.getValue('order_status_undefined')}</span>
+																<span class="order-status">${lang.getValue('order_status_undefined')}</span>
 															</c:otherwise>
 														</c:choose>
 													</div>
