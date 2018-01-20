@@ -12,6 +12,7 @@ import com.epam.action.SignInMainAction;
 import com.epam.action.SignInProcessAction;
 import com.epam.action.SignUpMainAction;
 import com.epam.action.SignUpProcessAction;
+import com.epam.component.auth.Auth;
 import com.epam.component.route.MapRouter;
 import com.epam.component.route.RouterException;
 import com.epam.component.service_locator.ServiceLocator;
@@ -50,12 +51,7 @@ public class DispatcherServlet extends HttpServlet {
 		}
 		
 		// Redirect to login if not auth
-		if (
-				!(action instanceof SignInMainAction) &&
-				!(action instanceof SignInProcessAction) &&
-				!(action instanceof SignUpMainAction) &&
-				!(action instanceof SignUpProcessAction)
-			) {
+		if (!Auth.contains(action)) {
 			// Redirect to auth page if user not log in
 			try {
 				if (ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER) == null) {
