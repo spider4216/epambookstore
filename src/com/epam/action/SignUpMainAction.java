@@ -27,9 +27,9 @@ public class SignUpMainAction implements IAction {
 			throw new AccessControlException(lang.getValue("have_already_signed_up_access_error"));
 		}
 		
-		FlashMessage fm = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
+		FlashMessage flashMessage = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
 		
-		request.setAttribute("fm", fm);
+		request.setAttribute("fm", flashMessage);
 		
 		Viewer.execute(request, response, "signUp.jsp");
 	}

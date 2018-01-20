@@ -27,9 +27,9 @@ public class SignInMainAction implements IAction {
 			throw new AccessControlException(lang.getValue("has_already_sign_in_access_error"));
 		}
 		
-		FlashMessage fm = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
+		FlashMessage flashMessage = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
 		
-		request.setAttribute("fm", fm);
+		request.setAttribute("fm", flashMessage);
 
 		Viewer.execute(request, response, "signIn.jsp");
 	}

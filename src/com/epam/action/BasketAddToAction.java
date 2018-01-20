@@ -38,8 +38,8 @@ public class BasketAddToAction implements IAction {
 		
 		BasketService basketService = new BasketService();
 		basketService.insert(entity);
-		AjaxResponse ar = (AjaxResponse) ServiceLocator.getInstance().getService(ServiceLocatorEnum.AJAX_RESPONSE);
-		ar.setResponse(response);
-		ar.setMessage(lang.getValue("book_added_to_basket_success_hint")).responseOk();
+		AjaxResponse ajaxResponse = (AjaxResponse) ServiceLocator.getInstance().getService(ServiceLocatorEnum.AJAX_RESPONSE);
+		ajaxResponse.setResponse(response);
+		ajaxResponse.setMessage(lang.getValue("book_added_to_basket_success_hint")).responseOk();
 	}
 }

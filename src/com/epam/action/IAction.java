@@ -10,5 +10,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author Yuriy Sirotenko
  */
 public interface IAction {
+	
+	/**
+	 * This method is used in entry point of application
+	 */
 	abstract public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

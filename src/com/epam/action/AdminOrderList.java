@@ -15,6 +15,11 @@ import com.epam.entity.OrderEntity;
 import com.epam.entity.UserEntity;
 import com.epam.service.OrderService;
 
+/**
+ * Admin order list action
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class AdminOrderList implements IAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);

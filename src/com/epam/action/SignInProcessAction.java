@@ -21,7 +21,7 @@ import com.epam.service.exception.UserServiceException;
  */
 public class SignInProcessAction implements IAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		FlashMessage fm = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
+		FlashMessage flashMessage = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
 		UserService service = new UserService();
 		
 		String username = request.getParameter("username");
@@ -33,7 +33,7 @@ public class SignInProcessAction implements IAction {
 			validatorRequired.execute(username);
 			validatorRequired.execute(password);
 		} catch (ValidationException e) {
-			fm.setMsg(e.getMessage());
+			flashMessage.setMsg(e.getMessage());
 			response.sendRedirect("/BookShop/sign-in.html");
 			return;
 		}
@@ -46,7 +46,7 @@ public class SignInProcessAction implements IAction {
 			service.isPasswordValid(entity, password);
 			service.login(entity);
 		} catch (UserServiceException e) {
-			fm.setMsg(lang.getValue("auth_problem"));
+			flashMessage.setMsg(lang.getValue("auth_problem"));
 			response.sendRedirect("/BookShop/sign-in.html");
 			return;
 		}

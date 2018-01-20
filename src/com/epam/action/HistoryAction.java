@@ -22,7 +22,6 @@ import com.epam.service.OrderService;
 public class HistoryAction implements IAction {
 
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		OrderService orderService = new OrderService();
 		UserEntity user = (UserEntity) ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER); 
 		

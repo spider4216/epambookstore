@@ -11,6 +11,11 @@ import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.entity.UserEntity;
 import com.epam.service.UserService;
 
+/**
+ * Action for user logout
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class LogoutAction implements IAction {
 
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

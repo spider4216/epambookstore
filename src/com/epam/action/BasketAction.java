@@ -27,9 +27,9 @@ public class BasketAction implements IAction {
 		ArrayList<BasketEntity> basket = basketService.findAllProductsByUserId(user.getId());
 		Double totalSum = basketService.totalSumByCollection(basket);
 		
-		FlashMessage fm = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
+		FlashMessage flashMessage = (FlashMessage) ServiceLocator.getInstance().getService(ServiceLocatorEnum.FLASH_MESSAGE);
 		
-		request.setAttribute("fm", fm);
+		request.setAttribute("fm", flashMessage);
 		request.setAttribute("basket", basket);
 		request.setAttribute("totalSum", totalSum);
 		

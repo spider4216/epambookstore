@@ -8,10 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.action.IAction;
-import com.epam.action.SignInMainAction;
-import com.epam.action.SignInProcessAction;
-import com.epam.action.SignUpMainAction;
-import com.epam.action.SignUpProcessAction;
 import com.epam.component.auth.Auth;
 import com.epam.component.route.MapRouter;
 import com.epam.component.route.RouterException;
@@ -67,8 +63,6 @@ public class DispatcherServlet extends HttpServlet {
 		try {
 			action.execute(request, response);
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
 			request.setAttribute("errMsg", e.getMessage());
 			Viewer.execute(request, response, "error.jsp");
 			return;
