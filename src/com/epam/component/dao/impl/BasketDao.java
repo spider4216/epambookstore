@@ -21,6 +21,16 @@ import com.epam.entity.BasketEntity;
  * @author Yuriy Sirotenko
  */
 public class BasketDao implements IBasketDao {
+	private static final String SQL_INSERT = "INSERT INTO basket (user_id, book_id, count, is_history) VALUES (?, ?, ?, ?)";
+
+	private static final String SQL_FIND_ONE_BY_PRODUCT_AND_USER_ID = "SELECT * FROM basket WHERE book_id = ? AND user_id = ? AND is_history = 0";
+
+	private static final String SQL_FIND_ALL_BY_USER_ID = "SELECT bt.*, bk.* FROM basket bt INNER JOIN books bk ON bt.book_id = bk.id WHERE bt.user_id = ? AND is_history = 0";
+
+	private static final String SQL_DELETE_BY_USER_AND_BOOK_ID = "DELETE FROM basket WHERE user_id = ? AND book_id = ? AND is_history = 0";
+
+	private static final String SQL_DELETE_ALL_BY_USER_ID = "DELETE FROM basket WHERE user_id = ? AND is_history = 0";
+	
 	private static final Integer EMPTY_BASKET = 0;
 	
 	private Lang lang = null;
@@ -40,8 +50,7 @@ public class BasketDao implements IBasketDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlInsert = "INSERT INTO basket (user_id, book_id, count, is_history) VALUES (?, ?, ?, ?)";
-			PreparedStatement pr = connection.prepareStatement(sqlInsert);
+			PreparedStatement pr = connection.prepareStatement(SQL_INSERT);
 			pr.setInt(1, entity.getUserId());
 			pr.setInt(2, entity.getBookId());
 			pr.setInt(3, entity.getCount());
@@ -62,8 +71,7 @@ public class BasketDao implements IBasketDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlFind = "SELECT * FROM basket WHERE book_id = ? AND user_id = ? AND is_history = 0";
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_PRODUCT_AND_USER_ID);
 			pr.setInt(1, productId);
 			pr.setInt(2, userId);
 			ResultSet res = pr.executeQuery();
@@ -87,8 +95,7 @@ public class BasketDao implements IBasketDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlFind = "SELECT bt.*, bk.* FROM basket bt INNER JOIN books bk ON bt.book_id = bk.id WHERE bt.user_id = ? AND is_history = 0";
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_USER_ID);
 			pr.setInt(1, userId);
 			ResultSet res = pr.executeQuery();
 			
@@ -105,8 +112,7 @@ public class BasketDao implements IBasketDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlDelete = "DELETE FROM basket WHERE user_id = ? AND book_id = ? AND is_history = 0";
-			PreparedStatement pr = connection.prepareStatement(sqlDelete);
+			PreparedStatement pr = connection.prepareStatement(SQL_DELETE_BY_USER_AND_BOOK_ID);
 			pr.setInt(1, userId);
 			pr.setInt(2, bookId);
 			
@@ -125,8 +131,7 @@ public class BasketDao implements IBasketDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlDelete = "DELETE FROM basket WHERE user_id = ? AND is_history = 0";
-			PreparedStatement pr = connection.prepareStatement(sqlDelete);
+			PreparedStatement pr = connection.prepareStatement(SQL_DELETE_ALL_BY_USER_ID);
 			pr.setInt(1, userId);
 			
 			pr.executeUpdate();

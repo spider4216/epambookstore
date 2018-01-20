@@ -16,6 +16,8 @@ import com.epam.component.service_locator.ServiceLocatorException;
 
 public class RoleDao implements IRoleDao {
 	
+	private final static String SQL_FIND_ONE_BY_ID = "SELECT * FROM roles WHERE id = ?";
+	
 	private Lang lang = null;
 	
 	public RoleDao() throws DaoRoleException {
@@ -30,8 +32,7 @@ public class RoleDao implements IRoleDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlFind = "SELECT * FROM roles WHERE id = ?";
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_ID);
 			pr.setInt(1, id);
 			ResultSet res = pr.executeQuery();
 			res.next();

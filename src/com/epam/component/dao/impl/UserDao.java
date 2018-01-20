@@ -22,6 +22,16 @@ import com.epam.entity.UserEntity;
  * @author Yuriy Sirotenko
  */
 public class UserDao implements IUserDao {
+	private final static String SQL_INSERT_USER = "INSERT INTO user (username, password, first_name, last_name, gender, role_id) VALUES (?, ?, ?, ?, ?, ?)";
+
+	private final static String SQL_FIND_ONE_BY_USERNAME = "SELECT * FROM user WHERE username = ?";
+
+	private final static String SQL_UPDATE_SESSION_ID_BY_USERNAME = "UPDATE user SET session_id = ? where username = ?";
+
+	private final static String SQL_FIND_ONE_BY_SESSION_ID = "SELECT * FROM user WHERE session_id = ?";
+
+	private final static String SQL_FIND_ONE_BY_ID = "SELECT * FROM user WHERE id = ?";
+	
 	private static final Integer EMPTY_USER = 0;
 	
 	private Lang lang = null;
@@ -40,8 +50,7 @@ public class UserDao implements IUserDao {
 	public Integer insertUser(UserEntity entity) throws DaoUserException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
-			String sqlInsert = "INSERT INTO user (username, password, first_name, last_name, gender, role_id) VALUES (?, ?, ?, ?, ?, ?)";
-			PreparedStatement pr = connection.prepareStatement(sqlInsert);
+			PreparedStatement pr = connection.prepareStatement(SQL_INSERT_USER);
 			pr.setString(1, entity.getUsername());
 			pr.setString(2, entity.getPassword());
 			pr.setString(3, entity.getFirstName());
@@ -63,8 +72,7 @@ public class UserDao implements IUserDao {
 	public ResultSet findOneByUsername(String username) throws DaoUserException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
-			String sqlFind = "SELECT * FROM user WHERE username = ?";
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_USERNAME);
 			pr.setString(1, username);
 			ResultSet res = pr.executeQuery();
 			
@@ -87,8 +95,7 @@ public class UserDao implements IUserDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlUpdate = "UPDATE user SET session_id = ? where username = ?";
-			PreparedStatement pr = connection.prepareStatement(sqlUpdate);
+			PreparedStatement pr = connection.prepareStatement(SQL_UPDATE_SESSION_ID_BY_USERNAME);
 			pr.setString(1, sessionId);
 			pr.setString(2, username);
 			
@@ -107,8 +114,7 @@ public class UserDao implements IUserDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlSelect = "SELECT * FROM user WHERE session_id = ?";
-			PreparedStatement pr = connection.prepareStatement(sqlSelect);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_SESSION_ID);
 			pr.setString(1, sessionId);
 			ResultSet res = pr.executeQuery();
 			res.next();
@@ -126,8 +132,7 @@ public class UserDao implements IUserDao {
 	public ResultSet findOneById(Integer id) throws DaoUserException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
-			String sqlFind = "SELECT * FROM user WHERE id = ?";
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_ID);
 			pr.setInt(1, id);
 			ResultSet res = pr.executeQuery();
 			

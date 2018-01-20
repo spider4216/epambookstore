@@ -20,6 +20,10 @@ import com.epam.entity.OrderToProductEntity;
 
 public class OrderToProductDao implements IOrderToProductDao {
 	
+	private final static String SQL_FIND_ALL_BY_ORDER_ID = "SELECT * FROM order_to_product where order_id = ?";
+
+	private final static String SQL_INSERT = "INSERT INTO order_to_product (order_id, book_id, count) VALUES (?, ?, ?)";
+	
 	private Lang lang = null;
 
 	public OrderToProductDao() throws DaoOrderToProductException {
@@ -34,8 +38,7 @@ public class OrderToProductDao implements IOrderToProductDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlFind = "SELECT * FROM order_to_product where order_id = ?";
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_ORDER_ID);
 			pr.setInt(1, id);
 			
 			ResultSet res = pr.executeQuery();
@@ -49,8 +52,7 @@ public class OrderToProductDao implements IOrderToProductDao {
 	public Integer insert(OrderToProductEntity entity) throws DaoOrderToProductException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
-			String sqlInsert = "INSERT INTO order_to_product (order_id, book_id, count) VALUES (?, ?, ?)";
-			PreparedStatement pr = connection.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pr = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
 			pr.setInt(1, entity.getOrderId());
 			pr.setInt(2, entity.getBookId());
 			pr.setInt(3, entity.getCount());

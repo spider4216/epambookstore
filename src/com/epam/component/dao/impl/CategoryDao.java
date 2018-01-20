@@ -21,6 +21,11 @@ import com.epam.component.service_locator.ServiceLocatorException;
  * @author Yuriy Sirotenko
  */
 public class CategoryDao implements ICategoryDao {
+
+	private final static String SQL_FIND_ALL = "SELECT * FROM category";
+
+	private final static String SQL_FIND_ONE_BY_ID = "SELECT * FROM category WHERE id = ?";
+	
 	private Lang lang = null;
 	
 	public CategoryDao() throws DaoCategoryException {
@@ -38,10 +43,9 @@ public class CategoryDao implements ICategoryDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlFind = "SELECT * FROM category";
 			Statement pr = connection.createStatement();
 			
-			ResultSet res = pr.executeQuery(sqlFind);
+			ResultSet res = pr.executeQuery(SQL_FIND_ALL);
 
 			return res;
 		} catch (SQLException | ConnectionPoolException e) {
@@ -56,8 +60,7 @@ public class CategoryDao implements ICategoryDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlFind = "SELECT * FROM category WHERE id = ?";
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_ID);
 			pr.setInt(1, id);
 			ResultSet res = pr.executeQuery();
 			res.next();

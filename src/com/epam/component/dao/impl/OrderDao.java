@@ -23,6 +23,18 @@ import com.epam.entity.OrderEntity;
 
 public class OrderDao implements IOrderDao {
 
+	private final static String SQL_FIND_ALL = "SELECT * FROM orders";
+
+	private final static String SQL_FIND_ALL_BY_USER_ID = "SELECT * FROM orders where user_id = ?";
+
+	private final static String SQL_FIND_ALL_BY_STATUS = "SELECT * FROM orders where status = ?";
+
+	private final static String SQL_FIND_ONE_BY_ID = "SELECT * FROM orders WHERE id = ?";
+
+	private final static String SQL_INSERT = "INSERT INTO orders (user_id, status) VALUES (?, ?)";
+
+	private final static String SQL_UPDATE_STATUS_AS_ACCEPT_BY_ID = "UPDATE orders SET status = ? WHERE id = ?";
+	
 	private Lang lang = null;
 
 	public OrderDao() throws DaoOrderException {
@@ -37,10 +49,9 @@ public class OrderDao implements IOrderDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlFind = "SELECT * FROM orders";
 			Statement pr = connection.createStatement();
 			
-			ResultSet res = pr.executeQuery(sqlFind);
+			ResultSet res = pr.executeQuery(SQL_FIND_ALL);
 
 			return res;
 		} catch (SQLException | ConnectionPoolException e) {
@@ -52,8 +63,7 @@ public class OrderDao implements IOrderDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlFind = "SELECT * FROM orders where user_id = ?";
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_USER_ID);
 			pr.setInt(1, id);
 			
 			ResultSet res = pr.executeQuery();
@@ -68,8 +78,7 @@ public class OrderDao implements IOrderDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlFind = "SELECT * FROM orders where status = ?";
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_STATUS);
 			pr.setInt(1, status);
 			
 			ResultSet res = pr.executeQuery();
@@ -84,8 +93,7 @@ public class OrderDao implements IOrderDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlFind = "SELECT * FROM orders WHERE id = ?";
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_ID);
 			pr.setInt(1, id);
 			ResultSet res = pr.executeQuery();
 			res.next();
@@ -99,8 +107,7 @@ public class OrderDao implements IOrderDao {
 	public Integer insert(OrderEntity entity) throws DaoOrderException{
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
-			String sqlInsert = "INSERT INTO orders (user_id, status) VALUES (?, ?)";
-			PreparedStatement pr = connection.prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement pr = connection.prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 			pr.setInt(1, entity.getUserId());
 			pr.setInt(2, entity.getStatus());
 			
@@ -118,12 +125,10 @@ public class OrderDao implements IOrderDao {
 	}
 	
 	public Integer updateStatusAsAcceptById(Integer id) throws DaoOrderException {
-		String sqlDelete = "UPDATE orders SET status = ? WHERE id = ?";
-
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			PreparedStatement pr = connection.prepareStatement(sqlDelete);
+			PreparedStatement pr = connection.prepareStatement(SQL_UPDATE_STATUS_AS_ACCEPT_BY_ID);
 			pr.setInt(1, OrderStatus.APPROVED);
 			pr.setInt(2, id);
 			Integer res = pr.executeUpdate();

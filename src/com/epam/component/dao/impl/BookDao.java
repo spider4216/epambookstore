@@ -22,6 +22,18 @@ import com.epam.component.service_locator.ServiceLocatorException;
  */
 public class BookDao implements IBookDao {
 	
+	private final static String SQL_DELETE_BOOK = "DELETE FROM books WHERE id = ?";
+
+	private final static String SQL_FIND_BOOKS = "SELECT * FROM books";
+	
+	private final static String SQL_FIND_BOOKS_WITH_PAGINATION = "SELECT * FROM books LIMIT ?,?";
+
+	private final static String SQL_FIND_BOOKS_BY_CATEGORY_ID_WITH_PAGINATION = "SELECT * FROM books WHERE category_id = ? LIMIT ?,?";
+
+	private final static String SQL_FIND_ALL_BY_CATEGORY_ID = "SELECT * FROM books WHERE category_id = ?";
+
+	private final static String SQL_FIND_BOOK = "SELECT * FROM books WHERE id = ?";
+	
 	private Lang lang = null;
 	
 	public BookDao() throws DaoBookException {
@@ -39,8 +51,7 @@ public class BookDao implements IBookDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlDelete = "DELETE FROM books WHERE id = ?";
-			PreparedStatement pr = connection.prepareStatement(sqlDelete);
+			PreparedStatement pr = connection.prepareStatement(SQL_DELETE_BOOK);
 			pr.setInt(1, id);
 			
 			pr.executeUpdate();
@@ -58,9 +69,8 @@ public class BookDao implements IBookDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlFind = "SELECT * FROM books";
 			Statement pr = connection.createStatement();
-			ResultSet rs = pr.executeQuery(sqlFind);
+			ResultSet rs = pr.executeQuery(SQL_FIND_BOOKS);
 			
 			return rs;
 		} catch (SQLException | ConnectionPoolException e) {
@@ -75,8 +85,7 @@ public class BookDao implements IBookDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlFind = "SELECT * FROM books LIMIT ?,?";
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_BOOKS_WITH_PAGINATION);
 			pr.setInt(1, offset);
 			pr.setInt(2, limit);
 			
@@ -95,8 +104,7 @@ public class BookDao implements IBookDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlFind = "SELECT * FROM books WHERE category_id = ? LIMIT ?,?";
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_BOOKS_BY_CATEGORY_ID_WITH_PAGINATION);
 			pr.setInt(1, categoryId);
 			pr.setInt(2, offset);
 			pr.setInt(3, limit);
@@ -116,8 +124,7 @@ public class BookDao implements IBookDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			String sqlFind = "SELECT * FROM books WHERE category_id = ?";
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_CATEGORY_ID);
 			pr.setInt(1, id);
 
 			ResultSet res = pr.executeQuery();
@@ -175,12 +182,10 @@ public class BookDao implements IBookDao {
 	 * Find one book by id
 	 */
 	public ResultSet findBook(Integer id) throws DaoBookException {
-		String sqlFind = "SELECT * FROM books WHERE id = ?";
-		
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			PreparedStatement pr = connection.prepareStatement(sqlFind);
+			PreparedStatement pr = connection.prepareStatement(SQL_FIND_BOOK);
 			pr.setInt(1, id);
 			
 			ResultSet res = pr.executeQuery();
