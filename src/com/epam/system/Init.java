@@ -13,6 +13,7 @@ import com.epam.component.pagination.Pagination;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
+import com.epam.constant.RoleConstant;
 import com.epam.entity.UserEntity;
 import com.epam.service.UserService;
 import com.epam.service.exception.UserServiceException;
@@ -67,5 +68,7 @@ public class Init {
 			Pagination pagination = new Pagination();
 			ServiceLocator.getInstance().setService(ServiceLocatorEnum.PAGINATION, pagination);
 		}
+		
+		request.setAttribute("adminRoleId", RoleConstant.ADMIN);
 	}
 }

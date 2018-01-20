@@ -48,6 +48,12 @@
 					<li>
 						<a href="/BookShop/basket.html">${requestScope.lang.getValue('basket_title')}</a>
 					</li>
+					
+					<c:if test="${ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER).getRole().getId() == requestScope.adminRoleId}">
+						<li>
+							<a href="/BookShop/order-list.html">${requestScope.lang.getValue('order_list')}</a>
+						</li>
+					</c:if>
 				</c:if>
 			
 				<li class="dropdown">
