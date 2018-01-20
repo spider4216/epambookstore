@@ -54,6 +54,10 @@
 							<a href="/BookShop/order-list.html">${requestScope.lang.getValue('order_list')}</a>
 						</li>
 					</c:if>
+					
+					<li>
+						<a href="/BookShop/sign-out.html">${requestScope.lang.getValue('sign_out')}</a>
+					</li>
 				</c:if>
 			
 				<li class="dropdown">

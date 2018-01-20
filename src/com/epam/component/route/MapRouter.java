@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.epam.action.IAction;
 import com.epam.action.LangAction;
+import com.epam.action.LogoutAction;
 import com.epam.action.MainAction;
 import com.epam.action.SearchAction;
 import com.epam.action.SignInMainAction;
@@ -53,6 +54,7 @@ public class MapRouter {
 		map.put("/BookShop/ajax/search.html", new SearchAction());
 		map.put("/BookShop/order-list.html", new AdminOrderList());
 		map.put("/BookShop/ajax/accept-order.html", new AcceptOrderAction());
+		map.put("/BookShop/sign-out.html", new LogoutAction());
 	}
 	
 	public static IAction getAction(String path) throws RouterException {

@@ -146,6 +146,19 @@ public class UserService {
 	}
 	
 	/**
+	 * Logout
+	 */
+	public Boolean logOut(UserEntity entity) throws UserServiceException {
+		try {
+			userDao.updateSissionIdByUsername(entity.getUsername(), "");
+		} catch (DaoUserException e) {
+			throw new UserServiceException(lang.getValue("service_user_auth_problem"), e);
+		}
+		
+		return true;
+	}
+	
+	/**
 	 * Get current user
 	 */
 	public UserEntity currentUser() throws UserServiceException {
