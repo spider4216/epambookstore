@@ -35,7 +35,6 @@ import com.epam.system.Init;
 public class DispatcherServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setCharacterEncoding("UTF-8");
 		// Put Session to Service Locator
 		ServiceLocator sl = ServiceLocator.getInstance();
 		sl.setService(ServiceLocatorEnum.SESSION, request.getSession(true));
