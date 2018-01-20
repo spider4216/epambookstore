@@ -1,4 +1,4 @@
-package com.epam.component.dao;
+package com.epam.component.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.epam.component.dao.IBookDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoBookException;
 import com.epam.component.dao.factory.ConnectionPool;
@@ -19,11 +20,11 @@ import com.epam.component.service_locator.ServiceLocatorException;
  * 
  * @author Yuriy Sirotenko
  */
-public class MysqlBookDao implements IBookDao {
+public class BookDao implements IBookDao {
 	
 	private Lang lang = null;
 	
-	public MysqlBookDao() throws DaoBookException {
+	public BookDao() throws DaoBookException {
 		try {
 			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		} catch (ServiceLocatorException e) {

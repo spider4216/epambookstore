@@ -4,12 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.epam.component.dao.MysqlBookDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoBookException;
 import com.epam.component.dao.exception.MysqlDaoException;
 import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
+import com.epam.component.dao.impl.BookDao;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
@@ -23,7 +23,7 @@ import com.epam.service.exception.BookServiceException;
  * @author Yuriy Sirotenko
  */
 public class BookService {
-	private MysqlBookDao bookDao;
+	private BookDao bookDao;
 	private Lang lang;
 	
 	public BookService() throws BookServiceException {
@@ -35,7 +35,7 @@ public class BookService {
 		
 		try {
 			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
-			bookDao = (MysqlBookDao)MYSQLFactory.getBookDao();
+			bookDao = (BookDao)MYSQLFactory.getBookDao();
 		} catch (DaoBookException | MysqlDaoException e) {
 			throw new BookServiceException(lang.getValue("service_book_dao_err"), e);
 		}

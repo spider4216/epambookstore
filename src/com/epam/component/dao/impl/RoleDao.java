@@ -1,10 +1,11 @@
-package com.epam.component.dao;
+package com.epam.component.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.epam.component.dao.IRoleDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoRoleException;
 import com.epam.component.dao.factory.ConnectionPool;
@@ -13,11 +14,11 @@ import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 
-public class MysqlRoleDao implements IRoleDao {
+public class RoleDao implements IRoleDao {
 	
 	private Lang lang = null;
 	
-	public MysqlRoleDao() throws DaoRoleException {
+	public RoleDao() throws DaoRoleException {
 		try {
 			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		} catch (ServiceLocatorException e) {

@@ -1,4 +1,4 @@
-package com.epam.component.dao;
+package com.epam.component.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.epam.component.dao.ICategoryDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoCategoryException;
 import com.epam.component.dao.factory.ConnectionPool;
@@ -19,10 +20,10 @@ import com.epam.component.service_locator.ServiceLocatorException;
  * 
  * @author Yuriy Sirotenko
  */
-public class MysqlCategoryDao implements ICategoryDao {
+public class CategoryDao implements ICategoryDao {
 	private Lang lang = null;
 	
-	public MysqlCategoryDao() throws DaoCategoryException {
+	public CategoryDao() throws DaoCategoryException {
 		try {
 			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		} catch (ServiceLocatorException e) {

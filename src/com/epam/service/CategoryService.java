@@ -5,12 +5,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import com.epam.component.dao.MysqlCategoryDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoCategoryException;
 import com.epam.component.dao.exception.MysqlDaoException;
 import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
+import com.epam.component.dao.impl.CategoryDao;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
@@ -25,7 +25,7 @@ import com.epam.service.exception.CategoryServiceException;
  * @author Yuriy Sirotenko
  */
 public class CategoryService {
-	private MysqlCategoryDao categoryDao;
+	private CategoryDao categoryDao;
 	
 	private Lang lang;
 	
@@ -38,7 +38,7 @@ public class CategoryService {
 		
 		try {
 			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
-			categoryDao = (MysqlCategoryDao)MYSQLFactory.getCategoryDao();
+			categoryDao = (CategoryDao)MYSQLFactory.getCategoryDao();
 		} catch (DaoCategoryException | MysqlDaoException e) {
 			throw new CategoryServiceException(lang.getValue("service_category_get_dao_err"), e);
 		}

@@ -1,13 +1,6 @@
 package com.epam.component.dao.factory;
 
 
-import com.epam.component.dao.MysqlBasketDao;
-import com.epam.component.dao.MysqlBookDao;
-import com.epam.component.dao.MysqlCategoryDao;
-import com.epam.component.dao.MysqlOrderDao;
-import com.epam.component.dao.MysqlOrderToProductDao;
-import com.epam.component.dao.MysqlRoleDao;
-import com.epam.component.dao.MysqlUserDao;
 import com.epam.component.dao.IBasketDao;
 import com.epam.component.dao.IBookDao;
 import com.epam.component.dao.ICategoryDao;
@@ -22,34 +15,41 @@ import com.epam.component.dao.exception.DaoOrderException;
 import com.epam.component.dao.exception.DaoOrderToProductException;
 import com.epam.component.dao.exception.DaoRoleException;
 import com.epam.component.dao.exception.DaoUserException;
+import com.epam.component.dao.impl.BasketDao;
+import com.epam.component.dao.impl.BookDao;
+import com.epam.component.dao.impl.CategoryDao;
+import com.epam.component.dao.impl.OrderDao;
+import com.epam.component.dao.impl.OrderToProductDao;
+import com.epam.component.dao.impl.RoleDao;
+import com.epam.component.dao.impl.UserDao;
 
 public class MysqlDaoFactory extends DaoFactory {
 	
 	public IBookDao getBookDao() throws DaoBookException {
-		return new MysqlBookDao();
+		return new BookDao();
 	}
 	
 	public IUserDao getUserDao() throws DaoUserException {
-		return new MysqlUserDao();
+		return new UserDao();
 	}
 	
 	public ICategoryDao getCategoryDao() throws DaoCategoryException {
-		return new MysqlCategoryDao();
+		return new CategoryDao();
 	}
 	
 	public IBasketDao getBasketDao() throws DaoBasketException {
-		return new MysqlBasketDao();
+		return new BasketDao();
 	}
 	
 	public IRoleDao getRoleDao() throws DaoRoleException {
-		return new MysqlRoleDao();
+		return new RoleDao();
 	}
 	
 	public IOrderDao getOrderDao() throws DaoOrderException {
-		return new MysqlOrderDao();
+		return new OrderDao();
 	}
 	
 	public IOrderToProductDao getOrderToProduct() throws DaoOrderToProductException {
-		return new MysqlOrderToProductDao();
+		return new OrderToProductDao();
 	}
 }

@@ -1,4 +1,4 @@
-package com.epam.component.dao;
+package com.epam.component.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.epam.component.dao.IOrderDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoBasketException;
 import com.epam.component.dao.exception.DaoCategoryException;
@@ -20,11 +21,11 @@ import com.epam.constant.OrderStatus;
 import com.epam.constant.RoleConstant;
 import com.epam.entity.OrderEntity;
 
-public class MysqlOrderDao implements IOrderDao {
+public class OrderDao implements IOrderDao {
 
 	private Lang lang = null;
 
-	public MysqlOrderDao() throws DaoOrderException {
+	public OrderDao() throws DaoOrderException {
 		try {
 			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		} catch (ServiceLocatorException e) {

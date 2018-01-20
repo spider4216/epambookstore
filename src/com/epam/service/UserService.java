@@ -8,12 +8,12 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpSession;
 
-import com.epam.component.dao.MysqlUserDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.dao.exception.MysqlDaoException;
 import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
+import com.epam.component.dao.impl.UserDao;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
@@ -31,7 +31,7 @@ import com.epam.service.exception.UserServiceException;
 public class UserService {
 	private static final Integer EMPTY_USER = 0;
 	
-	private MysqlUserDao userDao;
+	private UserDao userDao;
 	
 	private Lang lang;
 	
@@ -44,7 +44,7 @@ public class UserService {
 		
 		try {
 			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
-			userDao = (MysqlUserDao)MYSQLFactory.getUserDao();
+			userDao = (UserDao)MYSQLFactory.getUserDao();
 		} catch (DaoUserException | MysqlDaoException e) {
 			throw new UserServiceException(lang.getValue("service_user_get_dao_err"));
 		}

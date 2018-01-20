@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.epam.component.dao.MysqlOrderToProductDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoCategoryException;
 import com.epam.component.dao.exception.DaoOrderException;
@@ -12,6 +11,7 @@ import com.epam.component.dao.exception.DaoOrderToProductException;
 import com.epam.component.dao.exception.MysqlDaoException;
 import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
+import com.epam.component.dao.impl.OrderToProductDao;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
@@ -26,7 +26,7 @@ import com.epam.service.exception.OrderServiceException;
 import com.epam.service.exception.OrderToProductServiceException;
 
 public class OrderToProductService {
-	private MysqlOrderToProductDao orderToProductDao;
+	private OrderToProductDao orderToProductDao;
 	
 	private Lang lang;
 	
@@ -39,7 +39,7 @@ public class OrderToProductService {
 		
 		try {
 			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
-			orderToProductDao = (MysqlOrderToProductDao)MYSQLFactory.getOrderToProduct();
+			orderToProductDao = (OrderToProductDao)MYSQLFactory.getOrderToProduct();
 		} catch (DaoOrderToProductException | MysqlDaoException e) {
 			throw new OrderToProductServiceException(lang.getValue("service_order_to_product_get_dao_err"), e);
 		}

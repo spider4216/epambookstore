@@ -1,10 +1,11 @@
-package com.epam.component.dao;
+package com.epam.component.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.epam.component.dao.IBasketDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoBasketException;
 import com.epam.component.dao.factory.ConnectionPool;
@@ -19,12 +20,12 @@ import com.epam.entity.BasketEntity;
  * 
  * @author Yuriy Sirotenko
  */
-public class MysqlBasketDao implements IBasketDao {
+public class BasketDao implements IBasketDao {
 	private static final Integer EMPTY_BASKET = 0;
 	
 	private Lang lang = null;
 	
-	public MysqlBasketDao() throws DaoBasketException {
+	public BasketDao() throws DaoBasketException {
 		try {
 			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		} catch (ServiceLocatorException e) {
