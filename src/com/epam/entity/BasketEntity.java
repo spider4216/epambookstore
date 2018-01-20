@@ -1,7 +1,10 @@
 package com.epam.entity;
 
-import java.util.Date;
-
+/**
+ * Basket entity
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class BasketEntity {
 	private Integer id;
 	
@@ -13,7 +16,6 @@ public class BasketEntity {
 	
 	private Integer is_history = 0;
 	
-	// TODO think about date type
 	private String create_date;
 	
 	/**

@@ -10,6 +10,14 @@ import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.component.validation.ValidatorFabric;
 import com.epam.component.validation.exception.ValidationException;
 
+/**
+ * Validator for password
+ * Minimum eight characters, at least one uppercase 
+ * letter, one lowercase letter, one number and one 
+ * special character
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class PasswordValidator extends ValidatorFabric {
 	public Boolean execute(String value) throws ValidationException {
 		Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,}");

@@ -1,7 +1,7 @@
 package com.epam.entity;
 
 /**
- * Book
+ * Book entity
  * 
  * @author Yuriy Sitotenko
  */
@@ -9,9 +9,6 @@ public class BookEntity {
 	
 	private Integer id;
 	
-	/**
-	 * ISBN's book
-	 */
 	private String isbn;
 	
 	private String name;
@@ -22,9 +19,6 @@ public class BookEntity {
 	
 	private Integer year;
 	
-	/**
-	 * Page numbers
-	 */
 	private Integer page;
 	
 	private Integer category_id;

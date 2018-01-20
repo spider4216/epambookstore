@@ -10,6 +10,12 @@ import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.component.validation.ValidatorFabric;
 import com.epam.component.validation.exception.ValidationException;
 
+/**
+ * Username validator
+ * Minimum four characters, special character not permitted
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class UsernameValidator extends ValidatorFabric {
 
 	public Boolean execute(String value) throws ValidationException {

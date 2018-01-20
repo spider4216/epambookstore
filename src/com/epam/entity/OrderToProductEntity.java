@@ -1,5 +1,10 @@
 package com.epam.entity;
 
+/**
+ * Order to product entity (many to many)
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class OrderToProductEntity {
 	private Integer id;
 	

@@ -7,6 +7,12 @@ import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.component.validation.ValidatorFabric;
 import com.epam.component.validation.exception.ValidationException;
 
+/**
+ * Require validator
+ * Field have to contains something
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class RequiredValidator extends ValidatorFabric {
 
 	public Boolean execute(String value) throws ValidationException {

@@ -1,6 +1,5 @@
 package com.epam.component.validation.validator;
 
-import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
@@ -10,8 +9,12 @@ import com.epam.component.validation.exception.ValidationException;
 import com.epam.service.UserService;
 import com.epam.service.exception.UserServiceException;
 
-// TODO rename validator. It should be something like "UniqueUsernameValidator"
-public class UniqueUsername extends ValidatorFabric {
+/**
+ * Unique username validator
+ * 
+ * @author Yuriy Sirotenko
+ */
+public class UniqueUsernameValidator extends ValidatorFabric {
 
 	public Boolean execute(String value) throws ValidationException {
 		Lang lang = null;

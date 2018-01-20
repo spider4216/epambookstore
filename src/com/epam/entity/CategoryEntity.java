@@ -1,5 +1,10 @@
 package com.epam.entity;
 
+/**
+ * Category Entity
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class CategoryEntity {
 	private Integer id;
 

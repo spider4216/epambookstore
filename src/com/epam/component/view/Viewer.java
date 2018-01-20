@@ -2,7 +2,6 @@ package com.epam.component.view;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +11,17 @@ import com.epam.entity.CategoryEntity;
 import com.epam.service.CategoryService;
 import com.epam.service.exception.CategoryServiceException;
 
-public class Viewer {	
+/**
+ * Viewer component
+ * It helps render view
+ * 
+ * @author Yuriy Sirotenko
+ */
+public class Viewer {
+	
+	/**
+	 * Render view with layout
+	 */
 	public static void execute(HttpServletRequest request, HttpServletResponse response, String name) throws ServletException, IOException {
 		request.setAttribute("includeJsp", name);
 		
@@ -27,6 +36,9 @@ public class Viewer {
 		request.getRequestDispatcher("/jsp/main.jsp").include(request, response);
 	}
 	
+	/**
+	 * Render view without layout
+	 */
 	public static void renderPartial(HttpServletRequest request, HttpServletResponse response, String name) throws ServletException, IOException {
 		request.getRequestDispatcher("/jsp/" + name).include(request, response);
 	}

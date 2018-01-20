@@ -3,9 +3,14 @@ package com.epam.component.validation;
 import com.epam.component.validation.exception.ValidationException;
 import com.epam.component.validation.validator.PasswordValidator;
 import com.epam.component.validation.validator.RequiredValidator;
-import com.epam.component.validation.validator.UniqueUsername;
+import com.epam.component.validation.validator.UniqueUsernameValidator;
 import com.epam.component.validation.validator.UsernameValidator;
 
+/**
+ * Validator fabric
+ * 
+ * @author Yuriy Sirotenko
+ */
 public abstract class ValidatorFabric {
 	public abstract Boolean execute(String value) throws ValidationException;
 	
@@ -20,7 +25,7 @@ public abstract class ValidatorFabric {
 				validator = new UsernameValidator();
 				break;
 			case USERNAME_UNIQUE :
-				validator = new UniqueUsername();
+				validator = new UniqueUsernameValidator();
 				break;
 			case REQUIRED :
 				validator = new RequiredValidator();

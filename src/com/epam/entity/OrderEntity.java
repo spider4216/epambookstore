@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import com.epam.constant.OrderStatus;
 
+/**
+ * Order entity
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class OrderEntity {
 	private Integer id;
 	

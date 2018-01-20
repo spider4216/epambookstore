@@ -9,6 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+/**
+ * Filter for encoding
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class EncodingFilter implements Filter {
 
 	private String encoding;

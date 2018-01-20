@@ -2,6 +2,11 @@ package com.epam.entity;
 
 import com.epam.constant.RoleConstant;
 
+/**
+ * User entity
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class UserEntity {
 	private Integer id;
 	

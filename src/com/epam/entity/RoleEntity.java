@@ -1,5 +1,10 @@
 package com.epam.entity;
 
+/**
+ * Role Entity
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class RoleEntity {
 	private Integer id;
 	
