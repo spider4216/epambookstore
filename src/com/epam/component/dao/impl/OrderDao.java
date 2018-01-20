@@ -8,19 +8,20 @@ import java.sql.Statement;
 
 import com.epam.component.dao.IOrderDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
-import com.epam.component.dao.exception.DaoBasketException;
-import com.epam.component.dao.exception.DaoCategoryException;
 import com.epam.component.dao.exception.DaoOrderException;
-import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.constant.OrderStatus;
-import com.epam.constant.RoleConstant;
 import com.epam.entity.OrderEntity;
 
+/**
+ * Mysql order dao
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class OrderDao implements IOrderDao {
 
 	private final static String SQL_FIND_ALL = "SELECT * FROM orders";
@@ -45,6 +46,9 @@ public class OrderDao implements IOrderDao {
 		}
 	}
 
+	/**
+	 * Find all orders
+	 */
 	public ResultSet findAll() throws DaoOrderException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
@@ -58,7 +62,10 @@ public class OrderDao implements IOrderDao {
 			throw new DaoOrderException(lang.getValue("dao_order_empty_err"), e);
 		}
 	}
-	
+
+	/**
+	 * Find all orders by user id
+	 */
 	public ResultSet findAllByUserId(Integer id) throws DaoOrderException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
@@ -74,6 +81,9 @@ public class OrderDao implements IOrderDao {
 		}
 	}
 
+	/**
+	 * Find all orders by status
+	 */
 	public ResultSet findAllByStatus(Integer status) throws DaoOrderException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
@@ -89,6 +99,9 @@ public class OrderDao implements IOrderDao {
 		}
 	}
 
+	/**
+	 * Find one order by id
+	 */
 	public ResultSet findOneById(Integer id) throws DaoOrderException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
@@ -104,6 +117,9 @@ public class OrderDao implements IOrderDao {
 		}
 	}
 	
+	/**
+	 * Insert order
+	 */
 	public Integer insert(OrderEntity entity) throws DaoOrderException{
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
@@ -124,6 +140,9 @@ public class OrderDao implements IOrderDao {
 		}
 	}
 	
+	/**
+	 * Update order status as accept by id
+	 */
 	public Integer updateStatusAsAcceptById(Integer id) throws DaoOrderException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();

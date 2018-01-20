@@ -8,6 +8,12 @@ import com.epam.action.SignInProcessAction;
 import com.epam.action.SignUpMainAction;
 import com.epam.action.SignUpProcessAction;
 
+/**
+ * Auth component helps exclude actions which 
+ * haven't to be part of redirect
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class Auth {
 	private static ArrayList<String> actions = new ArrayList<>();
 	

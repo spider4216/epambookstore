@@ -8,7 +8,7 @@ import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoCategoryException;
 import com.epam.component.dao.exception.DaoOrderException;
 import com.epam.component.dao.exception.DaoOrderToProductException;
-import com.epam.component.dao.exception.MysqlDaoException;
+import com.epam.component.dao.exception.DaoException;
 import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.OrderToProductDao;
@@ -40,7 +40,7 @@ public class OrderToProductService {
 		try {
 			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 			orderToProductDao = (OrderToProductDao)MYSQLFactory.getOrderToProduct();
-		} catch (DaoOrderToProductException | MysqlDaoException e) {
+		} catch (DaoOrderToProductException | DaoException e) {
 			throw new OrderToProductServiceException(lang.getValue("service_order_to_product_get_dao_err"), e);
 		}
 	}

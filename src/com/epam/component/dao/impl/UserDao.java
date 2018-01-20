@@ -129,6 +129,9 @@ public class UserDao implements IUserDao {
 		}
 	}
 	
+	/**
+	 * Find user by id
+	 */
 	public ResultSet findOneById(Integer id) throws DaoUserException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();

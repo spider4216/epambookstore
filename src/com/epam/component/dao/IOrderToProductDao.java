@@ -11,7 +11,14 @@ import com.epam.entity.OrderToProductEntity;
  * @author Yuriy Sirotenko
  */
 public interface IOrderToProductDao {
+	
+	/**
+	 * Find all order to product map (many to many) by order id
+	 */
 	public ResultSet findAllByOrderId(Integer id) throws DaoOrderToProductException;
 	
+	/**
+	 * Insert order to product map (many to many)
+	 */
 	public Integer insert(OrderToProductEntity entity) throws DaoOrderToProductException;
 }

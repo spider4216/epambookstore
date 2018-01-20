@@ -8,16 +8,19 @@ import java.sql.Statement;
 
 import com.epam.component.dao.IOrderToProductDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
-import com.epam.component.dao.exception.DaoOrderException;
 import com.epam.component.dao.exception.DaoOrderToProductException;
 import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
-import com.epam.entity.OrderEntity;
 import com.epam.entity.OrderToProductEntity;
 
+/**
+ * Mysql order to product dao (map - many to many)
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class OrderToProductDao implements IOrderToProductDao {
 	
 	private final static String SQL_FIND_ALL_BY_ORDER_ID = "SELECT * FROM order_to_product where order_id = ?";
@@ -34,6 +37,9 @@ public class OrderToProductDao implements IOrderToProductDao {
 		}
 	}
 
+	/**
+	 * Find all order to product map (many to many) by order id
+	 */
 	public ResultSet findAllByOrderId(Integer id) throws DaoOrderToProductException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
@@ -49,6 +55,9 @@ public class OrderToProductDao implements IOrderToProductDao {
 		}
 	}
 	
+	/**
+	 * Insert order to product map (many to many)
+	 */
 	public Integer insert(OrderToProductEntity entity) throws DaoOrderToProductException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();

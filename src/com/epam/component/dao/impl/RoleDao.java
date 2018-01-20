@@ -14,6 +14,11 @@ import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 
+/**
+ * Mysql role dao
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class RoleDao implements IRoleDao {
 	
 	private final static String SQL_FIND_ONE_BY_ID = "SELECT * FROM roles WHERE id = ?";
@@ -28,6 +33,9 @@ public class RoleDao implements IRoleDao {
 		}
 	}
 
+	/**
+	 * Find role by id
+	 */
 	public ResultSet findOneById(Integer id) throws DaoRoleException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();

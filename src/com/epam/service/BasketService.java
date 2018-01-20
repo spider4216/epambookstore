@@ -9,7 +9,7 @@ import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoBasketException;
 import com.epam.component.dao.exception.DaoBookException;
 import com.epam.component.dao.exception.DaoCategoryException;
-import com.epam.component.dao.exception.MysqlDaoException;
+import com.epam.component.dao.exception.DaoException;
 import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.BasketDao;
@@ -43,7 +43,7 @@ public class BasketService {
 		try {
 			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 			basketDao = (BasketDao)MYSQLFactory.getBasketDao();
-		} catch (DaoBasketException | MysqlDaoException e) {
+		} catch (DaoBasketException | DaoException e) {
 			throw new BasketServiceException("service_basket_create_dao_err", e);
 		}
 	}
