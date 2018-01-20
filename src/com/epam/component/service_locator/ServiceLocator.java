@@ -2,6 +2,15 @@ package com.epam.component.service_locator;
 
 import java.util.HashMap;
 
+/**
+ * Service locator component. The most important component in
+ * application. Container contains significant services which
+ * were often used from different part of application
+ * Service locator start to put services in front controller
+ * and init class
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class ServiceLocator {
 	private static ServiceLocator instance = null;
 	

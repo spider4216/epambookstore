@@ -16,6 +16,11 @@ import com.epam.component.dao.exception.DaoRoleException;
 import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.dao.exception.DaoException;
 
+/**
+ * Dao factory
+ * 
+ * @author Yuriy Sirotenko
+ */
 public abstract class DaoFactory {
 	public static final int MYSQL = 1;
 	

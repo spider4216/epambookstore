@@ -23,6 +23,11 @@ import com.epam.component.dao.impl.OrderToProductDao;
 import com.epam.component.dao.impl.RoleDao;
 import com.epam.component.dao.impl.UserDao;
 
+/**
+ * Mysql dao factory
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class MysqlDaoFactory extends DaoFactory {
 	
 	public IBookDao getBookDao() throws DaoBookException {

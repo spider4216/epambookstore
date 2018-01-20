@@ -9,6 +9,14 @@ import java.util.ResourceBundle;
 
 import com.epam.component.dao.exception.ConnectionPoolException;
 
+/**
+ * This realisation of connection pool was got from
+ * manual which I get in Java Lab. But it was refactored
+ * by mine a little bit, e.g I added single connection
+ * feature for transaction use
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class ConnectionPool {
 	private static ConnectionPool instance = null;
 	
@@ -59,9 +67,6 @@ public class ConnectionPool {
 	}
 	
 	public synchronized Connection getConnection() throws ConnectionPoolException {
-		// Need for transaction
-		// Comments more properly
-		// move to method
 		if (useSingleConnection == true) {
 			if (singleConnection == null) {
 				singleConnection = newConnection();
