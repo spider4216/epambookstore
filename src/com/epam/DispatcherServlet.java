@@ -1,16 +1,8 @@
-import java.io.BufferedReader;
+package com.epam;
+
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,16 +12,12 @@ import com.epam.action.SignInMainAction;
 import com.epam.action.SignInProcessAction;
 import com.epam.action.SignUpMainAction;
 import com.epam.action.SignUpProcessAction;
-import com.epam.component.lang.Lang;
 import com.epam.component.route.MapRouter;
 import com.epam.component.route.RouterException;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.component.view.Viewer;
-import com.epam.entity.UserEntity;
-import com.epam.service.UserService;
-import com.epam.service.exception.UserServiceException;
 import com.epam.system.Init;
 
 public class DispatcherServlet extends HttpServlet {

@@ -3,7 +3,7 @@
   <display-name>BookShop</display-name>
   <servlet>
   	<servlet-name>DispatcherServlet</servlet-name>
-  	<servlet-class>DispatcherServlet</servlet-class>
+  	<servlet-class>com.epam.DispatcherServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
