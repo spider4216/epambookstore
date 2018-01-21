@@ -16,15 +16,15 @@ import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 
 /**
- * Mysql category dao
+ * Mysql categories dao
  * 
  * @author Yuriy Sirotenko
  */
 public class CategoryDao implements ICategoryDao {
 
-	private final static String SQL_FIND_ALL = "SELECT * FROM category";
+	private final static String SQL_FIND_ALL = "SELECT * FROM categories";
 
-	private final static String SQL_FIND_ONE_BY_ID = "SELECT * FROM category WHERE id = ?";
+	private final static String SQL_FIND_ONE_BY_ID = "SELECT * FROM categories WHERE id = ?";
 	
 	private Lang lang = null;
 	

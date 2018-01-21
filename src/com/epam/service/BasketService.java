@@ -114,7 +114,6 @@ public class BasketService {
 		basket.setUserId(result.getInt("bt.user_id"));
 		basket.setBookId(result.getInt("bt.book_id"));
 		basket.setCount(result.getInt("bt.count"));
-		basket.setIsHistory(result.getInt("bt.is_history"));
 		basket.setCreateDate(result.getString("bt.create_date"));
 		basket.setBook(book);
 		

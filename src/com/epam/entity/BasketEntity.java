@@ -14,8 +14,6 @@ public class BasketEntity {
 	
 	private Integer count;
 	
-	private Integer is_history = 0;
-	
 	private String create_date;
 	
 	/**
@@ -61,14 +59,6 @@ public class BasketEntity {
 
 	public void setBook(BookEntity book) {
 		this.book = book;
-	}
-
-	public Integer getIsHistory() {
-		return is_history;
-	}
-
-	public void setIsHistory(Integer is_history) {
-		this.is_history = is_history;
 	}
 
 	public String getCreateDate() {

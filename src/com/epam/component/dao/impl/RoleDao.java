@@ -15,7 +15,7 @@ import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 
 /**
- * Mysql role dao
+ * Mysql roles dao
  * 
  * @author Yuriy Sirotenko
  */

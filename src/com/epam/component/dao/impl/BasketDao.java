@@ -21,15 +21,15 @@ import com.epam.entity.BasketEntity;
  * @author Yuriy Sirotenko
  */
 public class BasketDao implements IBasketDao {
-	private static final String SQL_INSERT = "INSERT INTO basket (user_id, book_id, count, is_history) VALUES (?, ?, ?, ?)";
+	private static final String SQL_INSERT = "INSERT INTO basket (user_id, book_id, count) VALUES (?, ?, ?)";
 
-	private static final String SQL_FIND_ONE_BY_PRODUCT_AND_USER_ID = "SELECT * FROM basket WHERE book_id = ? AND user_id = ? AND is_history = 0";
+	private static final String SQL_FIND_ONE_BY_PRODUCT_AND_USER_ID = "SELECT * FROM basket WHERE book_id = ? AND user_id = ?";
 
-	private static final String SQL_FIND_ALL_BY_USER_ID = "SELECT bt.*, bk.* FROM basket bt INNER JOIN books bk ON bt.book_id = bk.id WHERE bt.user_id = ? AND is_history = 0";
+	private static final String SQL_FIND_ALL_BY_USER_ID = "SELECT bt.*, bk.* FROM basket bt INNER JOIN books bk ON bt.book_id = bk.id WHERE bt.user_id = ?";
 
-	private static final String SQL_DELETE_BY_USER_AND_BOOK_ID = "DELETE FROM basket WHERE user_id = ? AND book_id = ? AND is_history = 0";
+	private static final String SQL_DELETE_BY_USER_AND_BOOK_ID = "DELETE FROM basket WHERE user_id = ? AND book_id = ?";
 
-	private static final String SQL_DELETE_ALL_BY_USER_ID = "DELETE FROM basket WHERE user_id = ? AND is_history = 0";
+	private static final String SQL_DELETE_ALL_BY_USER_ID = "DELETE FROM basket WHERE user_id = ?";
 	
 	private static final Integer EMPTY_BASKET = 0;
 	
@@ -54,7 +54,6 @@ public class BasketDao implements IBasketDao {
 			pr.setInt(1, entity.getUserId());
 			pr.setInt(2, entity.getBookId());
 			pr.setInt(3, entity.getCount());
-			pr.setInt(4, entity.getIsHistory());
 
 			Integer res = pr.executeUpdate();
 			

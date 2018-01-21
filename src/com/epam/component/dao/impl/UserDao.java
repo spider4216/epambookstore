@@ -17,20 +17,20 @@ import com.epam.constant.RoleConstant;
 import com.epam.entity.UserEntity;
 
 /**
- * Mysql user dao
+ * Mysql users dao
  * 
  * @author Yuriy Sirotenko
  */
 public class UserDao implements IUserDao {
-	private final static String SQL_INSERT_USER = "INSERT INTO user (username, password, first_name, last_name, gender, role_id) VALUES (?, ?, ?, ?, ?, ?)";
+	private final static String SQL_INSERT_USER = "INSERT INTO users (username, password, first_name, last_name, gender, role_id) VALUES (?, ?, ?, ?, ?, ?)";
 
-	private final static String SQL_FIND_ONE_BY_USERNAME = "SELECT * FROM user WHERE username = ?";
+	private final static String SQL_FIND_ONE_BY_USERNAME = "SELECT * FROM users WHERE username = ?";
 
-	private final static String SQL_UPDATE_SESSION_ID_BY_USERNAME = "UPDATE user SET session_id = ? where username = ?";
+	private final static String SQL_UPDATE_SESSION_ID_BY_USERNAME = "UPDATE users SET session_id = ? where username = ?";
 
-	private final static String SQL_FIND_ONE_BY_SESSION_ID = "SELECT * FROM user WHERE session_id = ?";
+	private final static String SQL_FIND_ONE_BY_SESSION_ID = "SELECT * FROM users WHERE session_id = ?";
 
-	private final static String SQL_FIND_ONE_BY_ID = "SELECT * FROM user WHERE id = ?";
+	private final static String SQL_FIND_ONE_BY_ID = "SELECT * FROM users WHERE id = ?";
 	
 	private static final Integer EMPTY_USER = 0;
 	

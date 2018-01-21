@@ -63,6 +63,8 @@ public class DispatcherServlet extends HttpServlet {
 		try {
 			action.execute(request, response);
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 			request.setAttribute("errMsg", e.getMessage());
 			Viewer.execute(request, response, "error.jsp");
 			return;
