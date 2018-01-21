@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.epam.action.IAction;
 import com.epam.component.auth.Auth;
 import com.epam.component.route.MapRouter;
@@ -18,6 +20,8 @@ import com.epam.component.view.Viewer;
 import com.epam.system.Init;
 
 public class DispatcherServlet extends HttpServlet {
+	
+	public final static Logger logger = Logger.getLogger(DispatcherServlet.class);
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Put Session to Service Locator
@@ -27,6 +31,7 @@ public class DispatcherServlet extends HttpServlet {
 		try {
 			Init.execute(request, response);
 		} catch (ServiceLocatorException e) {
+			logger.error(e.getMessage());
 			request.setAttribute("errMsg", e.getMessage());
 			Viewer.execute(request, response, "error.jsp");
 			return;
@@ -41,6 +46,7 @@ public class DispatcherServlet extends HttpServlet {
 		try {
 			action = MapRouter.getAction(path);
 		} catch (RouterException e) {
+			logger.error(e.getMessage());
 			request.setAttribute("errMsg", e.getMessage());
 			Viewer.execute(request, response, "error.jsp");
 			return;
@@ -63,8 +69,7 @@ public class DispatcherServlet extends HttpServlet {
 		try {
 			action.execute(request, response);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+			logger.error(e.getMessage());
 			request.setAttribute("errMsg", e.getMessage());
 			Viewer.execute(request, response, "error.jsp");
 			return;
