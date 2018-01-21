@@ -157,9 +157,6 @@ function BasketClass() {
 			beforeSend: function() {
 				element.prop('disabled', true);
 			},
-			complete: function() {
-				element.prop('disabled', false);
-			},
 			success: function(res) {
 				$.jGrowl(res.message);
 				setTimeout(function() {

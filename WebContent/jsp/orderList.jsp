@@ -11,6 +11,11 @@
 				</div>
 				
 				<div class="panel-body">
+					<c:if test="${fm.hasMsg() == true}">
+						<div class="alert alert-info" role="alert">
+							<c:out value="${fm.getMsg()}" />
+						</div>
+					</c:if>
 					
 					<c:if test="${not empty orders}">
 						<c:forEach items="${orders}" var="order">

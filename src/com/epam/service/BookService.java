@@ -185,6 +185,7 @@ public class BookService {
 		book.setPage(result.getInt("page"));
 		book.setCategoryId(result.getInt("category_id"));
 		book.setImgPath(result.getString("img_path"));
+		book.setYear(result.getInt("year"));
 		
 		return book;
 	}

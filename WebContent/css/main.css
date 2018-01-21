@@ -23,13 +23,14 @@
 }
 
 .thumbnail-book-card .thumb-title {
-	height: 90px;
+	height: 75px;
 	overflow: hidden;
 }
 
 
 .thumbnail-book-card .thumb-description {
-	height: 110px;
+	height: 103px;
+	margin-bottom: 20px;
 	overflow: hidden;
 }
 

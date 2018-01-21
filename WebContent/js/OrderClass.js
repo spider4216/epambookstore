@@ -1,16 +1,38 @@
+/**
+ * Class for order products
+ * 
+ * @author Yuriy Sirotenko
+ */
 function OrderClass() {
+	
+	/**
+	 * @private
+	 */
 	var acceptBtn = $("#accept_order");
 	
+	/**
+	 * @public
+	 */
 	this.run = function() {
 		acceptEvent();
 	}
 	
+	/**
+	 * Accept order
+	 * 
+	 * @private
+	 */
 	var acceptEvent = function() {
 		acceptBtn.click(function() {
 			acceptHandler($(this));
 		});
 	}
 	
+	/**
+	 * Ajax request for accept order
+	 * 
+	 * @private
+	 */
 	var acceptHandler = function(element) {
 		var orderId = element.parents(".panel").find("input[name='orderId']").val();
 
@@ -21,9 +43,6 @@ function OrderClass() {
 			data: {orderId: orderId},
 			beforeSend: function() {
 				element.prop('disabled', true);
-			},
-			complete: function() {
-				element.prop('disabled', false);
 			},
 			success: function(res) {
 				$.jGrowl(res.message);
