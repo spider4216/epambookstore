@@ -190,7 +190,6 @@ public class UserService {
 			RoleEntity role = roleService.findOneById(roleId);
 			entity.setRole(role);
 		} catch (RoleServiceException e) {
-			// TODO translate
 			throw new UserServiceException("cannot get role for user", e);
 		}
 		

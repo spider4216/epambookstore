@@ -36,7 +36,6 @@ public class Init {
 			Lang langInstance = (Lang)ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 			request.setAttribute("lang", langInstance);
 		} catch (ServiceLocatorException e) {
-			// TODO from config lang by default
 			String lang = "en";
 			
 			Locale locale = new Locale(lang);
