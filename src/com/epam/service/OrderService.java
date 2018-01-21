@@ -5,15 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.epam.action.BasketOrderAction;
 import com.epam.component.dao.exception.ConnectionPoolException;
-import com.epam.component.dao.exception.DaoBasketException;
 import com.epam.component.dao.exception.DaoOrderException;
-import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.dao.exception.DaoException;
 import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
-import com.epam.component.dao.impl.CategoryDao;
 import com.epam.component.dao.impl.OrderDao;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
@@ -29,6 +25,11 @@ import com.epam.service.exception.OrderServiceException;
 import com.epam.service.exception.OrderToProductServiceException;
 import com.epam.service.exception.UserServiceException;
 
+/**
+ * Service for order logic
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class OrderService {
 	private OrderDao orderDao;
 	
@@ -49,6 +50,9 @@ public class OrderService {
 		}
 	}
 	
+	/**
+	 * Find all orders
+	 */
 	public ArrayList<OrderEntity> findAll() throws OrderServiceException {
 		try {
 			ArrayList<OrderEntity> orderCollection = new ArrayList<>();
@@ -64,6 +68,9 @@ public class OrderService {
 		}
 	}
 	
+	/**
+	 * Find all user orders
+	 */
 	public ArrayList<OrderEntity> findAllUserOrders(Integer userId) throws OrderServiceException {
 		try {
 			ArrayList<OrderEntity> orderCollection = new ArrayList<>();
@@ -79,6 +86,9 @@ public class OrderService {
 		}
 	}
 	
+	/**
+	 * Find all not approved orders
+	 */
 	public ArrayList<OrderEntity> findAllNotApproved() throws OrderServiceException {
 		try {
 			ArrayList<OrderEntity> orderCollection = new ArrayList<>();
@@ -94,6 +104,9 @@ public class OrderService {
 		}
 	}
 	
+	/**
+	 * Find order by id
+	 */
 	public OrderEntity findOneById(Integer id) throws OrderServiceException {
 		try {
 			ResultSet res = orderDao.findOneById(id);
@@ -104,6 +117,9 @@ public class OrderService {
 		}
 	}
 	
+	/**
+	 * Order setter
+	 */
 	public OrderEntity orderSetter(ResultSet result) throws SQLException, OrderServiceException {
 		OrderEntity entity = new OrderEntity();
 		
@@ -144,6 +160,9 @@ public class OrderService {
 		return entity;
 	}
 	
+	/**
+	 * Insert one order
+	 */
 	public Integer insert(OrderEntity entity) throws OrderServiceException {
 		Integer id = null;
 		
@@ -156,6 +175,9 @@ public class OrderService {
 		return id;
 	}
 	
+	/**
+	 * Create entire order
+	 */
 	public Boolean createOrder(Integer userId) throws OrderServiceException {
 		Connection connection = null;
 		ConnectionPool connectionPool = null;
@@ -188,6 +210,9 @@ public class OrderService {
 		return true;
 	}
 	
+	/**
+	 * Accept order
+	 */
 	public Boolean acceptOrder(Integer id) throws OrderServiceException {
 		Integer res = null;
 		try {
@@ -203,6 +228,9 @@ public class OrderService {
 		return true;
 	}
 	
+	/**
+	 * Create one order without any relations
+	 */
 	private Integer createItemOrder(Connection connection, ConnectionPool connectionPool, Integer userId) throws OrderServiceException {
 		OrderEntity orderEntity = new OrderEntity();
 		orderEntity.setUserId(userId);
@@ -225,6 +253,9 @@ public class OrderService {
 		return orderId;
 	}
 	
+	/**
+	 * Get basket content
+	 */
 	private ArrayList<BasketEntity> getBasketContent(Connection connection, ConnectionPool connectionPool, Integer userId) throws OrderServiceException {
 		BasketService basketService = null;
 		ArrayList<BasketEntity> basketCollection = null;
@@ -244,6 +275,9 @@ public class OrderService {
 		return basketCollection;
 	}
 	
+	/**
+	 * Create order to product relation (many to many)
+	 */
 	private Boolean createOrderToProduct(Connection connection, ConnectionPool connectionPool, Integer orderId, ArrayList<BasketEntity> basketCollection) throws OrderServiceException {
 		try {
 			OrderToProductService orderToProductService = new OrderToProductService();
@@ -269,6 +303,9 @@ public class OrderService {
 		return true;
 	}
 	
+	/**
+	 * Clean basket
+	 */
 	private Boolean cleanBasket(Connection connection, ConnectionPool connectionPool, Integer userId) throws OrderServiceException {
 		try {
 			BasketService basketService = new BasketService();
@@ -299,6 +336,9 @@ public class OrderService {
 		return sum;
 	}
 	
+	/**
+	 * throw order service exception
+	 */
 	private void throwOrderServiceException(Exception e) throws OrderServiceException {
 		throw new OrderServiceException(lang.getValue("service_order_create_order_err"), e);
 	}

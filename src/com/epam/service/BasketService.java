@@ -3,29 +3,24 @@ package com.epam.service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Locale;
 
-import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoBasketException;
-import com.epam.component.dao.exception.DaoBookException;
-import com.epam.component.dao.exception.DaoCategoryException;
 import com.epam.component.dao.exception.DaoException;
-import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.BasketDao;
-import com.epam.component.dao.impl.BookDao;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.entity.BasketEntity;
 import com.epam.entity.BookEntity;
-import com.epam.entity.CategoryEntity;
-import com.epam.entity.UserEntity;
 import com.epam.service.exception.BasketServiceException;
-import com.epam.service.exception.BookServiceException;
-import com.epam.service.exception.CategoryServiceException;
 
+/**
+ * Basket Service
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class BasketService {
 	private final static Integer EMPTY_BASKET = 0;
 	

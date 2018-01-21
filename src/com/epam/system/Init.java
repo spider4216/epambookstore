@@ -18,6 +18,13 @@ import com.epam.entity.UserEntity;
 import com.epam.service.UserService;
 import com.epam.service.exception.UserServiceException;
 
+/**
+ * The important class of the application. This class
+ * describe application init logic and have to be used in
+ * entry script (DispatcherServlet - Front Controller)
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class Init {
 	public static void execute(HttpServletRequest request, HttpServletResponse response) throws ServiceLocatorException {
 		HttpSession session = (HttpSession)ServiceLocator

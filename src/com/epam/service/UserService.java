@@ -8,10 +8,8 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpSession;
 
-import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.dao.exception.DaoException;
-import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.UserDao;
 import com.epam.component.lang.Lang;
@@ -58,8 +56,7 @@ public class UserService {
 		try {
 			res = userDao.insertUser(entity);
 		} catch (DaoUserException e) {
-			// TODO translate
-			throw new UserServiceException("problem with insert", e);
+			throw new UserServiceException(lang.getValue("service_user_insert_err"), e);
 		}
 		
 		if (res <= EMPTY_USER) {

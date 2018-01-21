@@ -4,12 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.epam.component.dao.exception.ConnectionPoolException;
-import com.epam.component.dao.exception.DaoCategoryException;
-import com.epam.component.dao.exception.DaoOrderException;
 import com.epam.component.dao.exception.DaoOrderToProductException;
 import com.epam.component.dao.exception.DaoException;
-import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.OrderToProductDao;
 import com.epam.component.lang.Lang;
@@ -17,14 +13,15 @@ import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.entity.BookEntity;
-import com.epam.entity.CategoryEntity;
-import com.epam.entity.OrderEntity;
 import com.epam.entity.OrderToProductEntity;
 import com.epam.service.exception.BookServiceException;
-import com.epam.service.exception.CategoryServiceException;
-import com.epam.service.exception.OrderServiceException;
 import com.epam.service.exception.OrderToProductServiceException;
 
+/**
+ * Order to product (many to many) service
+ * 
+ * @author Yuriy Sirotenko
+ */
 public class OrderToProductService {
 	private OrderToProductDao orderToProductDao;
 	
@@ -45,6 +42,9 @@ public class OrderToProductService {
 		}
 	}
 	
+	/**
+	 * Find all relations by product id
+	 */
 	public ArrayList<OrderToProductEntity> findAllByProductId(Integer id) throws OrderToProductServiceException {
 		try {
 			ArrayList<OrderToProductEntity> orderToProductCollection = new ArrayList<>();
@@ -60,6 +60,9 @@ public class OrderToProductService {
 		}
 	}
 	
+	/**
+	 * Insert new relation
+	 */
 	public Integer insert(OrderToProductEntity entity) throws OrderToProductServiceException {
 		Integer id = null;
 
@@ -72,6 +75,9 @@ public class OrderToProductService {
 		return id;
 	}
 	
+	/**
+	 * Order to product setter
+	 */
 	private OrderToProductEntity orderToProductSetter(ResultSet result) throws OrderToProductServiceException {
 		BookService bookService = null;
 		

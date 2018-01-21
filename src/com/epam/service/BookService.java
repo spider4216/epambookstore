@@ -4,10 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoBookException;
 import com.epam.component.dao.exception.DaoException;
-import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.BookDao;
 import com.epam.component.lang.Lang;
@@ -50,6 +48,9 @@ public class BookService {
 		return res;
 	}
 
+	/**
+	 * Find book by id
+	 */
 	public BookEntity findById(Integer id) throws BookServiceException {
 		try {
 			ResultSet result = bookDao.findBook(id);
