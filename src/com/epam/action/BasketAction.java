@@ -10,7 +10,6 @@ import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.view.Viewer;
 import com.epam.entity.BasketEntity;
-import com.epam.entity.BookEntity;
 import com.epam.entity.UserEntity;
 import com.epam.service.BasketService;
 

@@ -2,6 +2,16 @@ package com.epam.component.route;
 
 import java.util.HashMap;
 
+import com.epam.action.AcceptOrderAction;
+import com.epam.action.AdminOrderList;
+import com.epam.action.BasketAction;
+import com.epam.action.BasketAddToAction;
+import com.epam.action.BasketClearAction;
+import com.epam.action.BasketDeleteBookAction;
+import com.epam.action.BasketOrderAction;
+import com.epam.action.BookAction;
+import com.epam.action.CategoryAction;
+import com.epam.action.HistoryAction;
 import com.epam.action.IAction;
 import com.epam.action.LangAction;
 import com.epam.action.LogoutAction;
@@ -15,16 +25,6 @@ import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
-import com.epam.action.BasketAddToAction;
-import com.epam.action.AcceptOrderAction;
-import com.epam.action.AdminOrderList;
-import com.epam.action.BasketAction;
-import com.epam.action.BasketClearAction;
-import com.epam.action.BasketDeleteBookAction;
-import com.epam.action.BasketOrderAction;
-import com.epam.action.BookAction;
-import com.epam.action.CategoryAction;
-import com.epam.action.HistoryAction;
 
 /**
  * Main router component. If you create your own action

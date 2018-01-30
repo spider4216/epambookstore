@@ -9,7 +9,6 @@ import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.entity.UserEntity;
-import com.epam.service.BasketService;
 import com.epam.service.OrderService;
 
 /**
