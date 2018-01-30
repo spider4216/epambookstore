@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.epam.component.dao.exception.DaoBookException;
-import com.epam.component.dao.exception.DaoException;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.BookDao;
 import com.epam.component.lang.Lang;
@@ -34,7 +33,7 @@ public class BookService {
 		try {
 			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 			bookDao = (BookDao)MYSQLFactory.getBookDao();
-		} catch (DaoBookException | DaoException e) {
+		} catch (DaoBookException e) {
 			throw new BookServiceException(lang.getValue("service_book_dao_err"), e);
 		}
 	}

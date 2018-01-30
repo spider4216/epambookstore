@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.epam.component.dao.exception.DaoRoleException;
-import com.epam.component.dao.exception.DaoException;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.RoleDao;
 import com.epam.component.lang.Lang;
@@ -34,7 +33,7 @@ public class RoleService {
 		try {
 			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 			roleDao = (RoleDao)MYSQLFactory.getRoleDao();
-		} catch (DaoRoleException | DaoException e) {
+		} catch (DaoRoleException e) {
 			throw new RoleServiceException(lang.getValue("service_role_get_dao_err"), e);
 		}
 	}

@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.epam.component.dao.exception.DaoBasketException;
-import com.epam.component.dao.exception.DaoException;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.BasketDao;
 import com.epam.component.lang.Lang;
@@ -38,7 +37,7 @@ public class BasketService {
 		try {
 			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 			basketDao = (BasketDao)MYSQLFactory.getBasketDao();
-		} catch (DaoBasketException | DaoException e) {
+		} catch (DaoBasketException e) {
 			throw new BasketServiceException("service_basket_create_dao_err", e);
 		}
 	}

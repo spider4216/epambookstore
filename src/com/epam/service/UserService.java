@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpSession;
 
 import com.epam.component.dao.exception.DaoUserException;
-import com.epam.component.dao.exception.DaoException;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.UserDao;
 import com.epam.component.lang.Lang;
@@ -43,7 +42,7 @@ public class UserService {
 		try {
 			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 			userDao = (UserDao)MYSQLFactory.getUserDao();
-		} catch (DaoUserException | DaoException e) {
+		} catch (DaoUserException e) {
 			throw new UserServiceException(lang.getValue("service_user_get_dao_err"));
 		}
 	}

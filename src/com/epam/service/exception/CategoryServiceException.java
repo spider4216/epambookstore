@@ -6,10 +6,6 @@ package com.epam.service.exception;
  * @author Yuriy Sirotenko
  */
 public class CategoryServiceException extends Exception {
-	public CategoryServiceException(String msg) {
-		super(msg);
-	}
-	
 	public CategoryServiceException(String msg, Exception e) {
 		super(msg, e);
 	}

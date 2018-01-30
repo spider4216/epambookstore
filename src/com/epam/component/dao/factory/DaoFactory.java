@@ -14,7 +14,6 @@ import com.epam.component.dao.exception.DaoOrderException;
 import com.epam.component.dao.exception.DaoOrderToProductException;
 import com.epam.component.dao.exception.DaoRoleException;
 import com.epam.component.dao.exception.DaoUserException;
-import com.epam.component.dao.exception.DaoException;
 
 /**
  * Dao factory
@@ -38,7 +37,7 @@ public abstract class DaoFactory {
 	
 	public abstract IOrderToProductDao getOrderToProduct() throws DaoOrderToProductException;
 	
-	public static DaoFactory getDaoFactory(Integer whichFactory) throws DaoException {
+	public static DaoFactory getDaoFactory(Integer whichFactory) {
 		switch (whichFactory) {
 			case MYSQL :
 				return new MysqlDaoFactory();

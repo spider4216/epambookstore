@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoOrderException;
-import com.epam.component.dao.exception.DaoException;
 import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.OrderDao;
@@ -45,7 +44,7 @@ public class OrderService {
 		try {
 			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 			orderDao = (OrderDao)MYSQLFactory.getOrderDao();
-		} catch (DaoOrderException | DaoException e) {
+		} catch (DaoOrderException e) {
 			throw new OrderServiceException(lang.getValue("service_order_get_dao_err"), e);
 		}
 	}
