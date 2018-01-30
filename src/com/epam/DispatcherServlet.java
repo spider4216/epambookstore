@@ -23,7 +23,7 @@ public class DispatcherServlet extends HttpServlet {
 	
 	public final static Logger logger = Logger.getLogger(DispatcherServlet.class);
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Put Session to Service Locator
 		ServiceLocator sl = ServiceLocator.getInstance();
 		sl.setService(ServiceLocatorEnum.SESSION, request.getSession(true));
@@ -74,9 +74,5 @@ public class DispatcherServlet extends HttpServlet {
 			Viewer.execute(request, response, "error.jsp");
 			return;
 		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 }
