@@ -45,9 +45,7 @@ public class CategoryDao implements ICategoryDao {
 			ConnectionPool.getInstance().freeConnection(connection);
 			Statement pr = connection.createStatement();
 			
-			ResultSet res = pr.executeQuery(SQL_FIND_ALL);
-
-			return res;
+			return pr.executeQuery(SQL_FIND_ALL);
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoCategoryException(lang.getValue("dao_category_empty_err"), e);
 		}

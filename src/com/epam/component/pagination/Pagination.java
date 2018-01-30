@@ -28,11 +28,7 @@ public class Pagination {
 	public Integer getCurrentPageNumber() {
 		String pageNum = request.getParameter("page");
 		
-		if (pageNum == null) {
-			return 1;
-		}
-		
-		return Integer.parseInt(pageNum);
+		return pageNum == null ? 1 : Integer.parseInt(pageNum);
 	}
 	
 	/**
@@ -46,11 +42,7 @@ public class Pagination {
 	 * Get previous page number
 	 */
 	public Integer getPreviousPageNumber() {
-		if (getCurrentPageNumber() == 1) {
-			return 1;
-		}
-
-		return getCurrentPageNumber() - 1;
+		return getCurrentPageNumber() == 1 ? 1 : getCurrentPageNumber() - 1; 
 	}
 	
 	/**
@@ -68,11 +60,7 @@ public class Pagination {
 			BookService bookeService = new BookService();
 			ArrayList<BookEntity> collection = bookeService.findNextPageBooks(getCurrentStartOffset() + COUNT_ITEM, COUNT_ITEM);
 			
-			if (collection.isEmpty()) {
-				return true;
-			}
-			
-			return false;
+			return collection.isEmpty();
 		} catch (BookServiceException e) {
 			return true;
 		}
@@ -86,11 +74,7 @@ public class Pagination {
 			BookService bookeService = new BookService();
 			ArrayList<BookEntity> collection = bookeService.findNextPageCategoryBooks(categoryId, getCurrentStartOffset() + COUNT_ITEM, COUNT_ITEM);
 			
-			if (collection.isEmpty()) {
-				return true;
-			}
-			
-			return false;
+			return collection.isEmpty();
 		} catch (BookServiceException e) {
 			return true;
 		}

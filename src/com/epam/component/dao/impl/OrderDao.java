@@ -55,9 +55,7 @@ public class OrderDao implements IOrderDao {
 			ConnectionPool.getInstance().freeConnection(connection);
 			Statement pr = connection.createStatement();
 			
-			ResultSet res = pr.executeQuery(SQL_FIND_ALL);
-
-			return res;
+			return pr.executeQuery(SQL_FIND_ALL);
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoOrderException(lang.getValue("dao_order_empty_err"), e);
 		}
@@ -73,9 +71,7 @@ public class OrderDao implements IOrderDao {
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_USER_ID);
 			pr.setInt(1, id);
 			
-			ResultSet res = pr.executeQuery();
-
-			return res;
+			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoOrderException(lang.getValue("dao_order_empty_err"), e);
 		}
@@ -91,9 +87,7 @@ public class OrderDao implements IOrderDao {
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_STATUS);
 			pr.setInt(1, status);
 			
-			ResultSet res = pr.executeQuery();
-			
-			return res;
+			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoOrderException(lang.getValue("dao_order_empty_err"), e);
 		}
@@ -132,9 +126,7 @@ public class OrderDao implements IOrderDao {
 			ResultSet res = pr.getGeneratedKeys();
 			res.next();
 
-			Integer id = res.getInt(1);
-			
-			return id;
+			return res.getInt(1);
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoOrderException(lang.getValue("dao_order_inser_err"), e);
 		}
@@ -150,9 +142,8 @@ public class OrderDao implements IOrderDao {
 			PreparedStatement pr = connection.prepareStatement(SQL_UPDATE_STATUS_AS_ACCEPT_BY_ID);
 			pr.setInt(1, OrderStatus.APPROVED);
 			pr.setInt(2, id);
-			Integer res = pr.executeUpdate();
-			
-			return res;
+
+			return pr.executeUpdate();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoOrderException(lang.getValue("dao_order_cannot_change_status"), e);
 		}

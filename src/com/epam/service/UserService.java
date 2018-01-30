@@ -84,8 +84,7 @@ public class UserService {
 	public UserEntity findByUsername(String username) throws UserServiceException {
 		try {
 			ResultSet res = userDao.findOneByUsername(username);
-			UserEntity user = userSetter(res);
-			return user;
+			return userSetter(res);
 		} catch (SQLException | DaoUserException e) {
 			throw new UserServiceException(lang.getValue("service_user_cannot_find_user"), e);
 		}
@@ -97,8 +96,7 @@ public class UserService {
 	public UserEntity findById(Integer id) throws UserServiceException {
 		try {
 			ResultSet res = userDao.findOneById(id);
-			UserEntity user = userSetter(res);
-			return user;
+			return userSetter(res);
 		} catch (SQLException | DaoUserException e) {
 			throw new UserServiceException(lang.getValue("service_user_cannot_find_user"), e);
 		}
@@ -162,8 +160,7 @@ public class UserService {
 		try {
 			HttpSession session = (HttpSession) ServiceLocator.getInstance().getService(ServiceLocatorEnum.SESSION);
 			ResultSet res = userDao.findOneBySessionId(session.getId());
-			UserEntity user = userSetter(res);
-			return user;
+			return userSetter(res);
 		} catch (DaoUserException | ServiceLocatorException | SQLException e) {
 			throw new UserServiceException(lang.getValue("service_user_current_user_err"), e);
 		}

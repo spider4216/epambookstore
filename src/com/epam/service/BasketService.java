@@ -124,8 +124,7 @@ public class BasketService {
 	 */
 	public Boolean deleteByUserAndBookId(Integer userId, Integer bookId) throws BasketServiceException {
 		try {
-			Boolean res = basketDao.deleteByUserAndBookId(userId, bookId);
-			return res;
+			return basketDao.deleteByUserAndBookId(userId, bookId);
 		} catch (DaoBasketException e) {
 			throw new BasketServiceException(lang.getValue("cannot_delete_books_from_basket"), e);
 		}
@@ -149,8 +148,7 @@ public class BasketService {
 	 */
 	public Boolean deleteUserBasketBooks(Integer userId) throws BasketServiceException {
 		try {
-			Boolean res = basketDao.deleteAllByUserId(userId);
-			return res;
+			return basketDao.deleteAllByUserId(userId);
 		} catch (DaoBasketException e) {
 			throw new BasketServiceException(lang.getValue("cannot_delete_books_from_basket"), e);
 		}

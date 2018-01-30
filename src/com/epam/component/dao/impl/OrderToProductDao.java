@@ -47,9 +47,7 @@ public class OrderToProductDao implements IOrderToProductDao {
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_ORDER_ID);
 			pr.setInt(1, id);
 			
-			ResultSet res = pr.executeQuery();
-
-			return res;
+			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoOrderToProductException(lang.getValue("dao_order_to_product_empty_err"), e);
 		}
@@ -66,9 +64,7 @@ public class OrderToProductDao implements IOrderToProductDao {
 			pr.setInt(2, entity.getBookId());
 			pr.setInt(3, entity.getCount());
 			
-			Integer id = pr.executeUpdate();
-			
-			return id;
+			return pr.executeUpdate();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoOrderToProductException(lang.getValue("dao_order_to_product_inser_err"), e);
 		}

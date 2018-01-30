@@ -63,15 +63,11 @@ public class OrderToProductService {
 	 * Insert new relation
 	 */
 	public Integer insert(OrderToProductEntity entity) throws OrderToProductServiceException {
-		Integer id = null;
-
 		try {
-			id = orderToProductDao.insert(entity);
+			return orderToProductDao.insert(entity);
 		} catch (DaoOrderToProductException e) {
 			throw new OrderToProductServiceException(lang.getValue("service_order_to_product_insert_err"), e);
 		}
-
-		return id;
 	}
 	
 	/**

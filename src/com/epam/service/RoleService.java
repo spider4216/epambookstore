@@ -44,9 +44,7 @@ public class RoleService {
 	public RoleEntity findOneById(Integer id) throws RoleServiceException {
 		try {
 			ResultSet res = roleDao.findOneById(id);
-			RoleEntity role = roleSetter(res);
-			
-			return role;
+			return roleSetter(res);
 		} catch (DaoRoleException | SQLException e) {
 			throw new RoleServiceException(lang.getValue("service_role_empty_err"), e);
 		}

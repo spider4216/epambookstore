@@ -44,8 +44,7 @@ public class BookService {
 	public BookEntity findById(Integer id) throws BookServiceException {
 		try {
 			ResultSet result = bookDao.findBook(id);
-			BookEntity res = bookSetter(result);
-			return res;
+			return bookSetter(result);
 		} catch (SQLException | DaoBookException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
 		}

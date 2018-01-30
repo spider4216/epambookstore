@@ -63,8 +63,7 @@ public class CategoryService {
 	public CategoryEntity findOneById(Integer id) throws CategoryServiceException {
 		try {
 			ResultSet res = categoryDao.findOneById(id);
-			CategoryEntity category = categorySetter(res);
-			return category;
+			return categorySetter(res);
 		} catch (DaoCategoryException | SQLException e) {
 			throw new CategoryServiceException(lang.getValue("service_category_empty_err"), e);
 		}

@@ -132,15 +132,11 @@ public class OrderService {
 	 * Insert one order
 	 */
 	private Integer insert(OrderEntity entity) throws OrderServiceException {
-		Integer id = null;
-		
 		try {
-			id = orderDao.insert(entity);
+			return orderDao.insert(entity);
 		} catch (DaoOrderException e) {
 			throw new OrderServiceException(lang.getValue("service_order_insert_err"), e);
 		}
-		
-		return id;
 	}
 	
 	/**

@@ -70,9 +70,8 @@ public class BookDao implements IBookDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			Statement pr = connection.createStatement();
-			ResultSet rs = pr.executeQuery(SQL_FIND_BOOKS);
-			
-			return rs;
+
+			return pr.executeQuery(SQL_FIND_BOOKS);
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
@@ -89,9 +88,7 @@ public class BookDao implements IBookDao {
 			pr.setInt(1, offset);
 			pr.setInt(2, limit);
 			
-			ResultSet rs = pr.executeQuery();
-			
-			return rs;
+			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
@@ -109,9 +106,7 @@ public class BookDao implements IBookDao {
 			pr.setInt(2, offset);
 			pr.setInt(3, limit);
 			
-			ResultSet rs = pr.executeQuery();
-			
-			return rs;
+			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
@@ -127,9 +122,7 @@ public class BookDao implements IBookDao {
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_CATEGORY_ID);
 			pr.setInt(1, id);
 
-			ResultSet res = pr.executeQuery();
-			
-			return res;
+			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
@@ -148,9 +141,7 @@ public class BookDao implements IBookDao {
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
 			pr.setString(1, "%" + name + "%");
 			
-			ResultSet res = pr.executeQuery();
-			
-			return res;
+			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
@@ -170,9 +161,7 @@ public class BookDao implements IBookDao {
 			pr.setString(1, "%" + name + "%");
 			pr.setInt(2, categoryId);
 			
-			ResultSet res = pr.executeQuery();
-			
-			return res;
+			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}

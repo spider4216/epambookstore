@@ -58,9 +58,7 @@ public class UserDao implements IUserDao {
 			pr.setInt(5, entity.getGender());
 			pr.setInt(6, RoleConstant.USER);
 			
-			Integer res = pr.executeUpdate();
-			
-			return res;
+			return pr.executeUpdate();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoUserException(lang.getValue("dao_user_cannot_inser_err"), e);
 		}
@@ -99,9 +97,7 @@ public class UserDao implements IUserDao {
 			pr.setString(1, sessionId);
 			pr.setString(2, username);
 			
-			Integer res = pr.executeUpdate();
-			
-			return res;
+			return pr.executeUpdate();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoUserException(lang.getValue("dao_user_session_update_err"), e);
 		}

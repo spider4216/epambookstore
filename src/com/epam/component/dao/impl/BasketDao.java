@@ -96,9 +96,8 @@ public class BasketDao implements IBasketDao {
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_USER_ID);
 			pr.setInt(1, userId);
-			ResultSet res = pr.executeQuery();
-			
-			return res;
+
+			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBasketException(lang.getValue("dao_basket_product_not_found"), e);
 		}

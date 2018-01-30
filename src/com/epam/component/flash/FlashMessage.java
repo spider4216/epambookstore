@@ -39,13 +39,12 @@ public class FlashMessage {
 	public String getMsg() throws ServiceLocatorException {
 		HttpSession session = getSession();
 		String sId = session.getId();
+		String msg = "";
 		
-		if (hasMsg() == false) {
-			return "";
+		if (hasMsg() == true) {
+			msg = pool.get(sId);
+			pool.remove(sId);
 		}
-		
-		String msg = pool.get(sId);
-		pool.remove(sId);
 		
 		return msg;
 	}
@@ -60,11 +59,7 @@ public class FlashMessage {
 		HttpSession session = getSession();
 		String sId = session.getId();
 		
-		if (pool.containsKey(sId) != true) {
-			return false;
-		}
-		
-		return true;
+		return pool.containsKey(sId);
 	}
 	
 	private HttpSession getSession() throws ServiceLocatorException {
