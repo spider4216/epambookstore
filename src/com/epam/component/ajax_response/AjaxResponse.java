@@ -38,11 +38,6 @@ public class AjaxResponse {
 		status = AjaxResponseStatus.STATUS_OK;
 		response();
 	}
-
-	public void responseErr()  throws IOException {
-		status = AjaxResponseStatus.STATUS_ERROR;
-		response();
-	}
 	
 	/**
 	 * It is said that there are a lot of libraries to convert

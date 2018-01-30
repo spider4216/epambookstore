@@ -50,24 +50,6 @@ public class OrderService {
 	}
 	
 	/**
-	 * Find all orders
-	 */
-	public ArrayList<OrderEntity> findAll() throws OrderServiceException {
-		try {
-			ArrayList<OrderEntity> orderCollection = new ArrayList<>();
-			ResultSet res = orderDao.findAll();
-
-			while (res.next()) {
-				orderCollection.add(orderSetter(res));
-			}
-			
-			return orderCollection;
-		} catch (DaoOrderException | SQLException e) {
-			throw new OrderServiceException(lang.getValue("service_order_empty_err"), e);
-		}
-	}
-	
-	/**
 	 * Find all user orders
 	 */
 	public ArrayList<OrderEntity> findAllUserOrders(Integer userId) throws OrderServiceException {
@@ -102,24 +84,11 @@ public class OrderService {
 			throw new OrderServiceException(lang.getValue("service_order_empty_err"), e);
 		}
 	}
-	
-	/**
-	 * Find order by id
-	 */
-	public OrderEntity findOneById(Integer id) throws OrderServiceException {
-		try {
-			ResultSet res = orderDao.findOneById(id);
-			OrderEntity entity = orderSetter(res);
-			return entity;
-		} catch (DaoOrderException | SQLException e) {
-			throw new OrderServiceException(lang.getValue("service_order_empty_err"), e);
-		}
-	}
-	
+		
 	/**
 	 * Order setter
 	 */
-	public OrderEntity orderSetter(ResultSet result) throws SQLException, OrderServiceException {
+	private OrderEntity orderSetter(ResultSet result) throws SQLException, OrderServiceException {
 		OrderEntity entity = new OrderEntity();
 		
 		entity.setId(result.getInt("id"));
@@ -162,7 +131,7 @@ public class OrderService {
 	/**
 	 * Insert one order
 	 */
-	public Integer insert(OrderEntity entity) throws OrderServiceException {
+	private Integer insert(OrderEntity entity) throws OrderServiceException {
 		Integer id = null;
 		
 		try {

@@ -8,5 +8,4 @@ package com.epam.constant;
 public interface RoleConstant {
 	Integer ADMIN = 1;
 	Integer USER = 2;
-	Integer GUEST = 3;
 }

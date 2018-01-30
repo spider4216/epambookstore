@@ -39,15 +39,6 @@ public class BookService {
 	}
 
 	/**
-	 * Delete one book by entity
-	 */
-	public Boolean delete(BookEntity entity) throws DaoBookException {
-		Boolean res = bookDao.deleteBook(entity.getId());
-		
-		return res;
-	}
-
-	/**
 	 * Find book by id
 	 */
 	public BookEntity findById(Integer id) throws BookServiceException {
@@ -56,24 +47,6 @@ public class BookService {
 			BookEntity res = bookSetter(result);
 			return res;
 		} catch (SQLException | DaoBookException e) {
-			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
-		}
-	}
-	
-	/**
-	 * Find all books
-	 */
-	public ArrayList<BookEntity> findAll() throws BookServiceException {
-		try {
-			ArrayList<BookEntity> bookCollection = new ArrayList<>();
-			ResultSet result = bookDao.findBooks();
-
-			while (result.next()) {
-				bookCollection.add(bookSetter(result));
-			}
-			
-			return bookCollection;
-		} catch (DaoBookException | SQLException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
 		}
 	}
@@ -144,24 +117,6 @@ public class BookService {
 				bookCollection.add(bookSetter(result));
 			}
 			
-			return bookCollection;
-		} catch (DaoBookException | SQLException e) {
-			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
-		}
-	}
-	
-	/**
-	 * Find all books by category id
-	 */
-	public ArrayList<BookEntity> findAllByCategoryId(Integer id) throws BookServiceException {
-		try {
-			ArrayList<BookEntity> bookCollection = new ArrayList<>();
-			ResultSet result = bookDao.findAllByCategoryId(id);
-
-			while (result.next()) {
-				bookCollection.add(bookSetter(result));
-			}
-
 			return bookCollection;
 		} catch (DaoBookException | SQLException e) {
 			throw new BookServiceException(lang.getValue("service_book_not_found"), e);
