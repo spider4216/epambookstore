@@ -18,7 +18,7 @@ import com.epam.service.exception.RoleServiceException;
  * 
  * @author Yuriy Sirotenko
  */
-public class RoleService {
+class RoleService {
 	private RoleDao roleDao;
 	
 	private Lang lang;

@@ -21,7 +21,7 @@ import com.epam.service.exception.OrderToProductServiceException;
  * 
  * @author Yuriy Sirotenko
  */
-public class OrderToProductService {
+class OrderToProductService {
 	private OrderToProductDao orderToProductDao;
 	
 	private Lang lang;

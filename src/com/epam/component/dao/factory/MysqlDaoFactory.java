@@ -28,7 +28,7 @@ import com.epam.component.dao.impl.UserDao;
  * 
  * @author Yuriy Sirotenko
  */
-public class MysqlDaoFactory extends DaoFactory {
+class MysqlDaoFactory extends DaoFactory {
 	
 	public IBookDao getBookDao() throws DaoBookException {
 		return new BookDao();

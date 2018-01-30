@@ -5,7 +5,7 @@ package com.epam.component.ajax_response;
  * 
  * @author Yuriy Sirotenko
  */
-public enum AjaxResponseStatus {
+enum AjaxResponseStatus {
 	STATUS_OK,
 	STATUS_ERROR;
 }
