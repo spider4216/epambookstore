@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.epam.component.dao.IBookDao;
+import com.epam.component.dao.IStatementIndex;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoBookException;
 import com.epam.component.dao.factory.ConnectionPool;
@@ -52,7 +53,7 @@ public class BookDao implements IBookDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_DELETE_BOOK);
-			pr.setInt(1, id);
+			pr.setInt(IStatementIndex.FIRST, id);
 			
 			pr.executeUpdate();
 			
@@ -85,8 +86,8 @@ public class BookDao implements IBookDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_BOOKS_WITH_PAGINATION);
-			pr.setInt(1, offset);
-			pr.setInt(2, limit);
+			pr.setInt(IStatementIndex.FIRST, offset);
+			pr.setInt(IStatementIndex.SECOND, limit);
 			
 			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
@@ -102,9 +103,9 @@ public class BookDao implements IBookDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_BOOKS_BY_CATEGORY_ID_WITH_PAGINATION);
-			pr.setInt(1, categoryId);
-			pr.setInt(2, offset);
-			pr.setInt(3, limit);
+			pr.setInt(IStatementIndex.FIRST, categoryId);
+			pr.setInt(IStatementIndex.SECOND, offset);
+			pr.setInt(IStatementIndex.THIRD, limit);
 			
 			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
@@ -120,7 +121,7 @@ public class BookDao implements IBookDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_CATEGORY_ID);
-			pr.setInt(1, id);
+			pr.setInt(IStatementIndex.FIRST, id);
 
 			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
@@ -139,7 +140,7 @@ public class BookDao implements IBookDao {
 			
 			String sqlFind = "SELECT * FROM books WHERE name" + columnSuffix +" LIKE ?";
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
-			pr.setString(1, "%" + name + "%");
+			pr.setString(IStatementIndex.FIRST, "%" + name + "%");
 			
 			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
@@ -158,8 +159,8 @@ public class BookDao implements IBookDao {
 
 			String sqlFind = "SELECT * FROM books WHERE name" + columnSuffix +" LIKE ? AND category_id = ?";
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
-			pr.setString(1, "%" + name + "%");
-			pr.setInt(2, categoryId);
+			pr.setString(IStatementIndex.FIRST, "%" + name + "%");
+			pr.setInt(IStatementIndex.SECOND, categoryId);
 			
 			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
@@ -175,7 +176,7 @@ public class BookDao implements IBookDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_BOOK);
-			pr.setInt(1, id);
+			pr.setInt(IStatementIndex.FIRST, id);
 			
 			ResultSet res = pr.executeQuery();
 			res.next();

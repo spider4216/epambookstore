@@ -34,6 +34,8 @@ public class OrderService {
 	
 	private Lang lang;
 	
+	private static final Integer EMPTY_VALUE = 0;
+	
 	public OrderService() throws OrderServiceException {
 		try {
 			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
@@ -185,7 +187,7 @@ public class OrderService {
 			throw new OrderServiceException(lang.getValue("service_order_accept_err"), e);
 		}
 		
-		if (res <= 0) {
+		if (res <= EMPTY_VALUE) {
 			return false;
 		}
 		

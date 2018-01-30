@@ -21,15 +21,15 @@ public class LangAction implements IAction {
 		String resLang = null;
 		
 		switch (frontLang) {
-		case LangList.LANG_EN :
-			resLang = LangList.LANG_EN;
-			break;
-		case LangList.LANG_RU :
-			resLang = LangList.LANG_RU;
-			break;
-		default:
-			resLang = LangList.LANG_EN;
-			break;
+			case LangList.LANG_EN :
+				resLang = LangList.LANG_EN;
+				break;
+			case LangList.LANG_RU :
+				resLang = LangList.LANG_RU;
+				break;
+			default:
+				resLang = LangList.LANG_EN;
+				break;
 		}
 		
 		Locale locale = new Locale(resLang);

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.epam.component.dao.IRoleDao;
+import com.epam.component.dao.IStatementIndex;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoRoleException;
 import com.epam.component.dao.factory.ConnectionPool;
@@ -41,7 +42,7 @@ public class RoleDao implements IRoleDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_ID);
-			pr.setInt(1, id);
+			pr.setInt(IStatementIndex.FIRST, id);
 			ResultSet res = pr.executeQuery();
 			res.next();
 			

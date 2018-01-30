@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.epam.component.dao.IOrderToProductDao;
+import com.epam.component.dao.IStatementIndex;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoOrderToProductException;
 import com.epam.component.dao.factory.ConnectionPool;
@@ -45,7 +46,7 @@ public class OrderToProductDao implements IOrderToProductDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_ORDER_ID);
-			pr.setInt(1, id);
+			pr.setInt(IStatementIndex.FIRST, id);
 			
 			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
@@ -60,9 +61,9 @@ public class OrderToProductDao implements IOrderToProductDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			PreparedStatement pr = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
-			pr.setInt(1, entity.getOrderId());
-			pr.setInt(2, entity.getBookId());
-			pr.setInt(3, entity.getCount());
+			pr.setInt(IStatementIndex.FIRST, entity.getOrderId());
+			pr.setInt(IStatementIndex.SECOND, entity.getBookId());
+			pr.setInt(IStatementIndex.THIRD, entity.getCount());
 			
 			return pr.executeUpdate();
 		} catch (SQLException | ConnectionPoolException e) {

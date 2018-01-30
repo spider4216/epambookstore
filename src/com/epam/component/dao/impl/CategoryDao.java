@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.epam.component.dao.ICategoryDao;
+import com.epam.component.dao.IStatementIndex;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoCategoryException;
 import com.epam.component.dao.factory.ConnectionPool;
@@ -59,7 +60,7 @@ public class CategoryDao implements ICategoryDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_ID);
-			pr.setInt(1, id);
+			pr.setInt(IStatementIndex.FIRST, id);
 			ResultSet res = pr.executeQuery();
 			res.next();
 			

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.epam.component.dao.IStatementIndex;
 import com.epam.component.dao.IUserDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoUserException;
@@ -51,12 +52,12 @@ public class UserDao implements IUserDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			PreparedStatement pr = connection.prepareStatement(SQL_INSERT_USER);
-			pr.setString(1, entity.getUsername());
-			pr.setString(2, entity.getPassword());
-			pr.setString(3, entity.getFirstName());
-			pr.setString(4, entity.getLastName());
-			pr.setInt(5, entity.getGender());
-			pr.setInt(6, RoleConstant.USER);
+			pr.setString(IStatementIndex.FIRST, entity.getUsername());
+			pr.setString(IStatementIndex.SECOND, entity.getPassword());
+			pr.setString(IStatementIndex.THIRD, entity.getFirstName());
+			pr.setString(IStatementIndex.FORTH, entity.getLastName());
+			pr.setInt(IStatementIndex.FIFTH, entity.getGender());
+			pr.setInt(IStatementIndex.SIXTH, RoleConstant.USER);
 			
 			return pr.executeUpdate();
 		} catch (SQLException | ConnectionPoolException e) {
@@ -71,7 +72,7 @@ public class UserDao implements IUserDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_USERNAME);
-			pr.setString(1, username);
+			pr.setString(IStatementIndex.FIRST, username);
 			ResultSet res = pr.executeQuery();
 			
 			res.next();
@@ -94,8 +95,8 @@ public class UserDao implements IUserDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_UPDATE_SESSION_ID_BY_USERNAME);
-			pr.setString(1, sessionId);
-			pr.setString(2, username);
+			pr.setString(IStatementIndex.FIRST, sessionId);
+			pr.setString(IStatementIndex.SECOND, username);
 			
 			return pr.executeUpdate();
 		} catch (SQLException | ConnectionPoolException e) {
@@ -111,7 +112,7 @@ public class UserDao implements IUserDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_SESSION_ID);
-			pr.setString(1, sessionId);
+			pr.setString(IStatementIndex.FIRST, sessionId);
 			ResultSet res = pr.executeQuery();
 			res.next();
 
@@ -132,7 +133,7 @@ public class UserDao implements IUserDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_ID);
-			pr.setInt(1, id);
+			pr.setInt(IStatementIndex.FIRST, id);
 			ResultSet res = pr.executeQuery();
 			
 			res.next();

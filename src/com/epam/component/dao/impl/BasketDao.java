@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.epam.component.dao.IBasketDao;
+import com.epam.component.dao.IStatementIndex;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoBasketException;
 import com.epam.component.dao.factory.ConnectionPool;
@@ -51,9 +52,9 @@ public class BasketDao implements IBasketDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_INSERT);
-			pr.setInt(1, entity.getUserId());
-			pr.setInt(2, entity.getBookId());
-			pr.setInt(3, entity.getCount());
+			pr.setInt(IStatementIndex.FIRST, entity.getUserId());
+			pr.setInt(IStatementIndex.SECOND, entity.getBookId());
+			pr.setInt(IStatementIndex.THIRD, entity.getCount());
 
 			Integer res = pr.executeUpdate();
 			
@@ -71,8 +72,8 @@ public class BasketDao implements IBasketDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_PRODUCT_AND_USER_ID);
-			pr.setInt(1, productId);
-			pr.setInt(2, userId);
+			pr.setInt(IStatementIndex.FIRST, productId);
+			pr.setInt(IStatementIndex.SECOND, userId);
 			ResultSet res = pr.executeQuery();
 			res.next();
 			
@@ -95,7 +96,7 @@ public class BasketDao implements IBasketDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_USER_ID);
-			pr.setInt(1, userId);
+			pr.setInt(IStatementIndex.FIRST, userId);
 
 			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
@@ -111,8 +112,8 @@ public class BasketDao implements IBasketDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_DELETE_BY_USER_AND_BOOK_ID);
-			pr.setInt(1, userId);
-			pr.setInt(2, bookId);
+			pr.setInt(IStatementIndex.FIRST, userId);
+			pr.setInt(IStatementIndex.SECOND, bookId);
 			
 			pr.executeUpdate();
 			
@@ -130,7 +131,7 @@ public class BasketDao implements IBasketDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_DELETE_ALL_BY_USER_ID);
-			pr.setInt(1, userId);
+			pr.setInt(IStatementIndex.FIRST, userId);
 			
 			pr.executeUpdate();
 			

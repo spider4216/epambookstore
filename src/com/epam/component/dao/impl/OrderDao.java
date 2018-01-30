@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.epam.component.dao.IOrderDao;
+import com.epam.component.dao.IStatementIndex;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoOrderException;
 import com.epam.component.dao.factory.ConnectionPool;
@@ -69,7 +70,7 @@ public class OrderDao implements IOrderDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_USER_ID);
-			pr.setInt(1, id);
+			pr.setInt(IStatementIndex.FIRST, id);
 			
 			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
@@ -85,7 +86,7 @@ public class OrderDao implements IOrderDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_STATUS);
-			pr.setInt(1, status);
+			pr.setInt(IStatementIndex.FIRST, status);
 			
 			return pr.executeQuery();
 		} catch (SQLException | ConnectionPoolException e) {
@@ -101,7 +102,7 @@ public class OrderDao implements IOrderDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_ID);
-			pr.setInt(1, id);
+			pr.setInt(IStatementIndex.FIRST, id);
 			ResultSet res = pr.executeQuery();
 			res.next();
 			
@@ -118,8 +119,8 @@ public class OrderDao implements IOrderDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			PreparedStatement pr = connection.prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
-			pr.setInt(1, entity.getUserId());
-			pr.setInt(2, entity.getStatus());
+			pr.setInt(IStatementIndex.FIRST, entity.getUserId());
+			pr.setInt(IStatementIndex.SECOND, entity.getStatus());
 			
 			pr.executeUpdate();
 			
@@ -140,8 +141,8 @@ public class OrderDao implements IOrderDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_UPDATE_STATUS_AS_ACCEPT_BY_ID);
-			pr.setInt(1, OrderStatus.APPROVED);
-			pr.setInt(2, id);
+			pr.setInt(IStatementIndex.FIRST, OrderStatus.APPROVED);
+			pr.setInt(IStatementIndex.SECOND, id);
 
 			return pr.executeUpdate();
 		} catch (SQLException | ConnectionPoolException e) {

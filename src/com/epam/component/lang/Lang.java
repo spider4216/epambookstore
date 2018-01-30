@@ -29,6 +29,6 @@ public class Lang {
 	}
 	
 	public String getColumnSuffix() {
-		return this.getLangAsString().equals(new Locale("en").getLanguage()) != true ? "_" + this.getLangAsString() : "";
+		return this.getLangAsString().equals(new Locale(LangList.LANG_EN).getLanguage()) != true ? "_" + this.getLangAsString() : "";
 	}
 }

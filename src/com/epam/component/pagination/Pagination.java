@@ -16,6 +16,10 @@ import com.epam.service.exception.BookServiceException;
 public class Pagination {
 	public final Integer COUNT_ITEM = 10;
 	
+	private static final Integer FIRST_PAGE_INDEX = 1;
+	
+	private static final Integer START_OFFSET_INDEX = 0;
+	
 	private HttpServletRequest request;
 	
 	public void setRequest(HttpServletRequest request) {
@@ -28,28 +32,28 @@ public class Pagination {
 	public Integer getCurrentPageNumber() {
 		String pageNum = request.getParameter("page");
 		
-		return pageNum == null ? 1 : Integer.parseInt(pageNum);
+		return pageNum == null ? FIRST_PAGE_INDEX : Integer.parseInt(pageNum);
 	}
 	
 	/**
 	 * Get next page number
 	 */
 	public Integer getNextPageNumber() {
-		return getCurrentPageNumber() + 1;
+		return getCurrentPageNumber() + FIRST_PAGE_INDEX;
 	}
 	
 	/**
 	 * Get previous page number
 	 */
 	public Integer getPreviousPageNumber() {
-		return getCurrentPageNumber() == 1 ? 1 : getCurrentPageNumber() - 1; 
+		return getCurrentPageNumber().equals(FIRST_PAGE_INDEX) ? FIRST_PAGE_INDEX : getCurrentPageNumber() - FIRST_PAGE_INDEX; 
 	}
 	
 	/**
 	 * Is previous page disabled
 	 */
 	public Boolean isPreviousDisabled() {
-		return getCurrentPageNumber() == 1 ? true : false;
+		return getCurrentPageNumber().equals(FIRST_PAGE_INDEX) ? true : false;
 	}
 	
 	/**
@@ -86,8 +90,8 @@ public class Pagination {
 	public Integer getCurrentStartOffset() {
 		Integer currentPageNum = getCurrentPageNumber();
 
-		if (currentPageNum == 1) {
-			return 0;
+		if (currentPageNum == FIRST_PAGE_INDEX) {
+			return START_OFFSET_INDEX;
 		}
 
 		return (currentPageNum * COUNT_ITEM) - COUNT_ITEM;
