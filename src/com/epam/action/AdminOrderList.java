@@ -28,7 +28,7 @@ public class AdminOrderList implements IAction {
 		OrderService orderService = new OrderService();
 		UserEntity user = (UserEntity) ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER); 
 		
-		if (user.getRole().getId() != RoleConstant.ADMIN) {
+		if (!user.getRole().getId().equals(RoleConstant.ADMIN)) {
 			throw new AccessControlException(lang.getValue("access_denied"));
 		}
 		

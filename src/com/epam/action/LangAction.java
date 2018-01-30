@@ -27,8 +27,8 @@ public class LangAction implements IAction {
 		case LangList.LANG_RU :
 			resLang = LangList.LANG_RU;
 			break;
-
 		default:
+			resLang = LangList.LANG_EN;
 			break;
 		}
 		

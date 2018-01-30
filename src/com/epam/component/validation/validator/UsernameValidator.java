@@ -29,7 +29,7 @@ public class UsernameValidator extends ValidatorFabric {
 		Pattern p = Pattern.compile("^[a-zA-Z1-9_]{4,14}");
 		Matcher m = p.matcher(value);
 		
-		if (m.matches() != true) {
+		if (!m.matches()) {
 			throw new ValidationException(lang.getValue("login_validator_hint"));
 		}
 		

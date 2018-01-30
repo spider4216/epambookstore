@@ -26,7 +26,7 @@ public class AcceptOrderAction implements IAction {
 		UserEntity user = (UserEntity) ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER);
 		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		
-		if (user.getRole().getId() != RoleConstant.ADMIN) {
+		if (!user.getRole().getId().equals(RoleConstant.ADMIN)) {
 			throw new AccessControlException(lang.getValue("access_denied"));
 		}
 		

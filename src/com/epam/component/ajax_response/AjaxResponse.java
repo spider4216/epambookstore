@@ -47,7 +47,7 @@ public class AjaxResponse {
 	 * as string
 	 */
 	private void response() throws IOException {
-		String resStatus = "err";
+		String resStatus;
 		
 		switch (status) {
 			case STATUS_OK :
@@ -56,6 +56,8 @@ public class AjaxResponse {
 			case STATUS_ERROR :
 				resStatus = "err";
 				break;
+			default:
+				resStatus = "err";
 		}
 		
 		// the reason was wrote in comment above

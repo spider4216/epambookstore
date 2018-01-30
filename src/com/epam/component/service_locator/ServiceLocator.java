@@ -33,7 +33,7 @@ public class ServiceLocator {
 	}
 	
 	public Object getService(ServiceLocatorEnum name) throws ServiceLocatorException {
-		if (pool.containsKey(name) == false) {
+		if (!pool.containsKey(name)) {
 			throw new ServiceLocatorException("Cannot find service with specified name");
 		}
 		

@@ -41,7 +41,7 @@ public class FlashMessage {
 		String sId = session.getId();
 		String msg = "";
 		
-		if (hasMsg() == true) {
+		if (hasMsg()) {
 			msg = pool.get(sId);
 			pool.remove(sId);
 		}

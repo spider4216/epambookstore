@@ -30,7 +30,7 @@ public class PasswordValidator extends ValidatorFabric {
 			throw new ValidationException("Service could not be found", e);
 		}
 		
-		if (m.matches() != true) {
+		if (!m.matches()) {
 			throw new ValidationException(lang.getValue("password_validator_hint"));
 		}
 		
