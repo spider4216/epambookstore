@@ -14,5 +14,5 @@ public interface IAction {
 	/**
 	 * This method is used in entry point of application
 	 */
-	abstract public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	void execute(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

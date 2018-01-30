@@ -15,10 +15,10 @@ public interface IOrderToProductDao {
 	/**
 	 * Find all order to product map (many to many) by order id
 	 */
-	public ResultSet findAllByOrderId(Integer id) throws DaoOrderToProductException;
+	ResultSet findAllByOrderId(Integer id) throws DaoOrderToProductException;
 	
 	/**
 	 * Insert order to product map (many to many)
 	 */
-	public Integer insert(OrderToProductEntity entity) throws DaoOrderToProductException;
+	Integer insert(OrderToProductEntity entity) throws DaoOrderToProductException;
 }

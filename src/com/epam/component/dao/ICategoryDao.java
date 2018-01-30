@@ -14,10 +14,10 @@ public interface ICategoryDao {
 	/**
 	 * Find all categories
 	 */
-	public ResultSet findAll() throws DaoCategoryException;
+	ResultSet findAll() throws DaoCategoryException;
 	
 	/**
 	 * Find category by id
 	 */
-	public ResultSet findOneById(Integer id) throws DaoCategoryException;
+	ResultSet findOneById(Integer id) throws DaoCategoryException;
 }

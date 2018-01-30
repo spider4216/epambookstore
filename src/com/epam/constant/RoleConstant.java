@@ -6,7 +6,7 @@ package com.epam.constant;
  * @author Yuriy Sirotenko
  */
 public interface RoleConstant {
-	public static final Integer ADMIN = 1;
-	public static final Integer USER = 2;
-	public static final Integer GUEST = 3;
+	Integer ADMIN = 1;
+	Integer USER = 2;
+	Integer GUEST = 3;
 }

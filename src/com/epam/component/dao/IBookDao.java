@@ -14,35 +14,35 @@ public interface IBookDao {
 	/**
 	 * Delete book by ID
 	 */
-	public Boolean deleteBook(Integer id) throws DaoBookException;
+	Boolean deleteBook(Integer id) throws DaoBookException;
 	
 	/**
 	 * Find All books
 	 */
-	public ResultSet findBooks() throws DaoBookException;
+	ResultSet findBooks() throws DaoBookException;
 	
 	/**
 	 * Find one book by id
 	 */
-	public ResultSet findBook(Integer id) throws DaoBookException;
+	ResultSet findBook(Integer id) throws DaoBookException;
 	
 	/**
 	 * Find all books by category id
 	 */
-	public ResultSet findAllByCategoryId(Integer id) throws DaoBookException;
+	ResultSet findAllByCategoryId(Integer id) throws DaoBookException;
 	
 	/**
 	 * Find all books by name with like operator
 	 */
-	public ResultSet findAllLikeName(String name) throws DaoBookException;
+	ResultSet findAllLikeName(String name) throws DaoBookException;
 	
 	/**
 	 * Find all books according to pagination params
 	 */
-	public ResultSet findBooksWithPagination(Integer offset, Integer limit) throws DaoBookException;
+	ResultSet findBooksWithPagination(Integer offset, Integer limit) throws DaoBookException;
 	
 	/**
 	 * Find all books by name with like operator and category id
 	 */
-	public ResultSet findAllLikeNameByCategoryId(String name, Integer categoryId) throws DaoBookException;
+	ResultSet findAllLikeNameByCategoryId(String name, Integer categoryId) throws DaoBookException;
 }

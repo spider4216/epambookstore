@@ -14,5 +14,5 @@ public interface IRoleDao {
 	/**
 	 * Find role by id
 	 */
-	public ResultSet findOneById(Integer id) throws DaoRoleException;
+	ResultSet findOneById(Integer id) throws DaoRoleException;
 }

@@ -15,30 +15,30 @@ public interface IOrderDao {
 	/**
 	 * Find all orders
 	 */
-	public ResultSet findAll() throws DaoOrderException;
+	ResultSet findAll() throws DaoOrderException;
 
 	/**
 	 * Find one order by id
 	 */
-	public ResultSet findOneById(Integer id) throws DaoOrderException;
+	ResultSet findOneById(Integer id) throws DaoOrderException;
 	
 	/**
 	 * Insert order
 	 */
-	public Integer insert(OrderEntity entity) throws DaoOrderException;
+	Integer insert(OrderEntity entity) throws DaoOrderException;
 	
 	/**
 	 * Find all orders by user id
 	 */
-	public ResultSet findAllByUserId(Integer id) throws DaoOrderException;
+	ResultSet findAllByUserId(Integer id) throws DaoOrderException;
 	
 	/**
 	 * Find all orders by status
 	 */
-	public ResultSet findAllByStatus(Integer status) throws DaoOrderException;
+	ResultSet findAllByStatus(Integer status) throws DaoOrderException;
 	
 	/**
 	 * Update order status as accept by id
 	 */
-	public Integer updateStatusAsAcceptById(Integer id) throws DaoOrderException;
+	Integer updateStatusAsAcceptById(Integer id) throws DaoOrderException;
 }

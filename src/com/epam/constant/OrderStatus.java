@@ -6,6 +6,6 @@ package com.epam.constant;
  * @author Yuriy Sirotenko
  */
 public interface OrderStatus {
-	public static Integer UNDER_CONSIDERATION = 1;
-	public static Integer APPROVED = 2;
+	Integer UNDER_CONSIDERATION = 1;
+	Integer APPROVED = 2;
 }

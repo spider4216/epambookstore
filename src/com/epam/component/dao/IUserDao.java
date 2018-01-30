@@ -15,25 +15,25 @@ public interface IUserDao {
 	/**
 	 * Insert user
 	 */
-	public Integer insertUser(UserEntity entity) throws DaoUserException;
+	Integer insertUser(UserEntity entity) throws DaoUserException;
 	
 	/**
 	 * Find user by username
 	 */
-	public ResultSet findOneByUsername(String username) throws DaoUserException;
+	ResultSet findOneByUsername(String username) throws DaoUserException;
 	
 	/**
 	 * Update session id by username
 	 */
-	public Integer updateSissionIdByUsername(String username, String sessionId) throws DaoUserException;
+	Integer updateSissionIdByUsername(String username, String sessionId) throws DaoUserException;
 	
 	/**
 	 * Find user by session id
 	 */
-	public ResultSet findOneBySessionId(String sessionId) throws DaoUserException;
+	ResultSet findOneBySessionId(String sessionId) throws DaoUserException;
 	
 	/**
 	 * Find user by id
 	 */
-	public ResultSet findOneById(Integer id) throws DaoUserException;
+	ResultSet findOneById(Integer id) throws DaoUserException;
 }
