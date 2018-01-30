@@ -17,6 +17,8 @@ import com.epam.action.SignUpProcessAction;
 public class Auth {
 	private static ArrayList<String> actions = new ArrayList<>();
 	
+	private Auth() {};
+	
 	static {
 		actions.add(SignInMainAction.class.getName());
 		actions.add(SignInProcessAction.class.getName());

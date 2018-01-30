@@ -26,12 +26,9 @@ import com.epam.service.exception.UserServiceException;
  * @author Yuriy Sirotenko
  */
 public class Init {
+	private Init() {}
+	
 	public static void execute(HttpServletRequest request, HttpServletResponse response) throws ServiceLocatorException {
-		HttpSession session = (HttpSession)ServiceLocator
-				.getInstance()
-				.getService(ServiceLocatorEnum.SESSION);
-
-		
 		try {
 			Lang langInstance = (Lang)ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 			request.setAttribute("lang", langInstance);
