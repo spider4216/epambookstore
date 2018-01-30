@@ -112,26 +112,6 @@ public class ConnectionPool {
 		}
 	}
 	
-	public synchronized void release() throws ConnectionPoolException {
-		Iterator allConnections = freeConnection.iterator();
-		
-		while (allConnections.hasNext()) {
-			Connection con = (Connection) allConnections.next();
-			
-			try {
-				con.close();
-			} catch (SQLException e) {
-				throw new ConnectionPoolException("Cannot close connection", e);
-			}
-		}
-		
-		freeConnection.clear();
-	}
-	
-	public Integer getConnectionCount() {
-		return freeConnection.size();
-	}
-	
 	public void useOneConnection(Boolean val) {
 		useSingleConnection = val;
 	}

@@ -22,10 +22,6 @@ public class AjaxResponse {
 		
 	private HttpServletResponse response;
 
-	public AjaxResponseStatus getStatus() {
-		return status;
-	}
-
 	public AjaxResponse setMessage(String message) {
 		this.message = message;
 		

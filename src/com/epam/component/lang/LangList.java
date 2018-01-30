@@ -6,6 +6,6 @@ package com.epam.component.lang;
  * @author Yuriy Sirotenko
  */
 public interface LangList {
-	public String LANG_RU = "ru";
-	public String LANG_EN = "en";
+	String LANG_RU = "ru";
+	String LANG_EN = "en";
 }
