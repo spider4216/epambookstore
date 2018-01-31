@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import com.epam.component.dao.CDao;
 import com.epam.component.dao.IBookDao;
 import com.epam.component.dao.IStatementIndex;
 import com.epam.component.dao.exception.ConnectionPoolException;
@@ -15,23 +17,20 @@ import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
+import com.epam.entity.BookEntity;
 
 /**
  * Mysql Dao for Books
  * 
  * @author Yuriy Sirotenko
  */
-public class BookDao implements IBookDao {
+public class BookDao extends CDao implements IBookDao {
 	
 	private final static String SQL_DELETE_BOOK = "DELETE FROM books WHERE id = ?";
 
-	private final static String SQL_FIND_BOOKS = "SELECT * FROM books";
-	
 	private final static String SQL_FIND_BOOKS_WITH_PAGINATION = "SELECT * FROM books LIMIT ?,?";
 
 	private final static String SQL_FIND_BOOKS_BY_CATEGORY_ID_WITH_PAGINATION = "SELECT * FROM books WHERE category_id = ? LIMIT ?,?";
-
-	private final static String SQL_FIND_ALL_BY_CATEGORY_ID = "SELECT * FROM books WHERE category_id = ?";
 
 	private final static String SQL_FIND_BOOK = "SELECT * FROM books WHERE id = ?";
 	
@@ -58,26 +57,11 @@ public class BookDao implements IBookDao {
 			throw new DaoBookException(lang.getValue("dao_book_delete_err"), e);
 		}
 	}
-
-	/**
-	 * Find All books
-	 */
-	public ResultSet findBooks() throws DaoBookException {
-		try {
-			Connection connection = ConnectionPool.getInstance().getConnection();
-			ConnectionPool.getInstance().freeConnection(connection);
-			Statement pr = connection.createStatement();
-
-			return pr.executeQuery(SQL_FIND_BOOKS);
-		} catch (SQLException | ConnectionPoolException e) {
-			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
-		}
-	}
 	
 	/**
 	 * Find all books according to pagination params
 	 */
-	public ResultSet findBooksWithPagination(Integer offset, Integer limit) throws DaoBookException {
+	public ArrayList<BookEntity> findBooksWithPagination(Integer offset, Integer limit) throws DaoBookException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
@@ -85,7 +69,18 @@ public class BookDao implements IBookDao {
 			pr.setInt(IStatementIndex.FIRST, offset);
 			pr.setInt(IStatementIndex.SECOND, limit);
 			
-			return pr.executeQuery();
+			ResultSet result = pr.executeQuery();
+			
+			ArrayList<BookEntity> bookCollection = new ArrayList<>();
+
+			while (result.next()) {
+				bookCollection.add(bookSetter(result));
+			}
+			
+			closeResources(pr, result, connection);
+			
+			return bookCollection;
+			
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
@@ -94,7 +89,7 @@ public class BookDao implements IBookDao {
 	/**
 	 * Find all books according to pagination params and category id
 	 */
-	public ResultSet findBooksByCategoryIdWithPagination(Integer categoryId, Integer offset, Integer limit) throws DaoBookException {
+	public ArrayList<BookEntity> findBooksByCategoryIdWithPagination(Integer categoryId, Integer offset, Integer limit) throws DaoBookException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
@@ -103,23 +98,17 @@ public class BookDao implements IBookDao {
 			pr.setInt(IStatementIndex.SECOND, offset);
 			pr.setInt(IStatementIndex.THIRD, limit);
 			
-			return pr.executeQuery();
-		} catch (SQLException | ConnectionPoolException e) {
-			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
-		}
-	}
-	
-	/**
-	 * Find all books by category id
-	 */
-	public ResultSet findAllByCategoryId(Integer id) throws DaoBookException {		
-		try {
-			Connection connection = ConnectionPool.getInstance().getConnection();
-			ConnectionPool.getInstance().freeConnection(connection);
-			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_CATEGORY_ID);
-			pr.setInt(IStatementIndex.FIRST, id);
+			ResultSet result = pr.executeQuery();
+			
+			ArrayList<BookEntity> bookCollection = new ArrayList<>();
 
-			return pr.executeQuery();
+			while (result.next()) {
+				bookCollection.add(bookSetter(result));
+			}
+			
+			closeResources(pr, result, connection);
+			
+			return bookCollection;
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
@@ -128,7 +117,7 @@ public class BookDao implements IBookDao {
 	/**
 	 * Find all books by name with like operator
 	 */
-	public ResultSet findAllLikeName(String name) throws DaoBookException {
+	public ArrayList<BookEntity> findAllLikeName(String name) throws DaoBookException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
@@ -138,7 +127,16 @@ public class BookDao implements IBookDao {
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
 			pr.setString(IStatementIndex.FIRST, "%" + name + "%");
 			
-			return pr.executeQuery();
+			ArrayList<BookEntity> bookCollection = new ArrayList<>();
+			ResultSet result = pr.executeQuery();
+
+			while (result.next()) {
+				bookCollection.add(bookSetter(result));
+			}
+			
+			closeResources(pr, result, connection);
+			
+			return bookCollection;
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
@@ -147,7 +145,7 @@ public class BookDao implements IBookDao {
 	/**
 	 * Find all books by name with like operator and category id
 	 */
-	public ResultSet findAllLikeNameByCategoryId(String name, Integer categoryId) throws DaoBookException {
+	public ArrayList<BookEntity> findAllLikeNameByCategoryId(String name, Integer categoryId) throws DaoBookException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
@@ -158,7 +156,16 @@ public class BookDao implements IBookDao {
 			pr.setString(IStatementIndex.FIRST, "%" + name + "%");
 			pr.setInt(IStatementIndex.SECOND, categoryId);
 			
-			return pr.executeQuery();
+			ArrayList<BookEntity> bookCollection = new ArrayList<>();
+			ResultSet result = pr.executeQuery();
+
+			while (result.next()) {
+				bookCollection.add(bookSetter(result));
+			}
+			
+			closeResources(pr, result, connection);
+			
+			return bookCollection;
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
@@ -167,19 +174,44 @@ public class BookDao implements IBookDao {
 	/**
 	 * Find one book by id
 	 */
-	public ResultSet findBook(Integer id) throws DaoBookException {
+	public BookEntity findBook(Integer id) throws DaoBookException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_BOOK);
 			pr.setInt(IStatementIndex.FIRST, id);
 			
-			ResultSet res = pr.executeQuery();
-			res.next();
+			ResultSet result = pr.executeQuery();
+			result.next();
 			
-			return res;
+			BookEntity book = bookSetter(result);
+
+			closeResources(pr, result, connection);
+			
+			return book;
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBookException(lang.getValue("dao_book_not_found"), e);
 		}
+	}
+	
+	/**
+	 * Book setter
+	 */
+	private BookEntity bookSetter(ResultSet result) throws SQLException {
+		BookEntity book = new BookEntity();
+		
+		String columnSuffix = lang.getColumnSuffix();
+		book.setId(result.getInt("id"));
+		book.setName(result.getString("name" + columnSuffix));
+		book.setPrice(result.getDouble("price"));
+		book.setAuthor(result.getString("author" + columnSuffix));
+		book.setDescription(result.getString("description" + columnSuffix));
+		book.setIsbn(result.getString("isbn"));
+		book.setPage(result.getInt("page"));
+		book.setCategoryId(result.getInt("category_id"));
+		book.setImgPath(result.getString("img_path"));
+		book.setYear(result.getInt("year"));
+		
+		return book;
 	}
 }

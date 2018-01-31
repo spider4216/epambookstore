@@ -1,8 +1,10 @@
 package com.epam.component.dao;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import com.epam.component.dao.exception.DaoBookException;
+import com.epam.entity.BookEntity;
 
 /**
  * Interface for Book Dao
@@ -17,32 +19,27 @@ public interface IBookDao {
 	Boolean deleteBook(Integer id) throws DaoBookException;
 	
 	/**
-	 * Find All books
-	 */
-	ResultSet findBooks() throws DaoBookException;
-	
-	/**
 	 * Find one book by id
 	 */
-	ResultSet findBook(Integer id) throws DaoBookException;
-	
-	/**
-	 * Find all books by category id
-	 */
-	ResultSet findAllByCategoryId(Integer id) throws DaoBookException;
+	BookEntity findBook(Integer id) throws DaoBookException;
 	
 	/**
 	 * Find all books by name with like operator
 	 */
-	ResultSet findAllLikeName(String name) throws DaoBookException;
+	ArrayList<BookEntity> findAllLikeName(String name) throws DaoBookException;
 	
 	/**
 	 * Find all books according to pagination params
 	 */
-	ResultSet findBooksWithPagination(Integer offset, Integer limit) throws DaoBookException;
+	ArrayList<BookEntity> findBooksWithPagination(Integer offset, Integer limit) throws DaoBookException;
 	
 	/**
 	 * Find all books by name with like operator and category id
 	 */
-	ResultSet findAllLikeNameByCategoryId(String name, Integer categoryId) throws DaoBookException;
+	ArrayList<BookEntity> findAllLikeNameByCategoryId(String name, Integer categoryId) throws DaoBookException;
+	
+	/**
+	 * Find all books by category id with pagination
+	 */
+	ArrayList<BookEntity> findBooksByCategoryIdWithPagination(Integer categoryId, Integer offset, Integer limit) throws DaoBookException;
 }
