@@ -1,5 +1,10 @@
 package com.epam.component.lang;
 
+/**
+ * Lang List
+ * 
+ * @author Yuriy Sirotenko
+ */
 public enum LangEnum {
 	LANG_RU("ru"),
 	LANG_EN("en");

@@ -2,7 +2,7 @@ package com.epam.entity;
 
 import java.util.ArrayList;
 
-import com.epam.constant.OrderStatus;
+import com.epam.enum_list.OrderEnum;
 
 /**
  * Order entity
@@ -16,7 +16,7 @@ public class OrderEntity {
 	
 	private Integer user_id;
 	
-	private Integer status = OrderStatus.UNDER_CONSIDERATION;
+	private Integer status = OrderEnum.UNDER_CONSIDERATION.getValue();
 	
 	/**
 	 * Virtual field like a relation one to many

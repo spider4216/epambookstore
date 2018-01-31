@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="com.epam.constant.OrderStatus"%>
 
 <div class="container-fluid">
 	<div class="row">

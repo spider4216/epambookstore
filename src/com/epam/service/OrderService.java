@@ -14,11 +14,11 @@ import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
-import com.epam.constant.OrderStatus;
 import com.epam.entity.BasketEntity;
 import com.epam.entity.OrderEntity;
 import com.epam.entity.OrderToProductEntity;
 import com.epam.entity.UserEntity;
+import com.epam.enum_list.OrderEnum;
 import com.epam.service.exception.BasketServiceException;
 import com.epam.service.exception.OrderServiceException;
 import com.epam.service.exception.OrderToProductServiceException;
@@ -75,7 +75,7 @@ public class OrderService {
 	public ArrayList<OrderEntity> findAllNotApproved() throws OrderServiceException {
 		try {
 			ArrayList<OrderEntity> orderCollection = new ArrayList<>();
-			ResultSet res = orderDao.findAllByStatus(OrderStatus.UNDER_CONSIDERATION);
+			ResultSet res = orderDao.findAllByStatus(OrderEnum.UNDER_CONSIDERATION.getValue());
 			
 			while (res.next()) {
 				orderCollection.add(orderSetter(res));
@@ -200,7 +200,7 @@ public class OrderService {
 	private Integer createItemOrder(Connection connection, ConnectionPool connectionPool, Integer userId) throws OrderServiceException {
 		OrderEntity orderEntity = new OrderEntity();
 		orderEntity.setUserId(userId);
-		orderEntity.setStatus(OrderStatus.UNDER_CONSIDERATION);
+		orderEntity.setStatus(OrderEnum.UNDER_CONSIDERATION.getValue());
 		
 		Integer orderId = null;
 		

@@ -15,8 +15,8 @@ import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
-import com.epam.constant.OrderStatus;
 import com.epam.entity.OrderEntity;
+import com.epam.enum_list.OrderEnum;
 
 /**
  * Mysql order dao
@@ -141,7 +141,7 @@ public class OrderDao implements IOrderDao {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_UPDATE_STATUS_AS_ACCEPT_BY_ID);
-			pr.setInt(IStatementIndex.FIRST, OrderStatus.APPROVED);
+			pr.setInt(IStatementIndex.FIRST, OrderEnum.APPROVED.getValue());
 			pr.setInt(IStatementIndex.SECOND, id);
 
 			return pr.executeUpdate();
