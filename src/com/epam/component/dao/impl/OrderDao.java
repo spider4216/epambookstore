@@ -39,12 +39,8 @@ public class OrderDao implements IOrderDao {
 	
 	private Lang lang = null;
 
-	public OrderDao() throws DaoOrderException {
-		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new DaoOrderException("cannot get lang", e);
-		}
+	public OrderDao() throws DaoOrderException, ServiceLocatorException {
+		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 	}
 
 	/**

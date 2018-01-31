@@ -37,12 +37,8 @@ public class BookDao implements IBookDao {
 	
 	private Lang lang = null;
 	
-	public BookDao() throws DaoBookException {
-		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new DaoBookException("Problem with book dao", e);
-		}
+	public BookDao() throws DaoBookException, ServiceLocatorException {
+		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 	}
 
 	/**

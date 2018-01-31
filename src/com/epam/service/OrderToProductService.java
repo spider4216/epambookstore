@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.epam.component.dao.exception.DaoBookException;
 import com.epam.component.dao.exception.DaoOrderToProductException;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.OrderToProductDao;
@@ -26,19 +27,10 @@ class OrderToProductService {
 	
 	private Lang lang;
 	
-	public OrderToProductService() throws OrderToProductServiceException {
-		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new OrderToProductServiceException("cannot get lang", e);
-		}
-		
-		try {
-			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
-			orderToProductDao = (OrderToProductDao)MYSQLFactory.getOrderToProduct();
-		} catch (DaoOrderToProductException e) {
-			throw new OrderToProductServiceException(lang.getValue("service_order_to_product_get_dao_err"), e);
-		}
+	public OrderToProductService() throws OrderToProductServiceException, ServiceLocatorException, DaoOrderToProductException {
+		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
+		orderToProductDao = (OrderToProductDao)MYSQLFactory.getOrderToProduct();
 	}
 	
 	/**
@@ -89,7 +81,7 @@ class OrderToProductService {
 			entity.setBook(book);
 			
 			return entity;
-		} catch (SQLException | BookServiceException e) {
+		} catch (SQLException | BookServiceException | ServiceLocatorException | DaoBookException e) {
 			throw new OrderToProductServiceException(lang.getValue("service_order_to_product_insert_err"), e);
 		}
 	}

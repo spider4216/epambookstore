@@ -22,6 +22,7 @@ import com.epam.component.dao.impl.OrderDao;
 import com.epam.component.dao.impl.OrderToProductDao;
 import com.epam.component.dao.impl.RoleDao;
 import com.epam.component.dao.impl.UserDao;
+import com.epam.component.service_locator.ServiceLocatorException;
 
 /**
  * Mysql dao factory
@@ -30,31 +31,61 @@ import com.epam.component.dao.impl.UserDao;
  */
 class MysqlDaoFactory extends DaoFactory {
 	
+	public static final String excMsg = "service locator problem";
+	
 	public IBookDao getBookDao() throws DaoBookException {
-		return new BookDao();
+		try {
+			return new BookDao();
+		} catch (ServiceLocatorException e) {
+			throw new DaoBookException(excMsg, e);
+		}
 	}
 	
 	public IUserDao getUserDao() throws DaoUserException {
-		return new UserDao();
+		try {
+			return new UserDao();
+		} catch (ServiceLocatorException e) {
+			throw new DaoUserException(excMsg, e);
+		}
 	}
 	
 	public ICategoryDao getCategoryDao() throws DaoCategoryException {
-		return new CategoryDao();
+		try {
+			return new CategoryDao();
+		} catch (ServiceLocatorException e) {
+			throw new DaoCategoryException(excMsg, e);
+		}
 	}
 	
 	public IBasketDao getBasketDao() throws DaoBasketException {
-		return new BasketDao();
+		try {
+			return new BasketDao();
+		} catch (ServiceLocatorException e) {
+			throw new DaoBasketException(excMsg, e);
+		}
 	}
 	
 	public IRoleDao getRoleDao() throws DaoRoleException {
-		return new RoleDao();
+		try {
+			return new RoleDao();
+		} catch (ServiceLocatorException e) {
+			throw new DaoRoleException(excMsg, e);
+		}
 	}
 	
 	public IOrderDao getOrderDao() throws DaoOrderException {
-		return new OrderDao();
+		try {
+			return new OrderDao();
+		} catch (ServiceLocatorException e) {
+			throw new DaoOrderException(excMsg, e);
+		}
 	}
 	
 	public IOrderToProductDao getOrderToProduct() throws DaoOrderToProductException {
-		return new OrderToProductDao();
+		try {
+			return new OrderToProductDao();
+		} catch (ServiceLocatorException e) {
+			throw new DaoOrderToProductException(excMsg, e);
+		}
 	}
 }

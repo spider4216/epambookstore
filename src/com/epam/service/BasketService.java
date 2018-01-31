@@ -27,19 +27,10 @@ public class BasketService {
 	
 	private Lang lang;
 	
-	public BasketService() throws BasketServiceException {
-		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new BasketServiceException("Problem with lang", e);
-		}
-		
-		try {
-			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
-			basketDao = (BasketDao)MYSQLFactory.getBasketDao();
-		} catch (DaoBasketException e) {
-			throw new BasketServiceException("service_basket_create_dao_err", e);
-		}
+	public BasketService() throws BasketServiceException, ServiceLocatorException, DaoBasketException {
+		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
+		basketDao = (BasketDao)MYSQLFactory.getBasketDao();
 	}
 	
 	/**

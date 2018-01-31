@@ -36,12 +36,8 @@ public class BasketDao implements IBasketDao {
 	
 	private Lang lang = null;
 	
-	public BasketDao() throws DaoBasketException {
-		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new DaoBasketException("Problem with create dao basket", e);
-		}
+	public BasketDao() throws DaoBasketException, ServiceLocatorException {
+		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 	}
 	
 	/**

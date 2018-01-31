@@ -30,12 +30,8 @@ public class OrderToProductDao implements IOrderToProductDao {
 	
 	private Lang lang = null;
 
-	public OrderToProductDao() throws DaoOrderToProductException {
-		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new DaoOrderToProductException("cannot get lang", e);
-		}
+	public OrderToProductDao() throws DaoOrderToProductException, ServiceLocatorException {
+		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 	}
 
 	/**

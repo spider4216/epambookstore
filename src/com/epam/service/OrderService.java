@@ -6,7 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.epam.component.dao.exception.ConnectionPoolException;
+import com.epam.component.dao.exception.DaoBasketException;
 import com.epam.component.dao.exception.DaoOrderException;
+import com.epam.component.dao.exception.DaoOrderToProductException;
+import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.OrderDao;
@@ -36,19 +39,10 @@ public class OrderService {
 	
 	private static final Integer EMPTY_VALUE = 0;
 	
-	public OrderService() throws OrderServiceException {
-		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new OrderServiceException("cannot get lang", e);
-		}
-		
-		try {
-			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
-			orderDao = (OrderDao)MYSQLFactory.getOrderDao();
-		} catch (DaoOrderException e) {
-			throw new OrderServiceException(lang.getValue("service_order_get_dao_err"), e);
-		}
+	public OrderService() throws OrderServiceException, ServiceLocatorException, DaoOrderException {
+		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
+		orderDao = (OrderDao)MYSQLFactory.getOrderDao();
 	}
 	
 	/**
@@ -101,7 +95,7 @@ public class OrderService {
 		OrderToProductService orderProductService = null;
 		try {
 			orderProductService = new OrderToProductService();
-		} catch (OrderToProductServiceException e) {
+		} catch (OrderToProductServiceException | ServiceLocatorException | DaoOrderToProductException e) {
 			throw new OrderServiceException("service_order_create_entity_err", e);
 		}
 		
@@ -121,7 +115,7 @@ public class OrderService {
 		try {
 			userService = new UserService();
 			user = userService.findById(entity.getUserId());
-		} catch (UserServiceException e) {
+		} catch (UserServiceException | ServiceLocatorException | DaoUserException e) {
 			throw new OrderServiceException(lang.getValue("service_order_user_one_err"), e);
 		}
 		
@@ -228,7 +222,7 @@ public class OrderService {
 		try {
 			basketService = new BasketService();
 			basketCollection = basketService.findAllProductsByUserId(userId);
-		} catch (BasketServiceException e) {
+		} catch (BasketServiceException | ServiceLocatorException | DaoBasketException e) {
 			connectionPool.useOneConnection(false);
 			try {
 				connection.rollback();
@@ -256,7 +250,7 @@ public class OrderService {
 				
 				orderToProductService.insert(orderToProductEntity);
 			}
-		} catch (OrderToProductServiceException e) {
+		} catch (OrderToProductServiceException | ServiceLocatorException | DaoOrderToProductException e) {
 			connectionPool.useOneConnection(false);
 			try {
 				connection.rollback();
@@ -276,7 +270,7 @@ public class OrderService {
 		try {
 			BasketService basketService = new BasketService();
 			basketService.deleteUserBasketBooks(userId);
-		} catch (BasketServiceException e) {
+		} catch (BasketServiceException | ServiceLocatorException | DaoBasketException e) {
 			connectionPool.useOneConnection(false);
 			try {
 				connection.rollback();

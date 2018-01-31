@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpSession;
 
+import com.epam.component.dao.exception.DaoRoleException;
 import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.UserDao;
@@ -32,19 +33,10 @@ public class UserService {
 	
 	private Lang lang;
 	
-	public UserService() throws UserServiceException {
-		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new UserServiceException("Cannot get lang", e);
-		}
-		
-		try {
-			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
-			userDao = (UserDao)MYSQLFactory.getUserDao();
-		} catch (DaoUserException e) {
-			throw new UserServiceException(lang.getValue("service_user_get_dao_err"));
-		}
+	public UserService() throws UserServiceException, ServiceLocatorException, DaoUserException {
+		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
+		userDao = (UserDao)MYSQLFactory.getUserDao();
 	}
 
 	/**
@@ -185,8 +177,8 @@ public class UserService {
 			RoleService roleService = new RoleService();
 			RoleEntity role = roleService.findOneById(roleId);
 			entity.setRole(role);
-		} catch (RoleServiceException e) {
-			throw new UserServiceException("cannot get role for user", e);
+		} catch (RoleServiceException | ServiceLocatorException | DaoRoleException e) {
+			throw new UserServiceException(lang.getValue("service_user_role_getting_err"), e);
 		}
 		
 		return entity;

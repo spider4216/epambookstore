@@ -20,7 +20,7 @@ import com.epam.component.view.Viewer;
  * @author Yuriy Sirotenko
  */
 public class SignUpMainAction implements IAction {
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServiceLocatorException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		
 		if (ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER) != null) {

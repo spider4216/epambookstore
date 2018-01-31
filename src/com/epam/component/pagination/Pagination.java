@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.epam.component.dao.exception.DaoBookException;
+import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.entity.BookEntity;
 import com.epam.service.BookService;
 import com.epam.service.exception.BookServiceException;
@@ -65,7 +67,7 @@ public class Pagination {
 			ArrayList<BookEntity> collection = bookeService.findNextPageBooks(getCurrentStartOffset() + COUNT_ITEM, COUNT_ITEM);
 			
 			return collection.isEmpty();
-		} catch (BookServiceException e) {
+		} catch (BookServiceException | ServiceLocatorException | DaoBookException e) {
 			return true;
 		}
 	}
@@ -79,7 +81,7 @@ public class Pagination {
 			ArrayList<BookEntity> collection = bookeService.findNextPageCategoryBooks(categoryId, getCurrentStartOffset() + COUNT_ITEM, COUNT_ITEM);
 			
 			return collection.isEmpty();
-		} catch (BookServiceException e) {
+		} catch (BookServiceException | ServiceLocatorException | DaoBookException e) {
 			return true;
 		}
 	}

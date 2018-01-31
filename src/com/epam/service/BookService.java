@@ -23,19 +23,10 @@ public class BookService {
 	private BookDao bookDao;
 	private Lang lang;
 	
-	public BookService() throws BookServiceException {
-		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new BookServiceException("Cannot getting book dao", e);
-		}
-		
-		try {
-			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
-			bookDao = (BookDao)MYSQLFactory.getBookDao();
-		} catch (DaoBookException e) {
-			throw new BookServiceException(lang.getValue("service_book_dao_err"), e);
-		}
+	public BookService() throws BookServiceException, ServiceLocatorException, DaoBookException {
+		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
+		bookDao = (BookDao)MYSQLFactory.getBookDao();
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package com.epam.component.validation.validator;
 
+import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
@@ -28,7 +29,7 @@ public class UniqueUsernameValidator extends ValidatorFabric {
 		
 		try {
 			service = new UserService();
-		} catch (UserServiceException e) {
+		} catch (UserServiceException | ServiceLocatorException | DaoUserException e) {
 			throw new ValidationException(lang.getValue("username_validator_problem"));
 		}
 

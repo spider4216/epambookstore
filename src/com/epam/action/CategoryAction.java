@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.component.dao.exception.DaoBookException;
 import com.epam.component.pagination.Pagination;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
@@ -22,7 +23,7 @@ import com.epam.service.exception.BookServiceException;
  * @author Yuriy Sirotenko
  */
 public class CategoryAction implements IAction {
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws BookServiceException, ServletException, IOException, ServiceLocatorException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Pagination pager = (Pagination) ServiceLocator.getInstance().getService(ServiceLocatorEnum.PAGINATION);
 		pager.setRequest(request);
 		BookService service = new BookService();

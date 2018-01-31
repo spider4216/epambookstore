@@ -37,12 +37,8 @@ public class UserDao implements IUserDao {
 	
 	private Lang lang = null;
 	
-	public UserDao() throws DaoUserException {
-		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new DaoUserException("Cannot get lang", e);
-		}
+	public UserDao() throws DaoUserException, ServiceLocatorException {
+		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 	}
 	
 	/**

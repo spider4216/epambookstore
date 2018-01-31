@@ -23,19 +23,10 @@ class RoleService {
 	
 	private Lang lang;
 	
-	public RoleService() throws RoleServiceException {
-		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new RoleServiceException("cannot get lang", e);
-		}
-		
-		try {
-			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
-			roleDao = (RoleDao)MYSQLFactory.getRoleDao();
-		} catch (DaoRoleException e) {
-			throw new RoleServiceException(lang.getValue("service_role_get_dao_err"), e);
-		}
+	public RoleService() throws RoleServiceException, ServiceLocatorException, DaoRoleException {
+		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
+		roleDao = (RoleDao)MYSQLFactory.getRoleDao();
 	}
 	
 	/**

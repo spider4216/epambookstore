@@ -24,19 +24,10 @@ public class CategoryService {
 	
 	private Lang lang;
 	
-	public CategoryService() throws CategoryServiceException {
-		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new CategoryServiceException("cannot get lang", e);
-		}
-		
-		try {
-			DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
-			categoryDao = (CategoryDao)MYSQLFactory.getCategoryDao();
-		} catch (DaoCategoryException e) {
-			throw new CategoryServiceException(lang.getValue("service_category_get_dao_err"), e);
-		}
+	public CategoryService() throws CategoryServiceException, ServiceLocatorException, DaoCategoryException {
+		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
+		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
+		categoryDao = (CategoryDao)MYSQLFactory.getCategoryDao();
 	}
 
 	/**

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.component.ajax_response.AjaxResponse;
+import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.flash.FlashMessage;
 import com.epam.component.lang.Lang;
 import com.epam.component.pagination.Pagination;
@@ -45,7 +46,7 @@ public class Init {
 			UserService us = new UserService();
 			UserEntity user = us.currentUser();
 			ServiceLocator.getInstance().setService(ServiceLocatorEnum.USER, user);
-		} catch (UserServiceException e) {
+		} catch (UserServiceException | ServiceLocatorException | DaoUserException e) {
 			ServiceLocator.getInstance().setService(ServiceLocatorEnum.USER, null);
 		}
 		

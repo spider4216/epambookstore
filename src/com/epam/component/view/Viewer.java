@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.epam.component.dao.exception.DaoCategoryException;
+import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.entity.CategoryEntity;
 import com.epam.service.CategoryService;
 import com.epam.service.exception.CategoryServiceException;
@@ -29,7 +31,7 @@ public class Viewer {
 			// get all categories for layout
 			ArrayList<CategoryEntity> categories = new CategoryService().findAll();
 			request.setAttribute("categories", categories);
-		} catch (CategoryServiceException e) {
+		} catch (CategoryServiceException | ServiceLocatorException | DaoCategoryException e) {
 			request.setAttribute("categories", null);
 		}
 		

@@ -26,12 +26,8 @@ public class RoleDao implements IRoleDao {
 	
 	private Lang lang = null;
 	
-	public RoleDao() throws DaoRoleException {
-		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new DaoRoleException("cannot get lang", e);
-		}
+	public RoleDao() throws DaoRoleException, ServiceLocatorException {
+		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 	}
 
 	/**

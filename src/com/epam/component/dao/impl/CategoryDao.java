@@ -29,12 +29,8 @@ public class CategoryDao implements ICategoryDao {
 	
 	private Lang lang = null;
 	
-	public CategoryDao() throws DaoCategoryException {
-		try {
-			lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		} catch (ServiceLocatorException e) {
-			throw new DaoCategoryException("cannot get lang", e);
-		}
+	public CategoryDao() throws DaoCategoryException, ServiceLocatorException {
+		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 	}
 
 	/**
