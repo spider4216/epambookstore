@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.component.lang.Lang;
-import com.epam.component.lang.LangList;
+import com.epam.component.lang.LangEnum;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 
@@ -18,21 +18,15 @@ import com.epam.component.service_locator.ServiceLocatorEnum;
 public class LangAction implements IAction {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String frontLang = request.getParameter("lang");
-		String resLang = null;
 		
-		switch (frontLang) {
-			case LangList.LANG_EN :
-				resLang = LangList.LANG_EN;
-				break;
-			case LangList.LANG_RU :
-				resLang = LangList.LANG_RU;
-				break;
-			default:
-				resLang = LangList.LANG_EN;
-				break;
+		String en = LangEnum.LANG_EN.getValue();
+		String ru = LangEnum.LANG_RU.getValue();
+		
+		if (!frontLang.equals(en) && !frontLang.equals(ru)) {
+			frontLang = en;
 		}
 		
-		Locale locale = new Locale(resLang);
+		Locale locale = new Locale(frontLang);
 		Lang lang = new Lang(locale);
 		
 		ServiceLocator.getInstance().setService(ServiceLocatorEnum.LANG, lang);
