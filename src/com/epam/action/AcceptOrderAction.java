@@ -10,8 +10,8 @@ import com.epam.component.flash.FlashMessage;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
-import com.epam.constant.RoleConstant;
 import com.epam.entity.UserEntity;
+import com.epam.enum_list.RoleEnum;
 import com.epam.service.OrderService;
 
 /**
@@ -26,7 +26,7 @@ public class AcceptOrderAction implements IAction {
 		UserEntity user = (UserEntity) ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER);
 		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		
-		if (!user.getRole().getId().equals(RoleConstant.ADMIN)) {
+		if (!user.getRole().getId().equals(RoleEnum.ADMIN.getValue())) {
 			throw new AccessControlException(lang.getValue("access_denied"));
 		}
 		

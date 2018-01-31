@@ -11,9 +11,9 @@ import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.view.Viewer;
-import com.epam.constant.RoleConstant;
 import com.epam.entity.OrderEntity;
 import com.epam.entity.UserEntity;
+import com.epam.enum_list.RoleEnum;
 import com.epam.service.OrderService;
 
 /**
@@ -28,7 +28,7 @@ public class AdminOrderList implements IAction {
 		OrderService orderService = new OrderService();
 		UserEntity user = (UserEntity) ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER); 
 		
-		if (!user.getRole().getId().equals(RoleConstant.ADMIN)) {
+		if (!user.getRole().getId().equals(RoleEnum.ADMIN.getValue())) {
 			throw new AccessControlException(lang.getValue("access_denied"));
 		}
 		

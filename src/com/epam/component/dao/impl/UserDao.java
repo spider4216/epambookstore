@@ -14,8 +14,8 @@ import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
-import com.epam.constant.RoleConstant;
 import com.epam.entity.UserEntity;
+import com.epam.enum_list.RoleEnum;
 
 /**
  * Mysql users dao
@@ -57,7 +57,7 @@ public class UserDao implements IUserDao {
 			pr.setString(IStatementIndex.THIRD, entity.getFirstName());
 			pr.setString(IStatementIndex.FORTH, entity.getLastName());
 			pr.setInt(IStatementIndex.FIFTH, entity.getGender());
-			pr.setInt(IStatementIndex.SIXTH, RoleConstant.USER);
+			pr.setInt(IStatementIndex.SIXTH, RoleEnum.USER.getValue());
 			
 			return pr.executeUpdate();
 		} catch (SQLException | ConnectionPoolException e) {

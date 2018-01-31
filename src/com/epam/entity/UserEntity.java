@@ -1,6 +1,6 @@
 package com.epam.entity;
 
-import com.epam.constant.RoleConstant;
+import com.epam.enum_list.RoleEnum;
 
 /**
  * User entity
@@ -22,7 +22,7 @@ public class UserEntity {
 	
 	private String session_id;
 	
-	private Integer role_id = RoleConstant.USER;
+	private Integer role_id = RoleEnum.USER.getValue();
 	
 	/**
 	 * Virtual field like a relation one to one

@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.epam.component.ajax_response.AjaxResponse;
 import com.epam.component.flash.FlashMessage;
@@ -13,8 +12,8 @@ import com.epam.component.pagination.Pagination;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
-import com.epam.constant.RoleConstant;
 import com.epam.entity.UserEntity;
+import com.epam.enum_list.RoleEnum;
 import com.epam.service.UserService;
 import com.epam.service.exception.UserServiceException;
 
@@ -72,6 +71,6 @@ public class Init {
 			ServiceLocator.getInstance().setService(ServiceLocatorEnum.PAGINATION, pagination);
 		}
 		
-		request.setAttribute("adminRoleId", RoleConstant.ADMIN);
+		request.setAttribute("adminRoleId", RoleEnum.ADMIN.getValue());
 	}
 }
