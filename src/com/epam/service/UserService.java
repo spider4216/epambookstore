@@ -77,17 +77,6 @@ public class UserService {
 	}
 	
 	/**
-	 * Find user by id
-	 */
-	public UserEntity findById(Integer id) throws UserServiceException {
-		try {
-			return userDao.findOneById(id);
-		} catch (DaoUserException e) {
-			throw new UserServiceException(lang.getValue("service_user_cannot_find_user"), e);
-		}
-	}
-	
-	/**
 	 * Hash Password
 	 */
 	public String passwordHash(String password) throws NoSuchAlgorithmException {

@@ -31,7 +31,7 @@ import com.epam.component.service_locator.ServiceLocatorException;
  */
 class MysqlDaoFactory extends DaoFactory {
 	
-	public static final String excMsg = "service locator problem";
+	private static final String excMsg = "service locator problem";
 	
 	public IBookDao getBookDao() throws DaoBookException {
 		try {

@@ -29,17 +29,6 @@ class OrderToProductService {
 	}
 	
 	/**
-	 * Find all relations by product id
-	 */
-	public ArrayList<OrderToProductEntity> findAllByOrderId(Integer id) throws OrderToProductServiceException {
-		try {
-			return orderToProductDao.findAllByOrderId(id);
-		} catch (DaoOrderToProductException e) {
-			throw new OrderToProductServiceException(lang.getValue("service_order_to_product_empty_err"), e);
-		}
-	}
-	
-	/**
 	 * Insert new relation
 	 */
 	public Integer insert(OrderToProductEntity entity) throws OrderToProductServiceException {
