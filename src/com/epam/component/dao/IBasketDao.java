@@ -1,6 +1,7 @@
 package com.epam.component.dao;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import com.epam.component.dao.exception.DaoBasketException;
 import com.epam.entity.BasketEntity;
@@ -20,12 +21,12 @@ public interface IBasketDao {
 	/**
 	 * Find book in basket by id and user id
 	 */
-	ResultSet findOneByProductAndUserId(Integer productId, Integer userId) throws DaoBasketException;
+	BasketEntity findOneByProductAndUserId(Integer productId, Integer userId) throws DaoBasketException;
 	
 	/**
 	 * Find all user's products in basket
 	 */
-	ResultSet findAllByUserId(Integer userId) throws DaoBasketException;
+	ArrayList<BasketEntity> findAllByUserId(Integer userId) throws DaoBasketException;
 	
 	/**
 	 * Delete product from basket by user and book id

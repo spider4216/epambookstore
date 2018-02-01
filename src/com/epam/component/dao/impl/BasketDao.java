@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import com.epam.component.dao.CDao;
 import com.epam.component.dao.IBasketDao;
 import com.epam.component.dao.IStatementIndex;
 import com.epam.component.dao.exception.ConnectionPoolException;
@@ -15,13 +17,14 @@ import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.entity.BasketEntity;
+import com.epam.entity.BookEntity;
 
 /**
  * Mysql dao for basket
  * 
  * @author Yuriy Sirotenko
  */
-public class BasketDao implements IBasketDao {
+public class BasketDao extends CDao implements IBasketDao {
 	private static final String SQL_INSERT = "INSERT INTO basket (user_id, book_id, count) VALUES (?, ?, ?)";
 
 	private static final String SQL_FIND_ONE_BY_PRODUCT_AND_USER_ID = "SELECT * FROM basket WHERE book_id = ? AND user_id = ?";
@@ -52,9 +55,7 @@ public class BasketDao implements IBasketDao {
 			pr.setInt(IStatementIndex.SECOND, entity.getBookId());
 			pr.setInt(IStatementIndex.THIRD, entity.getCount());
 
-			Integer res = pr.executeUpdate();
-			
-			return res;
+			return pr.executeUpdate();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBasketException(lang.getValue("dao_basket_drop_into_basket_err"), e);
 		}
@@ -63,22 +64,26 @@ public class BasketDao implements IBasketDao {
 	/**
 	 * Find book in basket by id and user id
 	 */
-	public ResultSet findOneByProductAndUserId(Integer productId, Integer userId) throws DaoBasketException {		
+	public BasketEntity findOneByProductAndUserId(Integer productId, Integer userId) throws DaoBasketException {		
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_PRODUCT_AND_USER_ID);
 			pr.setInt(IStatementIndex.FIRST, productId);
 			pr.setInt(IStatementIndex.SECOND, userId);
-			ResultSet res = pr.executeQuery();
-			res.next();
+			ResultSet result = pr.executeQuery();
+			result.next();
 			
 			
-			if (res.getRow() <= EMPTY_BASKET) {
+			if (result.getRow() <= EMPTY_BASKET) {
 				throw new DaoBasketException(lang.getValue("dao_basket_product_not_found"));
 			}
 			
-			return res;
+			BasketEntity basket = basketSetter(result);
+			
+			closeResources(pr, result, connection);
+			
+			return basket;
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBasketException(lang.getValue("dao_basket_err_by_product_and_user_id"), e);
 		}
@@ -87,14 +92,23 @@ public class BasketDao implements IBasketDao {
 	/**
 	 * Find all user's products in basket
 	 */
-	public ResultSet findAllByUserId(Integer userId) throws DaoBasketException {
+	public ArrayList<BasketEntity> findAllByUserId(Integer userId) throws DaoBasketException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_USER_ID);
 			pr.setInt(IStatementIndex.FIRST, userId);
+			
+			ResultSet result = pr.executeQuery();
+			ArrayList<BasketEntity> basketCollection = new ArrayList<>();
 
-			return pr.executeQuery();
+			while (result.next()) {
+				basketCollection.add(basketSetter(result));
+			}
+			
+			closeResources(pr, result, connection);
+
+			return basketCollection;
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBasketException(lang.getValue("dao_basket_product_not_found"), e);
 		}
@@ -135,5 +149,34 @@ public class BasketDao implements IBasketDao {
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBasketException(lang.getValue("dao_basket_cannot_delete_product"), e);
 		}
+	}
+	
+	/**
+	 * Basket setter
+	 */
+	private BasketEntity basketSetter(ResultSet result) throws SQLException {
+		String columnSuffix = lang.getColumnSuffix();
+		
+		BookEntity book = new BookEntity();
+		book.setId(result.getInt("bk.id"));
+		book.setName(result.getString("bk.name" + columnSuffix));
+		book.setPrice(result.getDouble("bk.price"));
+		book.setAuthor(result.getString("bk.author" + columnSuffix));
+		book.setDescription(result.getString("bk.description" + columnSuffix));
+		book.setIsbn(result.getString("bk.isbn"));
+		book.setPage(result.getInt("bk.page"));
+		book.setImgPath(result.getString("bk.img_path"));
+		book.setCategoryId(result.getInt("bk.category_id"));
+		
+		BasketEntity basket = new BasketEntity();
+		
+		basket.setId(result.getInt("bt.id"));
+		basket.setUserId(result.getInt("bt.user_id"));
+		basket.setBookId(result.getInt("bt.book_id"));
+		basket.setCount(result.getInt("bt.count"));
+		basket.setCreateDate(result.getString("bt.create_date"));
+		basket.setBook(book);
+		
+		return basket;
 	}
 }

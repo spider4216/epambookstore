@@ -1,7 +1,5 @@
 package com.epam.service;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.epam.component.dao.exception.DaoBasketException;
@@ -12,7 +10,6 @@ import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.entity.BasketEntity;
-import com.epam.entity.BookEntity;
 import com.epam.service.exception.BasketServiceException;
 
 /**
@@ -68,46 +65,10 @@ public class BasketService {
 	 */
 	public ArrayList<BasketEntity> findAllProductsByUserId(Integer userId) throws BasketServiceException {
 		try {
-			ArrayList<BasketEntity> basketCollection = new ArrayList<>();
-			ResultSet res = basketDao.findAllByUserId(userId);
-
-			while (res.next()) {
-				basketCollection.add(basketSetter(res));
-			}
-			
-			return basketCollection;
-		} catch (DaoBasketException | SQLException e) {
+			return basketDao.findAllByUserId(userId);
+		} catch (DaoBasketException e) {
 			throw new BasketServiceException(lang.getValue("service_basket_empty_err"), e);
 		}
-	}
-	
-	/**
-	 * Basket setter
-	 */
-	private BasketEntity basketSetter(ResultSet result) throws SQLException {
-		String columnSuffix = lang.getColumnSuffix();
-		
-		BookEntity book = new BookEntity();
-		book.setId(result.getInt("bk.id"));
-		book.setName(result.getString("bk.name" + columnSuffix));
-		book.setPrice(result.getDouble("bk.price"));
-		book.setAuthor(result.getString("bk.author" + columnSuffix));
-		book.setDescription(result.getString("bk.description" + columnSuffix));
-		book.setIsbn(result.getString("bk.isbn"));
-		book.setPage(result.getInt("bk.page"));
-		book.setImgPath(result.getString("bk.img_path"));
-		book.setCategoryId(result.getInt("bk.category_id"));
-		
-		BasketEntity basket = new BasketEntity();
-		
-		basket.setId(result.getInt("bt.id"));
-		basket.setUserId(result.getInt("bt.user_id"));
-		basket.setBookId(result.getInt("bt.book_id"));
-		basket.setCount(result.getInt("bt.count"));
-		basket.setCreateDate(result.getString("bt.create_date"));
-		basket.setBook(book);
-		
-		return basket;
 	}
 	
 	/**
