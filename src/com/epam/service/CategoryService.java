@@ -1,7 +1,5 @@
 package com.epam.service;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.epam.component.dao.exception.DaoCategoryException;
@@ -35,15 +33,8 @@ public class CategoryService {
 	 */
 	public ArrayList<CategoryEntity> findAll() throws CategoryServiceException {
 		try {
-			ArrayList<CategoryEntity> categoryCollection = new ArrayList<>();
-			ResultSet res = categoryDao.findAll();
-
-			while (res.next()) {
-				categoryCollection.add(categorySetter(res));
-			}
-			
-			return categoryCollection;
-		} catch (DaoCategoryException | SQLException e) {
+			return categoryDao.findAll();
+		} catch (DaoCategoryException e) {
 			throw new CategoryServiceException(lang.getValue("service_category_empty_err"), e);
 		}
 	}
@@ -53,22 +44,9 @@ public class CategoryService {
 	 */
 	public CategoryEntity findOneById(Integer id) throws CategoryServiceException {
 		try {
-			ResultSet res = categoryDao.findOneById(id);
-			return categorySetter(res);
-		} catch (DaoCategoryException | SQLException e) {
+			return categoryDao.findOneById(id);
+		} catch (DaoCategoryException e) {
 			throw new CategoryServiceException(lang.getValue("service_category_empty_err"), e);
 		}
-	}
-	
-	/**
-	 * Setter category entity
-	 */
-	private CategoryEntity categorySetter(ResultSet result) throws SQLException {
-		String columnSuffix = lang.getColumnSuffix();
-		CategoryEntity category = new CategoryEntity();
-		category.setId(result.getInt("id"));
-		category.setName(result.getString("name" + columnSuffix));
-		
-		return category;
 	}
 }

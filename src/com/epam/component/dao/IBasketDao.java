@@ -1,6 +1,5 @@
 package com.epam.component.dao;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import com.epam.component.dao.exception.DaoBasketException;

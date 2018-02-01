@@ -127,6 +127,8 @@ public class BasketDao extends CDao implements IBasketDao {
 			
 			pr.executeUpdate();
 			
+			closeResources(pr, connection);
+			
 			return true;
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBasketException(lang.getValue("dao_basket_cannot_delete_product"), e);
@@ -144,6 +146,8 @@ public class BasketDao extends CDao implements IBasketDao {
 			pr.setInt(IStatementIndex.FIRST, userId);
 			
 			pr.executeUpdate();
+			
+			closeResources(pr, connection);
 			
 			return true;
 		} catch (SQLException | ConnectionPoolException e) {
