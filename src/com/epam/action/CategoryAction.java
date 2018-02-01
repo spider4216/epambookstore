@@ -1,21 +1,16 @@
 package com.epam.action;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.epam.component.dao.exception.DaoBookException;
 import com.epam.component.pagination.Pagination;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
-import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.component.view.Viewer;
 import com.epam.entity.BookEntity;
 import com.epam.service.BookService;
-import com.epam.service.exception.BookServiceException;
 
 /**
  * Main action for category domain

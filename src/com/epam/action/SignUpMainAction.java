@@ -1,9 +1,7 @@
 package com.epam.action;
 
-import java.io.IOException;
 import java.security.AccessControlException;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,7 +9,6 @@ import com.epam.component.flash.FlashMessage;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
-import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.component.view.Viewer;
 
 /**

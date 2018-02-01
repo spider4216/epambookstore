@@ -1,7 +1,5 @@
 package com.epam.service;
 
-import java.util.ArrayList;
-
 import com.epam.component.dao.exception.DaoOrderToProductException;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.OrderToProductDao;

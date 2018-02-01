@@ -8,7 +8,6 @@ import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.component.validation.ValidatorFabric;
 import com.epam.component.validation.exception.ValidationException;
 import com.epam.service.UserService;
-import com.epam.service.exception.UserServiceException;
 
 /**
  * Unique username validator
