@@ -35,5 +35,5 @@ public interface IBasketDao {
 	/**
 	 * Delete all user's products from basket
 	 */
-	Boolean deleteAllByUserId(Integer userId) throws DaoBasketException;	
+	Boolean deleteAllByUserId(Integer userId) throws DaoBasketException;
 }

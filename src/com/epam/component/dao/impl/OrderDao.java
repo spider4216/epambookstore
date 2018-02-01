@@ -5,17 +5,26 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import com.epam.component.dao.CDao;
 import com.epam.component.dao.IOrderDao;
+import com.epam.component.dao.IOrderToProductDao;
 import com.epam.component.dao.IStatementIndex;
+import com.epam.component.dao.IUserDao;
 import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoOrderException;
+import com.epam.component.dao.exception.DaoOrderToProductException;
+import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.dao.factory.ConnectionPool;
+import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.lang.Lang;
 import com.epam.component.service_locator.ServiceLocator;
 import com.epam.component.service_locator.ServiceLocatorEnum;
 import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.entity.OrderEntity;
+import com.epam.entity.OrderToProductEntity;
+import com.epam.entity.UserEntity;
 import com.epam.enum_list.OrderEnum;
 
 /**
@@ -23,7 +32,7 @@ import com.epam.enum_list.OrderEnum;
  * 
  * @author Yuriy Sirotenko
  */
-public class OrderDao implements IOrderDao {
+public class OrderDao extends CDao implements IOrderDao {
 
 	private final static String SQL_FIND_ALL = "SELECT * FROM orders";
 
@@ -31,15 +40,13 @@ public class OrderDao implements IOrderDao {
 
 	private final static String SQL_FIND_ALL_BY_STATUS = "SELECT * FROM orders where status = ?";
 
-	private final static String SQL_FIND_ONE_BY_ID = "SELECT * FROM orders WHERE id = ?";
-
 	private final static String SQL_INSERT = "INSERT INTO orders (user_id, status) VALUES (?, ?)";
 
 	private final static String SQL_UPDATE_STATUS_AS_ACCEPT_BY_ID = "UPDATE orders SET status = ? WHERE id = ?";
 	
 	private Lang lang = null;
 
-	public OrderDao() throws DaoOrderException, ServiceLocatorException {
+	public OrderDao() throws ServiceLocatorException {
 		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 	}
 
@@ -50,9 +57,12 @@ public class OrderDao implements IOrderDao {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
-			Statement pr = connection.createStatement();
+			Statement st = connection.createStatement();
 			
-			return pr.executeQuery(SQL_FIND_ALL);
+			ResultSet result = st.executeQuery(SQL_FIND_ALL);
+			closeResources(st);
+			
+			return result;
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoOrderException(lang.getValue("dao_order_empty_err"), e);
 		}
@@ -61,14 +71,22 @@ public class OrderDao implements IOrderDao {
 	/**
 	 * Find all orders by user id
 	 */
-	public ResultSet findAllByUserId(Integer id) throws DaoOrderException {
+	public ArrayList<OrderEntity> findAllByUserId(Integer id) throws DaoOrderException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_USER_ID);
 			pr.setInt(IStatementIndex.FIRST, id);
+			ResultSet result = pr.executeQuery();
+			ArrayList<OrderEntity> orderCollection = new ArrayList<>();
 			
-			return pr.executeQuery();
+			while (result.next()) {
+				orderCollection.add(orderSetter(result));
+			}
+			
+			closeResources(pr, result);
+			
+			return orderCollection;
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoOrderException(lang.getValue("dao_order_empty_err"), e);
 		}
@@ -77,32 +95,24 @@ public class OrderDao implements IOrderDao {
 	/**
 	 * Find all orders by status
 	 */
-	public ResultSet findAllByStatus(Integer status) throws DaoOrderException {
+	public ArrayList<OrderEntity> findAllByStatus(Integer status) throws DaoOrderException {
 		try {
 			Connection connection = ConnectionPool.getInstance().getConnection();
 			ConnectionPool.getInstance().freeConnection(connection);
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_STATUS);
 			pr.setInt(IStatementIndex.FIRST, status);
 			
-			return pr.executeQuery();
-		} catch (SQLException | ConnectionPoolException e) {
-			throw new DaoOrderException(lang.getValue("dao_order_empty_err"), e);
-		}
-	}
-
-	/**
-	 * Find one order by id
-	 */
-	public ResultSet findOneById(Integer id) throws DaoOrderException {
-		try {
-			Connection connection = ConnectionPool.getInstance().getConnection();
-			ConnectionPool.getInstance().freeConnection(connection);
-			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ONE_BY_ID);
-			pr.setInt(IStatementIndex.FIRST, id);
-			ResultSet res = pr.executeQuery();
-			res.next();
+			ResultSet result = pr.executeQuery();
 			
-			return res;
+			ArrayList<OrderEntity> orderCollection = new ArrayList<>();
+			
+			while (result.next()) {
+				orderCollection.add(orderSetter(result));
+			}
+			
+			closeResources(pr, result);
+			
+			return orderCollection;			
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoOrderException(lang.getValue("dao_order_empty_err"), e);
 		}
@@ -120,10 +130,14 @@ public class OrderDao implements IOrderDao {
 			
 			pr.executeUpdate();
 			
-			ResultSet res = pr.getGeneratedKeys();
-			res.next();
+			ResultSet result = pr.getGeneratedKeys();
+			result.next();
+			
+			Integer id = result.getInt(1);
+			closeResources(pr, result);
 
-			return res.getInt(1);
+			// TODO magic number
+			return id;
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoOrderException(lang.getValue("dao_order_inser_err"), e);
 		}
@@ -139,10 +153,56 @@ public class OrderDao implements IOrderDao {
 			PreparedStatement pr = connection.prepareStatement(SQL_UPDATE_STATUS_AS_ACCEPT_BY_ID);
 			pr.setInt(IStatementIndex.FIRST, OrderEnum.APPROVED.getValue());
 			pr.setInt(IStatementIndex.SECOND, id);
+			
+			Integer result = pr.executeUpdate();
+			
+			closeResources(pr);
 
-			return pr.executeUpdate();
+			return result;
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoOrderException(lang.getValue("dao_order_cannot_change_status"), e);
 		}
+	}
+	
+	/**
+	 * Order setter
+	 */
+	private OrderEntity orderSetter(ResultSet result) throws DaoOrderException {
+		DaoFactory MysqlFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
+		OrderEntity entity = new OrderEntity();
+		
+		try {
+			entity.setId(result.getInt("id"));
+			entity.setUserId(result.getInt("user_id"));
+			entity.setStatus(result.getInt("status"));
+			entity.setCreateDate(result.getString("create_date"));
+		} catch (SQLException e) {
+			// TODO msg
+			throw new DaoOrderException(lang.getValue("msg"), e);
+		}
+		
+		ArrayList<OrderToProductEntity> orderProductCollection = null;
+		
+		try {
+			IOrderToProductDao orderToProductDao = (OrderToProductDao) MysqlFactory.getOrderToProduct();
+			orderProductCollection = orderToProductDao.findAllByOrderId(entity.getId());
+		} catch (DaoOrderToProductException e) {
+			throw new DaoOrderException(lang.getValue("service_order_many_err"), e);
+		}
+		
+		entity.setProducts(orderProductCollection);
+	
+		UserEntity user = null;
+		
+		try {
+			IUserDao userDao = (UserDao) MysqlFactory.getUserDao();
+			user = userDao.findOneById(entity.getUserId());
+		} catch (DaoUserException e) {
+			throw new DaoOrderException(lang.getValue("service_order_user_one_err"), e);
+		}
+		
+		entity.setUser(user);
+		
+		return entity;
 	}
 }

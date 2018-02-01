@@ -32,7 +32,7 @@ public class CategoryDao extends CDao implements ICategoryDao {
 	
 	private Lang lang = null;
 	
-	public CategoryDao() throws DaoCategoryException, ServiceLocatorException {
+	public CategoryDao() throws ServiceLocatorException {
 		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 	}
 
@@ -52,7 +52,7 @@ public class CategoryDao extends CDao implements ICategoryDao {
 				categoryCollection.add(categorySetter(result));
 			}
 			
-			closeResources(pr, result, connection);
+			closeResources(pr, result);
 			
 			return categoryCollection;
 		} catch (SQLException | ConnectionPoolException e) {
@@ -73,7 +73,7 @@ public class CategoryDao extends CDao implements ICategoryDao {
 			result.next();
 			
 			CategoryEntity category = categorySetter(result);
-			closeResources(pr, result, connection);
+			closeResources(pr, result);
 			
 			return category;
 		} catch (SQLException | ConnectionPoolException e) {

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.epam.component.dao.CDao;
@@ -36,7 +35,7 @@ public class BookDao extends CDao implements IBookDao {
 	
 	private Lang lang = null;
 	
-	public BookDao() throws DaoBookException, ServiceLocatorException {
+	public BookDao() throws ServiceLocatorException {
 		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 	}
 
@@ -51,6 +50,8 @@ public class BookDao extends CDao implements IBookDao {
 			pr.setInt(IStatementIndex.FIRST, id);
 			
 			pr.executeUpdate();
+			
+			closeResources(pr);
 			
 			return true;
 		} catch (SQLException | ConnectionPoolException e) {
@@ -77,7 +78,7 @@ public class BookDao extends CDao implements IBookDao {
 				bookCollection.add(bookSetter(result));
 			}
 			
-			closeResources(pr, result, connection);
+			closeResources(pr, result);
 			
 			return bookCollection;
 			
@@ -106,7 +107,7 @@ public class BookDao extends CDao implements IBookDao {
 				bookCollection.add(bookSetter(result));
 			}
 			
-			closeResources(pr, result, connection);
+			closeResources(pr, result);
 			
 			return bookCollection;
 		} catch (SQLException | ConnectionPoolException e) {
@@ -134,7 +135,7 @@ public class BookDao extends CDao implements IBookDao {
 				bookCollection.add(bookSetter(result));
 			}
 			
-			closeResources(pr, result, connection);
+			closeResources(pr, result);
 			
 			return bookCollection;
 		} catch (SQLException | ConnectionPoolException e) {
@@ -163,7 +164,7 @@ public class BookDao extends CDao implements IBookDao {
 				bookCollection.add(bookSetter(result));
 			}
 			
-			closeResources(pr, result, connection);
+			closeResources(pr, result);
 			
 			return bookCollection;
 		} catch (SQLException | ConnectionPoolException e) {
@@ -186,7 +187,7 @@ public class BookDao extends CDao implements IBookDao {
 			
 			BookEntity book = bookSetter(result);
 
-			closeResources(pr, result, connection);
+			closeResources(pr, result);
 			
 			return book;
 		} catch (SQLException | ConnectionPoolException e) {

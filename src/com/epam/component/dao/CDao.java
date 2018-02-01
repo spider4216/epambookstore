@@ -15,23 +15,21 @@ import java.sql.Statement;
  * @author Yuriy Sirotenko
  */
 public abstract class CDao {
-	public final void closeResources(PreparedStatement pr, ResultSet res, Connection con) throws SQLException {
+	public final void closeResources(PreparedStatement pr, ResultSet res) throws SQLException {
 		pr.close();
-		closePartResources(res, con);
-	}
-	
-	public final void closeResources(Statement st, ResultSet res, Connection con) throws SQLException {
-		st.close();
-		closePartResources(res, con);
-	}
-	
-	public final void closeResources(PreparedStatement pr, Connection con) throws SQLException {
-		pr.close();
-		con.close();
-	}
-	
-	private void closePartResources(ResultSet res, Connection con) throws SQLException {
 		res.close();
-		con.close();
 	}
+	
+	public final void closeResources(Statement st, ResultSet res) throws SQLException {
+		st.close();
+		res.close();
+	}
+	
+	public final void closeResources(PreparedStatement pr) throws SQLException {
+		pr.close();
+	}
+
+	public final void closeResources(Statement st) throws SQLException {
+		st.close();
+	}	
 }

@@ -22,7 +22,7 @@ public class CategoryService {
 	
 	private Lang lang;
 	
-	public CategoryService() throws CategoryServiceException, ServiceLocatorException, DaoCategoryException {
+	public CategoryService() throws ServiceLocatorException, DaoCategoryException {
 		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 		categoryDao = (CategoryDao)MYSQLFactory.getCategoryDao();

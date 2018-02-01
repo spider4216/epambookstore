@@ -29,7 +29,7 @@ public class UniqueUsernameValidator extends ValidatorFabric {
 		
 		try {
 			service = new UserService();
-		} catch (UserServiceException | ServiceLocatorException | DaoUserException e) {
+		} catch (ServiceLocatorException | DaoUserException e) {
 			throw new ValidationException(lang.getValue("username_validator_problem"));
 		}
 

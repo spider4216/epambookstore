@@ -24,7 +24,7 @@ public class BasketService {
 	
 	private Lang lang;
 	
-	public BasketService() throws BasketServiceException, ServiceLocatorException, DaoBasketException {
+	public BasketService() throws ServiceLocatorException, DaoBasketException {
 		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 		basketDao = (BasketDao)MYSQLFactory.getBasketDao();

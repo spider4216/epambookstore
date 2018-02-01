@@ -1,7 +1,5 @@
 package com.epam.service;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.epam.component.dao.exception.DaoBookException;
@@ -23,7 +21,7 @@ public class BookService {
 	private BookDao bookDao;
 	private Lang lang;
 	
-	public BookService() throws BookServiceException, ServiceLocatorException, DaoBookException {
+	public BookService() throws ServiceLocatorException, DaoBookException {
 		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 		bookDao = (BookDao)MYSQLFactory.getBookDao();

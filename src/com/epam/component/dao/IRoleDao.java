@@ -1,8 +1,7 @@
 package com.epam.component.dao;
 
-import java.sql.ResultSet;
-
 import com.epam.component.dao.exception.DaoRoleException;
+import com.epam.entity.RoleEntity;
 
 /**
  * Interface for Role dao
@@ -14,5 +13,5 @@ public interface IRoleDao {
 	/**
 	 * Find role by id
 	 */
-	ResultSet findOneById(Integer id) throws DaoRoleException;
+	RoleEntity findOneById(Integer id) throws DaoRoleException;
 }

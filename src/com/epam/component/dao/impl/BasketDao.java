@@ -27,7 +27,7 @@ import com.epam.entity.BookEntity;
 public class BasketDao extends CDao implements IBasketDao {
 	private static final String SQL_INSERT = "INSERT INTO basket (user_id, book_id, count) VALUES (?, ?, ?)";
 
-	private static final String SQL_FIND_ONE_BY_PRODUCT_AND_USER_ID = "SELECT * FROM basket WHERE book_id = ? AND user_id = ?";
+	private static final String SQL_FIND_ONE_BY_PRODUCT_AND_USER_ID = "SELECT bt.*, bk.* FROM basket bt INNER JOIN books bk ON bt.book_id = bk.id WHERE bt.book_id = ? AND bt.user_id = ?";
 
 	private static final String SQL_FIND_ALL_BY_USER_ID = "SELECT bt.*, bk.* FROM basket bt INNER JOIN books bk ON bt.book_id = bk.id WHERE bt.user_id = ?";
 
@@ -39,7 +39,7 @@ public class BasketDao extends CDao implements IBasketDao {
 	
 	private Lang lang = null;
 	
-	public BasketDao() throws DaoBasketException, ServiceLocatorException {
+	public BasketDao() throws ServiceLocatorException {
 		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 	}
 	
@@ -54,8 +54,11 @@ public class BasketDao extends CDao implements IBasketDao {
 			pr.setInt(IStatementIndex.FIRST, entity.getUserId());
 			pr.setInt(IStatementIndex.SECOND, entity.getBookId());
 			pr.setInt(IStatementIndex.THIRD, entity.getCount());
+			
+			Integer result = pr.executeUpdate();
+			closeResources(pr);
 
-			return pr.executeUpdate();
+			return result;
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoBasketException(lang.getValue("dao_basket_drop_into_basket_err"), e);
 		}
@@ -80,8 +83,7 @@ public class BasketDao extends CDao implements IBasketDao {
 			}
 			
 			BasketEntity basket = basketSetter(result);
-			
-			closeResources(pr, result, connection);
+			closeResources(pr, result);
 			
 			return basket;
 		} catch (SQLException | ConnectionPoolException e) {
@@ -106,7 +108,7 @@ public class BasketDao extends CDao implements IBasketDao {
 				basketCollection.add(basketSetter(result));
 			}
 			
-			closeResources(pr, result, connection);
+			closeResources(pr, result);
 
 			return basketCollection;
 		} catch (SQLException | ConnectionPoolException e) {
@@ -127,7 +129,7 @@ public class BasketDao extends CDao implements IBasketDao {
 			
 			pr.executeUpdate();
 			
-			closeResources(pr, connection);
+			closeResources(pr);
 			
 			return true;
 		} catch (SQLException | ConnectionPoolException e) {
@@ -147,7 +149,7 @@ public class BasketDao extends CDao implements IBasketDao {
 			
 			pr.executeUpdate();
 			
-			closeResources(pr, connection);
+			closeResources(pr);
 			
 			return true;
 		} catch (SQLException | ConnectionPoolException e) {

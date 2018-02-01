@@ -1,7 +1,5 @@
 package com.epam.component.dao;
 
-import java.sql.ResultSet;
-
 import com.epam.component.dao.exception.DaoUserException;
 import com.epam.entity.UserEntity;
 
@@ -20,7 +18,7 @@ public interface IUserDao {
 	/**
 	 * Find user by username
 	 */
-	ResultSet findOneByUsername(String username) throws DaoUserException;
+	UserEntity findOneByUsername(String username) throws DaoUserException;
 	
 	/**
 	 * Update session id by username
@@ -30,10 +28,10 @@ public interface IUserDao {
 	/**
 	 * Find user by session id
 	 */
-	ResultSet findOneBySessionId(String sessionId) throws DaoUserException;
+	UserEntity findOneBySessionId(String sessionId) throws DaoUserException;
 	
 	/**
 	 * Find user by id
 	 */
-	ResultSet findOneById(Integer id) throws DaoUserException;
+	UserEntity findOneById(Integer id) throws DaoUserException;
 }

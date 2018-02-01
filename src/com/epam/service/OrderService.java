@@ -1,7 +1,6 @@
 package com.epam.service;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -9,7 +8,6 @@ import com.epam.component.dao.exception.ConnectionPoolException;
 import com.epam.component.dao.exception.DaoBasketException;
 import com.epam.component.dao.exception.DaoOrderException;
 import com.epam.component.dao.exception.DaoOrderToProductException;
-import com.epam.component.dao.exception.DaoUserException;
 import com.epam.component.dao.factory.ConnectionPool;
 import com.epam.component.dao.factory.DaoFactory;
 import com.epam.component.dao.impl.OrderDao;
@@ -20,12 +18,10 @@ import com.epam.component.service_locator.ServiceLocatorException;
 import com.epam.entity.BasketEntity;
 import com.epam.entity.OrderEntity;
 import com.epam.entity.OrderToProductEntity;
-import com.epam.entity.UserEntity;
 import com.epam.enum_list.OrderEnum;
 import com.epam.service.exception.BasketServiceException;
 import com.epam.service.exception.OrderServiceException;
 import com.epam.service.exception.OrderToProductServiceException;
-import com.epam.service.exception.UserServiceException;
 
 /**
  * Service for order logic
@@ -50,15 +46,8 @@ public class OrderService {
 	 */
 	public ArrayList<OrderEntity> findAllUserOrders(Integer userId) throws OrderServiceException {
 		try {
-			ArrayList<OrderEntity> orderCollection = new ArrayList<>();
-			ResultSet res = orderDao.findAllByUserId(userId);
-
-			while (res.next()) {
-				orderCollection.add(orderSetter(res));
-			}
-			
-			return orderCollection;
-		} catch (DaoOrderException | SQLException e) {
+			return orderDao.findAllByUserId(userId);
+		} catch (DaoOrderException e) {
 			throw new OrderServiceException(lang.getValue("service_order_empty_err"), e);
 		}
 	}
@@ -68,60 +57,10 @@ public class OrderService {
 	 */
 	public ArrayList<OrderEntity> findAllNotApproved() throws OrderServiceException {
 		try {
-			ArrayList<OrderEntity> orderCollection = new ArrayList<>();
-			ResultSet res = orderDao.findAllByStatus(OrderEnum.UNDER_CONSIDERATION.getValue());
-			
-			while (res.next()) {
-				orderCollection.add(orderSetter(res));
-			}
-			
-			return orderCollection;
-		} catch (DaoOrderException | SQLException e) {
+			return orderDao.findAllByStatus(OrderEnum.UNDER_CONSIDERATION.getValue());
+		} catch (DaoOrderException e) {
 			throw new OrderServiceException(lang.getValue("service_order_empty_err"), e);
 		}
-	}
-		
-	/**
-	 * Order setter
-	 */
-	private OrderEntity orderSetter(ResultSet result) throws SQLException, OrderServiceException {
-		OrderEntity entity = new OrderEntity();
-		
-		entity.setId(result.getInt("id"));
-		entity.setUserId(result.getInt("user_id"));
-		entity.setStatus(result.getInt("status"));
-		entity.setCreateDate(result.getString("create_date"));
-		
-		OrderToProductService orderProductService = null;
-		try {
-			orderProductService = new OrderToProductService();
-		} catch (OrderToProductServiceException | ServiceLocatorException | DaoOrderToProductException e) {
-			throw new OrderServiceException("service_order_create_entity_err", e);
-		}
-		
-		ArrayList<OrderToProductEntity> orderProductCollection = null;
-		
-		try {
-			orderProductCollection = orderProductService.findAllByProductId(entity.getId());
-		} catch (OrderToProductServiceException e) {
-			throw new OrderServiceException(lang.getValue("service_order_many_err"), e);
-		}
-		
-		entity.setProducts(orderProductCollection);
-		
-		UserService userService = null;
-		UserEntity user = null;
-		
-		try {
-			userService = new UserService();
-			user = userService.findById(entity.getUserId());
-		} catch (UserServiceException | ServiceLocatorException | DaoUserException e) {
-			throw new OrderServiceException(lang.getValue("service_order_user_one_err"), e);
-		}
-		
-		entity.setUser(user);
-		
-		return entity;
 	}
 	
 	/**

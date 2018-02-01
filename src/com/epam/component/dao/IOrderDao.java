@@ -1,6 +1,7 @@
 package com.epam.component.dao;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import com.epam.component.dao.exception.DaoOrderException;
 import com.epam.entity.OrderEntity;
@@ -18,11 +19,6 @@ public interface IOrderDao {
 	ResultSet findAll() throws DaoOrderException;
 
 	/**
-	 * Find one order by id
-	 */
-	ResultSet findOneById(Integer id) throws DaoOrderException;
-	
-	/**
 	 * Insert order
 	 */
 	Integer insert(OrderEntity entity) throws DaoOrderException;
@@ -30,12 +26,12 @@ public interface IOrderDao {
 	/**
 	 * Find all orders by user id
 	 */
-	ResultSet findAllByUserId(Integer id) throws DaoOrderException;
+	ArrayList<OrderEntity> findAllByUserId(Integer id) throws DaoOrderException;
 	
 	/**
 	 * Find all orders by status
 	 */
-	ResultSet findAllByStatus(Integer status) throws DaoOrderException;
+	ArrayList<OrderEntity> findAllByStatus(Integer status) throws DaoOrderException;
 	
 	/**
 	 * Update order status as accept by id
