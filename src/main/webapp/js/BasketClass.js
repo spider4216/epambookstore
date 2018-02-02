@@ -111,7 +111,7 @@ function BasketClass() {
 			return;
 		}
 		
-		ajaxHelperMethod("/BookShop/ajax/add-to-basket.html", "post", { id : productId, count : productCount }, element);
+		ajaxHelperMethod("/BookStore/ajax/add-to-basket.html", "post", { id : productId, count : productCount }, element);
 	}
 	
 	/**
@@ -120,7 +120,7 @@ function BasketClass() {
 	 * @private
 	 */
 	var clearBasketHandler = function(element) {
-		ajaxHelperMethod("/BookShop/ajax/clear-basket.html", "post", null, element);
+		ajaxHelperMethod("/BookStore/ajax/clear-basket.html", "post", null, element);
 	}
 	
 	/**
@@ -131,7 +131,7 @@ function BasketClass() {
 	var deleteItemBasketHandler = function(element) {
 		var id = element.attr("data-book-id");
 		
-		ajaxHelperMethod("/BookShop/ajax/delete-book-from-basket.html", "get", {id: id}, element);
+		ajaxHelperMethod("/BookStore/ajax/delete-book-from-basket.html", "get", {id: id}, element);
 	}
 	
 	/**
@@ -140,7 +140,7 @@ function BasketClass() {
 	 * @private
 	 */
 	var orderBasketHandler = function(element) {
-		ajaxHelperMethod("/BookShop/ajax/order-books.html", "post", null, element);
+		ajaxHelperMethod("/BookStore/ajax/order-books.html", "post", null, element);
 	}
 	
 	/**

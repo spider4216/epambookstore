@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="container-fluid">
 	<div class="row">
@@ -48,7 +48,7 @@
 
 							<div class="row">
 								<span>${lang.getValue('book_detail_category')}:</span>
-								<a href="/BookShop/category.html?id=${category.getId()}">${category.getName()}</a>
+								<a href="/BookStore/category.html?id=${category.getId()}">${category.getName()}</a>
 							</div>
 							
 							<br />
@@ -64,7 +64,7 @@
 						<br />
 						<div class="col-md-12">
 							<c:if test="${isInBasket == true}">
-								<a href="/BookShop/basket.html" class="btn btn-warning">${lang.getValue('book_detail_go_to_basket')}</a>
+								<a href="/BookStore/basket.html" class="btn btn-warning">${lang.getValue('book_detail_go_to_basket')}</a>
 							</c:if>
 							
 							<c:if test="${isInBasket == false}">

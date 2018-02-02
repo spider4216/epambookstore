@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="container-fluid">
 	<div class="row">
@@ -25,7 +25,7 @@
 							</div>
 							
 							<div class="thumb-footer">
-								<a href="/BookShop/book.html?id=${item.getId()}" class="btn btn-default" role="button">${lang.getValue('more')}</a>
+								<a href="/BookStore/book.html?id=${item.getId()}" class="btn btn-default" role="button">${lang.getValue('more')}</a>
 							</div>
 						</div>
 					</div>

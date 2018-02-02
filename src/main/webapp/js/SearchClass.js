@@ -71,7 +71,7 @@ function SearchClass() {
 		}
 		
 		$.ajax({
-			url: "/BookShop/ajax/search.html",
+			url: "/BookStore/ajax/search.html",
 			method: "post",
 			dataType: "html",
 			data: {text: text, categoryId: categoryId},

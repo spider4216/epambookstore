@@ -57,7 +57,7 @@ public class DispatcherServlet extends HttpServlet {
 			// Redirect to auth page if user not log in
 			try {
 				if (ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER) == null) {
-					response.sendRedirect("/BookShop/sign-in.html");
+					response.sendRedirect("/BookStore/sign-in.html");
 				}
 			} catch (ServiceLocatorException e) {
 				request.setAttribute("errMsg", e.getMessage());

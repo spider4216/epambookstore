@@ -34,7 +34,7 @@ public class SignUpProcessAction implements IAction {
 			validatorUsernameUnique.execute(request.getParameter("username"));
 		} catch (ValidationException e) {
 			flashMessage.setMsg(e.getMessage());
-			response.sendRedirect("/BookShop/sign-up.html");
+			response.sendRedirect("/BookStore/sign-up.html");
 			return;
 		}
 
@@ -50,6 +50,6 @@ public class SignUpProcessAction implements IAction {
 
 		flashMessage.setMsg(lang.getValue("successfully_registered_message"));
 
-		response.sendRedirect("/BookShop/sign-in.html");
+		response.sendRedirect("/BookStore/sign-in.html");
 	}
 }

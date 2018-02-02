@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="com.epam.component.flash.FlashMessage"%>
 <div class="row">
 	<div class="col-md-12">
@@ -12,7 +12,7 @@
 			</div>
 			</c:if>
 			
-			<form method="post" action="/BookShop/sign-in-process.html">
+			<form method="post" action="/BookStore/sign-in-process.html">
 				<div class="panel-body">
 					
 					<div class="form-group">
@@ -27,7 +27,7 @@
 
 					<div class="sign-up-info">
 						<span>${lang.getValue('you_havent_have_account_yet_q')}</span>
-						<a href="/BookShop/sign-up.html">${lang.getValue('sign_up')}</a>
+						<a href="/BookStore/sign-up.html">${lang.getValue('sign_up')}</a>
 					</div>
 				</div>
 				<div class="panel-footer">

@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="container-fluid">
 	<div class="row">
@@ -44,7 +44,7 @@
 												</div>
 												
 												<div class="thumb-footer">
-													<a href="/BookShop/book.html?id=${item.getId()}" class="btn btn-default" role="button">${lang.getValue('more')}</a>
+													<a href="/BookStore/book.html?id=${item.getId()}" class="btn btn-default" role="button">${lang.getValue('more')}</a>
 												</div>
 											</div>
 										</div>
@@ -57,25 +57,25 @@
 									<ul class="pager">
 										<c:if test="${pager.isPreviousDisabled() == true}">
 											<li class="disabled">
-												<a href="/BookShop/category.html?id=${category_id}" class="disabled">${lang.getValue('pager_previous')}</a>
+												<a href="/BookStore/category.html?id=${category_id}" class="disabled">${lang.getValue('pager_previous')}</a>
 											</li>
 										</c:if>
 										
 										<c:if test="${pager.isPreviousDisabled() == false}">
 											<li>
-												<a href="/BookShop/category.html?id=${category_id}&page=${pager.getPreviousPageNumber()}">${lang.getValue('pager_previous')}</a>
+												<a href="/BookStore/category.html?id=${category_id}&page=${pager.getPreviousPageNumber()}">${lang.getValue('pager_previous')}</a>
 											</li>
 										</c:if>
 										
 										<c:if test="${pager.isNextForCategoryDisabled(category_id) == true}">
 											<li class="disabled">
-												<a href="/BookShop/category.html?id=${category_id}&page=${pager.getCurrentPageNumber()}">${lang.getValue('pager_next')}</a>
+												<a href="/BookStore/category.html?id=${category_id}&page=${pager.getCurrentPageNumber()}">${lang.getValue('pager_next')}</a>
 											</li>
 										</c:if>
 										
 										<c:if test="${pager.isNextForCategoryDisabled(category_id) == false}">
 											<li>
-												<a href="/BookShop/category.html?id=${category_id}&page=${pager.getNextPageNumber()}">${lang.getValue('pager_next')}</a>
+												<a href="/BookStore/category.html?id=${category_id}&page=${pager.getNextPageNumber()}">${lang.getValue('pager_next')}</a>
 											</li>
 										</c:if>
 									

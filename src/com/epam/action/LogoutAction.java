@@ -29,7 +29,7 @@ public class LogoutAction implements IAction {
 		UserService userService = new UserService();
 		userService.logOut(user);
 		
-		response.sendRedirect("/BookShop/");
+		response.sendRedirect("/BookStore/");
 	}
 
 }

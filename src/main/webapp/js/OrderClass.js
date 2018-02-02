@@ -37,7 +37,7 @@ function OrderClass() {
 		var orderId = element.parents(".panel").find("input[name='orderId']").val();
 
 		$.ajax({
-			url: "/BookShop/ajax/accept-order.html",
+			url: "/BookStore/ajax/accept-order.html",
 			method: "post",
 			dataType: "json",
 			data: {orderId: orderId},
