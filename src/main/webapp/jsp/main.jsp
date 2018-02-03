@@ -1,16 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="com.epam.component.service_locator.ServiceLocator"%>
-<%@page import="com.epam.component.service_locator.ServiceLocatorEnum"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${lang.getValue('book_store')}</title>
-<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="css/main.css" rel="stylesheet" type="text/css">
-<link href="css/jquery.jgrowl.min.css" rel="stylesheet" type="text/css">
+<link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../css/main.css" rel="stylesheet" type="text/css">
+<link href="../css/jquery.jgrowl.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -33,13 +31,13 @@
 			
 			<ul class="nav navbar-nav navbar-right">
 			
-				<c:if test="${empty ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER)}">
+				<c:if test="${empty user}">
 					<li>
 						<a href="/BookStore/sign-in.html">${lang.getValue('sign_in')}</a>
 					</li>
 				</c:if>
 				
-				<c:if test="${not empty ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER)}">
+				<c:if test="${not empty user}">
 					<li>
 						<a href="/BookStore/history.html">${lang.getValue('history_title')}</a>
 					</li>
@@ -48,7 +46,7 @@
 						<a href="/BookStore/basket.html">${lang.getValue('basket_title')}</a>
 					</li>
 					
-					<c:if test="${ServiceLocator.getInstance().getService(ServiceLocatorEnum.USER).getRole().getId() == requestScope.adminRoleId}">
+					<c:if test="${user.getRole().getId() == adminRoleId}">
 						<li>
 							<a href="/BookStore/order-list.html">${lang.getValue('order_list')}</a>
 						</li>
@@ -74,17 +72,17 @@
 <jsp:include page='<%=(String) request.getAttribute("includeJsp")%>' />
 
 <div class="scripts">
-	<script src="js/jquery-3.2.1.min.js"></script>
-	<script src="js/validator.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.blockUI.js"></script>
-	<script src="js/jquery.jgrowl.min.js"></script>
-	<script src="js/BasketClass.js"></script>
-	<script src="js/BasketRun.js"></script>
-	<script src="js/SearchClass.js"></script>
-	<script src="js/SearchRun.js"></script>
-	<script src="js/OrderClass.js"></script>
-	<script src="js/OrderRun.js"></script>
+	<script src="../js/jquery-3.2.1.min.js"></script>
+	<script src="../js/validator.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/jquery.blockUI.js"></script>
+	<script src="../js/jquery.jgrowl.min.js"></script>
+	<script src="../js/BasketClass.js"></script>
+	<script src="../js/BasketRun.js"></script>
+	<script src="../js/SearchClass.js"></script>
+	<script src="../js/SearchRun.js"></script>
+	<script src="../js/OrderClass.js"></script>
+	<script src="../js/OrderRun.js"></script>
 </div>
 </body>
 </html>

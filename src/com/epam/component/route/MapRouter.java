@@ -43,6 +43,7 @@ public class MapRouter {
 		map.put("/BookStore/sign-up-process.html", new SignUpProcessAction());
 		map.put("/BookStore/sign-in-process.html", new SignInProcessAction());
 		map.put("/BookStore/", new MainAction());
+		map.put("/BookStore", new MainAction());
 		map.put("/BookStore/change-lang.html", new LangAction());
 		map.put("/BookStore/book.html", new BookAction());
 		map.put("/BookStore/ajax/add-to-basket.html", new BasketAddToAction());

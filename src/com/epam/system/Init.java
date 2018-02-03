@@ -46,6 +46,7 @@ public class Init {
 			UserService us = new UserService();
 			UserEntity user = us.currentUser();
 			ServiceLocator.getInstance().setService(ServiceLocatorEnum.USER, user);
+			request.setAttribute("user", user);
 		} catch (UserServiceException | ServiceLocatorException | DaoUserException e) {
 			ServiceLocator.getInstance().setService(ServiceLocatorEnum.USER, null);
 		}
