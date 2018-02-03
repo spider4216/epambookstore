@@ -6,11 +6,11 @@ package com.epam.component.route;
  * @author Yuriy Sirotenko
  */
 public class RouterException extends Exception {
-	public RouterException(String msg) {
+	RouterException(String msg) {
 		super(msg);
 	}
 	
-	public RouterException(String msg, Exception e) {
+	RouterException(String msg, Exception e) {
 		super(msg, e);
 	}
 }
