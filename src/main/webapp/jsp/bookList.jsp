@@ -25,7 +25,7 @@
 							</div>
 							
 							<div class="thumb-footer">
-								<a href="/BookStore/book.html?id=${item.getId()}" class="btn btn-default" role="button">${lang.getValue('more')}</a>
+								<a href="/book.html?id=${item.getId()}" class="btn btn-default" role="button">${lang.getValue('more')}</a>
 							</div>
 						</div>
 					</div>

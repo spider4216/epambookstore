@@ -12,7 +12,7 @@
 			</div>
 			</c:if>
 			
-			<form method="post" action="/BookStore/sign-in-process.html">
+			<form method="post" action="/sign-in-process.html">
 				<div class="panel-body">
 					
 					<div class="form-group">
@@ -27,7 +27,7 @@
 
 					<div class="sign-up-info">
 						<span>${lang.getValue('you_havent_have_account_yet_q')}</span>
-						<a href="/BookStore/sign-up.html">${lang.getValue('sign_up')}</a>
+						<a href="/sign-up.html">${lang.getValue('sign_up')}</a>
 					</div>
 				</div>
 				<div class="panel-footer">

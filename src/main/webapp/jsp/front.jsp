@@ -43,7 +43,7 @@
 												</div>
 												
 												<div class="thumb-footer">
-													<a href="/BookStore/book.html?id=${item.getId()}" class="btn btn-default" role="button">${lang.getValue('more')}</a>
+													<a href="/book.html?id=${item.getId()}" class="btn btn-default" role="button">${lang.getValue('more')}</a>
 												</div>
 											</div>
 										</div>
@@ -56,25 +56,25 @@
 									<ul class="pager">
 										<c:if test="${pager.isPreviousDisabled() == true}">
 											<li class="disabled">
-												<a href="/BookStore/#" class="disabled">${lang.getValue('pager_previous')}</a>
+												<a href="/#" class="disabled">${lang.getValue('pager_previous')}</a>
 											</li>
 										</c:if>
 										
 										<c:if test="${pager.isPreviousDisabled() == false}">
 											<li>
-												<a href="/BookStore/?page=${pager.getPreviousPageNumber()}">${lang.getValue('pager_previous')}</a>
+												<a href="/?page=${pager.getPreviousPageNumber()}">${lang.getValue('pager_previous')}</a>
 											</li>
 										</c:if>
 										
 										<c:if test="${pager.isNextDisabled() == true}">
 											<li class="disabled">
-												<a href="/BookStore/?page=${pager.getCurrentPageNumber()}">${lang.getValue('pager_next')}</a>
+												<a href="/?page=${pager.getCurrentPageNumber()}">${lang.getValue('pager_next')}</a>
 											</li>
 										</c:if>
 										
 										<c:if test="${pager.isNextDisabled() == false}">
 											<li>
-												<a href="/BookStore/?page=${pager.getNextPageNumber()}">${lang.getValue('pager_next')}</a>
+												<a href="/?page=${pager.getNextPageNumber()}">${lang.getValue('pager_next')}</a>
 											</li>
 										</c:if>
 									

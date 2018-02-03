@@ -13,7 +13,7 @@
 			</div>
 			</c:if>
 			
-			<form action="/BookStore/sign-up-process.html" method="post" data-toggle="validator">
+			<form action="/sign-up-process.html" method="post" data-toggle="validator">
 				<div class="panel-body">
 				
 			  		<div class="form-group">

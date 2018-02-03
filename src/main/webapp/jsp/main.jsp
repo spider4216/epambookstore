@@ -15,7 +15,7 @@
 <nav class="navbar navbar-inverse navbar-static-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="/BookStore">${lang.getValue('book_store')}</a>
+			<a class="navbar-brand" href="/">${lang.getValue('book_store')}</a>
 		</div>
 	
 		<div class="navbar-collapse collapse">
@@ -23,7 +23,7 @@
 				<ul class="nav navbar-nav">
 					<c:forEach items="${categories}" var="item">
 						<li>
-							<a href="/BookStore/category.html?id=${item.getId()}">${item.getName()}</a>
+							<a href="/category.html?id=${item.getId()}">${item.getName()}</a>
 						</li>
 					</c:forEach>
 				</ul>
@@ -33,35 +33,35 @@
 			
 				<c:if test="${empty user}">
 					<li>
-						<a href="/BookStore/sign-in.html">${lang.getValue('sign_in')}</a>
+						<a href="/sign-in.html">${lang.getValue('sign_in')}</a>
 					</li>
 				</c:if>
 				
 				<c:if test="${not empty user}">
 					<li>
-						<a href="/BookStore/history.html">${lang.getValue('history_title')}</a>
+						<a href="/history.html">${lang.getValue('history_title')}</a>
 					</li>
 					
 					<li>
-						<a href="/BookStore/basket.html">${lang.getValue('basket_title')}</a>
+						<a href="/basket.html">${lang.getValue('basket_title')}</a>
 					</li>
 					
 					<c:if test="${user.getRole().getId() == adminRoleId}">
 						<li>
-							<a href="/BookStore/order-list.html">${lang.getValue('order_list')}</a>
+							<a href="/order-list.html">${lang.getValue('order_list')}</a>
 						</li>
 					</c:if>
 					
 					<li>
-						<a href="/BookStore/sign-out.html">${lang.getValue('sign_out')}</a>
+						<a href="/sign-out.html">${lang.getValue('sign_out')}</a>
 					</li>
 				</c:if>
 			
 				<li class="dropdown">
          			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${lang.getValue('language')} <span class="caret"></span></a>
         			<ul class="dropdown-menu">
-          				<li><a href="/BookStore/change-lang.html?lang=en">EN</a></li>
-           				<li><a href="/BookStore/change-lang.html?lang=ru">RU</a></li>
+          				<li><a href="/change-lang.html?lang=en">EN</a></li>
+           				<li><a href="/change-lang.html?lang=ru">RU</a></li>
        				</ul>
        			</li>
 			</ul>

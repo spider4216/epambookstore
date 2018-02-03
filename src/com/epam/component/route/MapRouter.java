@@ -37,25 +37,25 @@ public class MapRouter {
 	private static HashMap<String, IAction> map = new HashMap<>();
 	
 	static {
-		map.put("/BookStore/category.html", new CategoryAction());
-		map.put("/BookStore/sign-in.html", new SignInMainAction());
-		map.put("/BookStore/sign-up.html", new SignUpMainAction());
-		map.put("/BookStore/sign-up-process.html", new SignUpProcessAction());
-		map.put("/BookStore/sign-in-process.html", new SignInProcessAction());
-		map.put("/BookStore/", new MainAction());
-		map.put("/BookStore", new MainAction());
-		map.put("/BookStore/change-lang.html", new LangAction());
-		map.put("/BookStore/book.html", new BookAction());
-		map.put("/BookStore/ajax/add-to-basket.html", new BasketAddToAction());
-		map.put("/BookStore/basket.html", new BasketAction());
-		map.put("/BookStore/ajax/delete-book-from-basket.html", new BasketDeleteBookAction());
-		map.put("/BookStore/ajax/clear-basket.html", new BasketClearAction());
-		map.put("/BookStore/ajax/order-books.html", new BasketOrderAction());
-		map.put("/BookStore/history.html", new HistoryAction());
-		map.put("/BookStore/ajax/search.html", new SearchAction());
-		map.put("/BookStore/order-list.html", new AdminOrderList());
-		map.put("/BookStore/ajax/accept-order.html", new AcceptOrderAction());
-		map.put("/BookStore/sign-out.html", new LogoutAction());
+		map.put("/category.html", new CategoryAction());
+		map.put("/sign-in.html", new SignInMainAction());
+		map.put("/sign-up.html", new SignUpMainAction());
+		map.put("/sign-up-process.html", new SignUpProcessAction());
+		map.put("/sign-in-process.html", new SignInProcessAction());
+		map.put("/", new MainAction());
+		map.put("", new MainAction());
+		map.put("/change-lang.html", new LangAction());
+		map.put("/book.html", new BookAction());
+		map.put("/ajax/add-to-basket.html", new BasketAddToAction());
+		map.put("/basket.html", new BasketAction());
+		map.put("/ajax/delete-book-from-basket.html", new BasketDeleteBookAction());
+		map.put("/ajax/clear-basket.html", new BasketClearAction());
+		map.put("/ajax/order-books.html", new BasketOrderAction());
+		map.put("/history.html", new HistoryAction());
+		map.put("/ajax/search.html", new SearchAction());
+		map.put("/order-list.html", new AdminOrderList());
+		map.put("/ajax/accept-order.html", new AcceptOrderAction());
+		map.put("/sign-out.html", new LogoutAction());
 	}
 	
 	public static IAction getAction(String path) throws RouterException {

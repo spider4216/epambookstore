@@ -34,7 +34,7 @@ public class SignInProcessAction implements IAction {
 			validatorRequired.execute(password);
 		} catch (ValidationException e) {
 			flashMessage.setMsg(e.getMessage());
-			response.sendRedirect("/BookStore/sign-in.html");
+			response.sendRedirect("/sign-in.html");
 			return;
 		}
 		
@@ -47,10 +47,10 @@ public class SignInProcessAction implements IAction {
 			service.login(entity);
 		} catch (UserServiceException e) {
 			flashMessage.setMsg(lang.getValue("auth_problem"));
-			response.sendRedirect("/BookStore/sign-in.html");
+			response.sendRedirect("/sign-in.html");
 			return;
 		}
 		
-		response.sendRedirect("/BookStore");
+		response.sendRedirect("/");
 	}
 }
