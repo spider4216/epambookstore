@@ -80,30 +80,27 @@ public class OrderService {
 	public Boolean createOrder(Integer userId) throws OrderServiceException {
 		Connection connection = null;
 		ConnectionPool connectionPool = null;
-		
+
 		try {
 			connectionPool = ConnectionPool.getInstance();
 			connectionPool.useOneConnection(true);
 			connection = (Connection) ConnectionPool.getInstance().getConnection();
 			connection.setAutoCommit(false);
-		} catch (ConnectionPoolException | SQLException e) {
-			throwOrderServiceException(e);
-		}
-		
-		// Create order
-		Integer orderId = createItemOrder(connection, connectionPool, userId);
-		// Find basket content
-		ArrayList<BasketEntity> basketCollection = getBasketContent(connection, connectionPool, userId);
-		// Create order to product - many to many
-		createOrderToProduct(connection, connectionPool, orderId, basketCollection);
-		// Clean basket
-		cleanBasket(connection, connectionPool, userId);
 
-		connectionPool.useOneConnection(false);
-		try {
+			// Create order
+			Integer orderId = createItemOrder(connection, connectionPool, userId);
+			// Find basket content
+			ArrayList<BasketEntity> basketCollection = getBasketContent(connection, connectionPool, userId);
+			// Create order to product - many to many
+			createOrderToProduct(connection, connectionPool, orderId, basketCollection);
+			// Clean basket
+			cleanBasket(connection, connectionPool, userId);
+
 			connection.commit();
-		} catch (SQLException e) {
+		} catch (SQLException | ConnectionPoolException e) {
 			throwOrderServiceException(e);
+		} finally {
+			connectionPool.useOneConnection(false);
 		}
 		
 		return true;
@@ -130,7 +127,7 @@ public class OrderService {
 	/**
 	 * Create one order without any relations
 	 */
-	private Integer createItemOrder(Connection connection, ConnectionPool connectionPool, Integer userId) throws OrderServiceException {
+	private Integer createItemOrder(Connection connection, ConnectionPool connectionPool, Integer userId) throws OrderServiceException, SQLException {
 		OrderEntity orderEntity = new OrderEntity();
 		orderEntity.setUserId(userId);
 		orderEntity.setStatus(OrderEnum.UNDER_CONSIDERATION.getValue());
@@ -141,11 +138,7 @@ public class OrderService {
 			orderId = insert(orderEntity);
 		} catch (OrderServiceException e) {
 			connectionPool.useOneConnection(false);
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				throwOrderServiceException(e1);
-			}
+			connection.rollback();
 			throwOrderServiceException(e);
 		}
 		
@@ -155,7 +148,7 @@ public class OrderService {
 	/**
 	 * Get basket content
 	 */
-	private ArrayList<BasketEntity> getBasketContent(Connection connection, ConnectionPool connectionPool, Integer userId) throws OrderServiceException {
+	private ArrayList<BasketEntity> getBasketContent(Connection connection, ConnectionPool connectionPool, Integer userId) throws OrderServiceException, SQLException {
 		BasketService basketService = null;
 		ArrayList<BasketEntity> basketCollection = null;
 		try {
@@ -163,11 +156,7 @@ public class OrderService {
 			basketCollection = basketService.findAllProductsByUserId(userId);
 		} catch (BasketServiceException | ServiceLocatorException | DaoBasketException e) {
 			connectionPool.useOneConnection(false);
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				throwOrderServiceException(e1);
-			}
+			connection.rollback();
 			throwOrderServiceException(e);
 		}
 		
@@ -177,7 +166,7 @@ public class OrderService {
 	/**
 	 * Create order to product relation (many to many)
 	 */
-	private Boolean createOrderToProduct(Connection connection, ConnectionPool connectionPool, Integer orderId, ArrayList<BasketEntity> basketCollection) throws OrderServiceException {
+	private Boolean createOrderToProduct(Connection connection, ConnectionPool connectionPool, Integer orderId, ArrayList<BasketEntity> basketCollection) throws OrderServiceException, SQLException {
 		try {
 			OrderToProductService orderToProductService = new OrderToProductService();
 			
@@ -191,11 +180,7 @@ public class OrderService {
 			}
 		} catch (OrderToProductServiceException | ServiceLocatorException | DaoOrderToProductException e) {
 			connectionPool.useOneConnection(false);
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				throwOrderServiceException(e1);
-			}
+			connection.rollback();
 			throwOrderServiceException(e);
 		}
 		
@@ -205,17 +190,13 @@ public class OrderService {
 	/**
 	 * Clean basket
 	 */
-	private Boolean cleanBasket(Connection connection, ConnectionPool connectionPool, Integer userId) throws OrderServiceException {
+	private Boolean cleanBasket(Connection connection, ConnectionPool connectionPool, Integer userId) throws OrderServiceException, SQLException {
 		try {
 			BasketService basketService = new BasketService();
 			basketService.deleteUserBasketBooks(userId);
 		} catch (BasketServiceException | ServiceLocatorException | DaoBasketException e) {
 			connectionPool.useOneConnection(false);
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				throwOrderServiceException(e1);
-			}
+			connection.rollback();
 			throwOrderServiceException(e);
 		}
 		
