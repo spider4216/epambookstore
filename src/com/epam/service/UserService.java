@@ -90,8 +90,6 @@ public class UserService {
 	 * Check is password valid
 	 */
 	public Boolean isPasswordValid(UserEntity entity, String password) throws NoSuchAlgorithmException, ServiceLocatorException, UserServiceException {
-		Lang lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-		
 		if (!entity.getPassword().equals(passwordHash(password))) {
 			throw new UserServiceException(lang.getValue("invalid_login_or_password"));
 		}
