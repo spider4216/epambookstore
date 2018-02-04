@@ -44,6 +44,8 @@ public class OrderDao extends CDao implements IOrderDao {
 
 	private final static String SQL_UPDATE_STATUS_AS_ACCEPT_BY_ID = "UPDATE orders SET status = ? WHERE id = ?";
 	
+	private final static Integer RETURN_ID = 1;
+	
 	private Lang lang = null;
 
 	public OrderDao() throws ServiceLocatorException {
@@ -133,10 +135,9 @@ public class OrderDao extends CDao implements IOrderDao {
 			ResultSet result = pr.getGeneratedKeys();
 			result.next();
 			
-			Integer id = result.getInt(1);
+			Integer id = result.getInt(RETURN_ID);
 			closeResources(pr, result);
 
-			// TODO magic number
 			return id;
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DaoOrderException(lang.getValue("dao_order_inser_err"), e);
@@ -177,8 +178,7 @@ public class OrderDao extends CDao implements IOrderDao {
 			entity.setStatus(result.getInt("status"));
 			entity.setCreateDate(result.getString("create_date"));
 		} catch (SQLException e) {
-			// TODO msg
-			throw new DaoOrderException(lang.getValue("msg"), e);
+			throw new DaoOrderException(lang.getValue("dao_order_setter_err"), e);
 		}
 		
 		ArrayList<OrderToProductEntity> orderProductCollection = null;
@@ -187,7 +187,7 @@ public class OrderDao extends CDao implements IOrderDao {
 			IOrderToProductDao orderToProductDao = (OrderToProductDao) MysqlFactory.getOrderToProduct();
 			orderProductCollection = orderToProductDao.findAllByOrderId(entity.getId());
 		} catch (DaoOrderToProductException e) {
-			throw new DaoOrderException(lang.getValue("service_order_many_err"), e);
+			throw new DaoOrderException(lang.getValue("dao_order_many_err"), e);
 		}
 		
 		entity.setProducts(orderProductCollection);
@@ -198,7 +198,7 @@ public class OrderDao extends CDao implements IOrderDao {
 			IUserDao userDao = (UserDao) MysqlFactory.getUserDao();
 			user = userDao.findOneById(entity.getUserId());
 		} catch (DaoUserException e) {
-			throw new DaoOrderException(lang.getValue("service_order_user_one_err"), e);
+			throw new DaoOrderException(lang.getValue("dao_order_user_one_err"), e);
 		}
 		
 		entity.setUser(user);
