@@ -16,7 +16,7 @@ import com.epam.service.exception.BookServiceException;
  * @author Yuriy Sirotenko
  */
 public class Pagination {
-	public final Integer COUNT_ITEM = 10;
+	public static final Integer COUNT_ITEM = 10;
 	
 	private static final Integer FIRST_PAGE_INDEX = 1;
 	
