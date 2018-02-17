@@ -1,6 +1,5 @@
 package com.epam.component.dao;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import com.epam.component.dao.exception.DaoOrderException;
@@ -12,11 +11,6 @@ import com.epam.entity.OrderEntity;
  * @author Yuriy Sirotenko
  */
 public interface IOrderDao {
-	
-	/**
-	 * Find all orders
-	 */
-	ResultSet findAll() throws DaoOrderException;
 
 	/**
 	 * Insert order

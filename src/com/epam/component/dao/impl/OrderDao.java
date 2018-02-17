@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.epam.component.dao.CDao;
@@ -34,8 +33,6 @@ import com.epam.enum_list.OrderEnum;
  */
 public class OrderDao extends CDao implements IOrderDao {
 
-	private final static String SQL_FIND_ALL = "SELECT * FROM orders";
-
 	private final static String SQL_FIND_ALL_BY_USER_ID = "SELECT * FROM orders where user_id = ?";
 
 	private final static String SQL_FIND_ALL_BY_STATUS = "SELECT * FROM orders where status = ?";
@@ -50,24 +47,6 @@ public class OrderDao extends CDao implements IOrderDao {
 
 	public OrderDao() throws ServiceLocatorException {
 		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
-	}
-
-	/**
-	 * Find all orders
-	 */
-	public ResultSet findAll() throws DaoOrderException {
-		try {
-			Connection connection = ConnectionPool.getInstance().getConnection();
-			ConnectionPool.getInstance().freeConnection(connection);
-			Statement st = connection.createStatement();
-			
-			ResultSet result = st.executeQuery(SQL_FIND_ALL);
-			closeResources(st);
-			
-			return result;
-		} catch (SQLException | ConnectionPoolException e) {
-			throw new DaoOrderException(lang.getValue("dao_order_empty_err"), e);
-		}
 	}
 
 	/**
