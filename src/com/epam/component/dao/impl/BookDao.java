@@ -72,12 +72,8 @@ public class BookDao extends CDao implements IBookDao {
 			
 			ResultSet result = pr.executeQuery();
 			
-			ArrayList<BookEntity> bookCollection = new ArrayList<>();
+			ArrayList<BookEntity> bookCollection = createBookCollection(result);
 
-			while (result.next()) {
-				bookCollection.add(bookSetter(result));
-			}
-			
 			closeResources(pr, result);
 			
 			return bookCollection;
@@ -101,12 +97,8 @@ public class BookDao extends CDao implements IBookDao {
 			
 			ResultSet result = pr.executeQuery();
 			
-			ArrayList<BookEntity> bookCollection = new ArrayList<>();
+			ArrayList<BookEntity> bookCollection = createBookCollection(result);
 
-			while (result.next()) {
-				bookCollection.add(bookSetter(result));
-			}
-			
 			closeResources(pr, result);
 			
 			return bookCollection;
@@ -128,12 +120,9 @@ public class BookDao extends CDao implements IBookDao {
 			PreparedStatement pr = connection.prepareStatement(sqlFind);
 			pr.setString(IStatementIndex.FIRST, "%" + name + "%");
 			
-			ArrayList<BookEntity> bookCollection = new ArrayList<>();
 			ResultSet result = pr.executeQuery();
 
-			while (result.next()) {
-				bookCollection.add(bookSetter(result));
-			}
+			ArrayList<BookEntity> bookCollection = createBookCollection(result);
 			
 			closeResources(pr, result);
 			
@@ -157,13 +146,10 @@ public class BookDao extends CDao implements IBookDao {
 			pr.setString(IStatementIndex.FIRST, "%" + name + "%");
 			pr.setInt(IStatementIndex.SECOND, categoryId);
 			
-			ArrayList<BookEntity> bookCollection = new ArrayList<>();
 			ResultSet result = pr.executeQuery();
-
-			while (result.next()) {
-				bookCollection.add(bookSetter(result));
-			}
 			
+			ArrayList<BookEntity> bookCollection = createBookCollection(result);
+
 			closeResources(pr, result);
 			
 			return bookCollection;
@@ -214,5 +200,18 @@ public class BookDao extends CDao implements IBookDao {
 		book.setYear(result.getInt("year"));
 		
 		return book;
+	}
+	
+	/**
+	 * Create book collection
+	 */
+	private ArrayList<BookEntity> createBookCollection(ResultSet result) throws SQLException {
+		ArrayList<BookEntity> bookCollection = new ArrayList<>();
+		
+		while (result.next()) {
+			bookCollection.add(bookSetter(result));
+		}
+		
+		return bookCollection;
 	}
 }

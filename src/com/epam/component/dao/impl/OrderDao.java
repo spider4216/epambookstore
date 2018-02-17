@@ -80,11 +80,7 @@ public class OrderDao extends CDao implements IOrderDao {
 			PreparedStatement pr = connection.prepareStatement(SQL_FIND_ALL_BY_USER_ID);
 			pr.setInt(IStatementIndex.FIRST, id);
 			ResultSet result = pr.executeQuery();
-			ArrayList<OrderEntity> orderCollection = new ArrayList<>();
-			
-			while (result.next()) {
-				orderCollection.add(orderSetter(result));
-			}
+			ArrayList<OrderEntity> orderCollection = createOrderCollection(result);
 			
 			closeResources(pr, result);
 			
@@ -106,11 +102,7 @@ public class OrderDao extends CDao implements IOrderDao {
 			
 			ResultSet result = pr.executeQuery();
 			
-			ArrayList<OrderEntity> orderCollection = new ArrayList<>();
-			
-			while (result.next()) {
-				orderCollection.add(orderSetter(result));
-			}
+			ArrayList<OrderEntity> orderCollection = createOrderCollection(result);
 			
 			closeResources(pr, result);
 			
@@ -204,5 +196,18 @@ public class OrderDao extends CDao implements IOrderDao {
 		entity.setUser(user);
 		
 		return entity;
+	}
+	
+	/**
+	 * Create order collection
+	 */
+	private ArrayList<OrderEntity> createOrderCollection(ResultSet result) throws SQLException, DaoOrderException {
+		ArrayList<OrderEntity> orderCollection = new ArrayList<>();
+		
+		while (result.next()) {
+			orderCollection.add(orderSetter(result));
+		}
+		
+		return orderCollection;
 	}
 }
