@@ -92,7 +92,7 @@ public class Pagination {
 	public Integer getCurrentStartOffset() {
 		Integer currentPageNum = getCurrentPageNumber();
 
-		if (currentPageNum == FIRST_PAGE_INDEX) {
+		if (currentPageNum.equals(FIRST_PAGE_INDEX)) {
 			return START_OFFSET_INDEX;
 		}
 
