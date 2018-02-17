@@ -1,10 +1,12 @@
 package com.epam.component.dao.factory;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.util.Properties;
 
 import com.epam.component.dao.exception.ConnectionPoolException;
 
@@ -31,6 +33,8 @@ public class ConnectionPool {
 	
 	private Integer maxConnection;
 	
+	private final String DB_PROPERTY_PATH = "db/db.properties";
+	
 	/**
 	 * Need for transaction
 	 */
@@ -39,12 +43,20 @@ public class ConnectionPool {
 	private Connection singleConnection = null;
 
 	private ConnectionPool() throws ConnectionPoolException {
-		ResourceBundle resource = ResourceBundle.getBundle("com.epam.config.db");
-		url = resource.getString("url");
-		driver = resource.getString("driver");
-		user = resource.getString("user");
-		pass = resource.getString("password");
-		maxConnection = Integer.parseInt(resource.getString("max_connection"));
+		Properties property = new Properties();
+		InputStream resourceStream = this.getClass().getClassLoader().getResourceAsStream(DB_PROPERTY_PATH);
+		
+		try {
+			property.load(resourceStream);
+		} catch (IOException e) {
+			throw new ConnectionPoolException("Cannot find db config", e);
+		}
+		
+		url = property.getProperty("url");
+		driver = property.getProperty("driver");
+		user = property.getProperty("user");
+		pass = property.getProperty("password");
+		maxConnection = Integer.parseInt(property.getProperty("max_connection"));
 		
 		loadDriver();
 	}
