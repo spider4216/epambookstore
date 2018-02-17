@@ -38,7 +38,7 @@ public class ConnectionPool {
 	
 	private Connection singleConnection = null;
 
-	public ConnectionPool() throws ConnectionPoolException {
+	private ConnectionPool() throws ConnectionPoolException {
 		ResourceBundle resource = ResourceBundle.getBundle("com.epam.config.db");
 		url = resource.getString("url");
 		driver = resource.getString("driver");

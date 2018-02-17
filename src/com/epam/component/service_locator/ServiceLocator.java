@@ -16,7 +16,7 @@ public class ServiceLocator {
 	
 	private HashMap<ServiceLocatorEnum, Object> pool;
 	
-	public ServiceLocator() {
+	private ServiceLocator() {
 		pool = new HashMap<>();
 	}
 	
