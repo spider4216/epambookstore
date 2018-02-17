@@ -26,9 +26,5 @@ public abstract class CDao {
 	
 	public final void closeResources(PreparedStatement pr) throws SQLException {
 		pr.close();
-	}
-
-	public final void closeResources(Statement st) throws SQLException {
-		st.close();
 	}	
 }
