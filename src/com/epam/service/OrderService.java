@@ -35,7 +35,7 @@ public class OrderService {
 	
 	private static final Integer EMPTY_VALUE = 0;
 	
-	public OrderService() throws OrderServiceException, ServiceLocatorException, DaoOrderException {
+	public OrderService() throws ServiceLocatorException, DaoOrderException {
 		lang = (Lang) ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 		DaoFactory MYSQLFactory = DaoFactory.getDaoFactory(DaoFactory.MYSQL);
 		orderDao = (OrderDao)MYSQLFactory.getOrderDao();

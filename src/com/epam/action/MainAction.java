@@ -24,7 +24,7 @@ public class MainAction implements IAction {
 		pager.setRequest(request);
 		ServiceLocator.getInstance().setService(ServiceLocatorEnum.PAGINATION, pager);
 		BookService service = new BookService();
-		ArrayList<BookEntity> bookCollection = service.findNextPageBooks(pager.getCurrentStartOffset(), pager.COUNT_ITEM);
+		ArrayList<BookEntity> bookCollection = service.findNextPageBooks(pager.getCurrentStartOffset(), Pagination.COUNT_ITEM);
 		request.setAttribute("books", bookCollection);
 		request.setAttribute("pager", pager);
 

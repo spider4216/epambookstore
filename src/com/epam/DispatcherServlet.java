@@ -28,14 +28,7 @@ public class DispatcherServlet extends HttpServlet {
 		ServiceLocator sl = ServiceLocator.getInstance();
 		sl.setService(ServiceLocatorEnum.SESSION, request.getSession(true));
 
-		try {
-			Init.execute(request, response);
-		} catch (ServiceLocatorException e) {
-			logger.error(e.getMessage());
-			request.setAttribute("errMsg", e.getMessage());
-			Viewer.execute(request, response, "error.jsp");
-			return;
-		}
+		Init.execute(request, response);
 		
 		// Set type of content
 		response.setContentType("text/html");

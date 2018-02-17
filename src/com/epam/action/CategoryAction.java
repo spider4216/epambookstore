@@ -22,7 +22,7 @@ public class CategoryAction implements IAction {
 		Pagination pager = (Pagination) ServiceLocator.getInstance().getService(ServiceLocatorEnum.PAGINATION);
 		pager.setRequest(request);
 		BookService service = new BookService();
-		ArrayList<BookEntity> bookCollection = service.findNextPageCategoryBooks(Integer.parseInt(request.getParameter("id")), pager.getCurrentStartOffset(), pager.COUNT_ITEM);
+		ArrayList<BookEntity> bookCollection = service.findNextPageCategoryBooks(Integer.parseInt(request.getParameter("id")), pager.getCurrentStartOffset(), Pagination.COUNT_ITEM);
 		
 		request.setAttribute("books", bookCollection);
 		request.setAttribute("category_id", request.getParameter("id"));
