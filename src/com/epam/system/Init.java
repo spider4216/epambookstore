@@ -1,5 +1,6 @@
 package com.epam.system;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +29,7 @@ import com.epam.service.exception.UserServiceException;
 public class Init {
 	private Init() {}
 	
-	public static void execute(HttpServletRequest request, HttpServletResponse response) {
+	public static void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
 			Lang langInstance = (Lang)ServiceLocator.getInstance().getService(ServiceLocatorEnum.LANG);
 			request.setAttribute("lang", langInstance);

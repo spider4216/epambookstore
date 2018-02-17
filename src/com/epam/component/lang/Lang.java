@@ -1,7 +1,9 @@
 package com.epam.component.lang;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.Properties;
 
 /**
  * Multilingual component. It is put into Service Locator in init script
@@ -12,19 +14,24 @@ import java.util.ResourceBundle;
  * @author Yuriy Sirotenko
  */
 public class Lang {
-	private ResourceBundle bundle;
+	private Properties property;
 	
-	public Lang(Locale locale) {
-		bundle = ResourceBundle.getBundle("com.epam.component.lang.message.global", locale);
+	private Locale locale;
+	
+	public Lang(Locale locale) throws IOException {
+		this.locale = locale;
+		String msgPath = "message/global_" + locale.getLanguage() + ".properties";
+		property = new Properties();
+		InputStream resourceStream = this.getClass().getClassLoader().getResourceAsStream(msgPath);
+		
+		property.load(resourceStream);
 	}
 	
 	public String getValue(String key) {
-		return bundle.getString(key);
+		return property.getProperty(key);
 	}
 	
 	public String getLangAsString() {
-		Locale locale = bundle.getLocale();
-		
 		return locale.getLanguage();
 	}
 	
